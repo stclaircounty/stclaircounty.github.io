@@ -1,0 +1,108 @@
+# Project information
+site_name: St Clair County Community Site
+site_url: https://stclaircounty.net/
+site_author: St Clair County GitHub
+
+# Repository
+repo_name: stclaircounty/stclaircounty.github.io
+repo_url: https://github.com/stclaircounty/stclaircounty.github.io
+
+# Copyright
+copyright: Copyright &copy; 2025 - Present St Clair County Community Site
+
+# Mkdocs Material Settings
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil 
+    view: material/eye
+  features:
+    - content.action.edit
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tabs
+    - navigation.tracking
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+# Mkdocs Settings
+docs_dir: ../
+site_dir: !ENV [RUNNER_TEMP, '/tmp/mkdocs']
+edit_uri: edit/main/docs/
+use_directory_urls: false
+exclude_docs: |
+  .github/
+  README.md
+extra:
+  version:
+    provider: mike
+extra_css:
+  - style/style.css
+plugins:
+  - awesome-pages
+  - blog
+  - meta
+  - search
+  - tags
+
+# Markdown Extensions
+markdown_extensions:
+  - abbr
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.betterem
+  - pymdownx.blocks.admonition
+  - pymdownx.blocks.caption
+  - pymdownx.blocks.definition
+  - pymdownx.blocks.details
+  - pymdownx.blocks.tab
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+      pygments_lang_class: true
+      auto_title: true
+      linenums: true
+      linenums_style: pymdownx-inline
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.progressbar
+  - pymdownx.saneheaders
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist
+  - pymdownx.tilde
+  - tables
+  - toc:
+      title: On this page
+      permalink: true
