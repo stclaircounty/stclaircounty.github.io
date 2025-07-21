@@ -19,5 +19,8 @@ jobs:
         run: |
           echo $PWD
           ls -lah
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+        
       - name: Configure Git Credentials
         uses: stclaircounty/builder@v1.0.4
