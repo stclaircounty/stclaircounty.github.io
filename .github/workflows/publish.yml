@@ -15,5 +15,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Debug
+        run: |
+          echo $PWD
+          ls -lah
       - name: Configure Git Credentials
         uses: stclaircounty/builder@v1.0.4
