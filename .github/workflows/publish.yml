@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Git Safe Directory
+        run: git config --global --add safe.directory $PWD
       - name: Debug
         run: |
           echo $PWD
