@@ -1,0 +1,12 @@
+- name: LongFast
+  index: 0
+  psk: AQ==
+  description: Default communication channel.
+- name: Michigan
+  index: 1
+  psk: MA==
+  description: Default communication channel.
+- name: StClair
+  index: 2
+  psk: MA==
+  description: Default communication channel.
