@@ -1,0 +1,7 @@
+mkdocs-awesome-pages-plugin
+mkdocs-macros-plugin
+mkdocs-material
+mkdocs-material[imaging]
+mike
+pygments
+pymdown-extensions
