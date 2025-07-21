@@ -14,4 +14,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Configure Git Credentials
-        uses: stclaircounty/builder/.github/actions/build@v1.0.2
+        uses: stclaircounty/builder@v1.0.4
