@@ -8,21 +8,8 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/stclaircounty/builder:latest
-      volumes:
-        - ${{ github.workspace }}:/workspace 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Git Safe Directory
-        run: git config --global --add safe.directory $PWD
-      - name: Debug
-        run: |
-          echo $PWD
-          ls -lah
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-        
-      - name: Configure Git Credentials
-        uses: stclaircounty/builder@v1.0.4
+      - name: Build Website
+        uses: stclaircounty/builder@v1
