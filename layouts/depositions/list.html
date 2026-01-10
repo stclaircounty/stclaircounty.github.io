@@ -1,27 +1,43 @@
 {{ define "main" }}
-{{/* Pull depositions from data file */}}
-{{ $depositionsData := site.Data.depositions }}
+{{/* Pull depositions from data/depositions.yaml - source of truth */}}
 {{ $depositions := slice }}
-{{ range $key, $depo := $depositionsData }}
-  {{ if not (hasPrefix $key "_") }}
-    {{ $depositions = $depositions | append (merge $depo (dict "key" $key)) }}
+{{ range $key, $item := site.Data.depositions }}
+  {{/* Skip non-map entries and _meta, look for deponent (registry format) */}}
+  {{ if and (not (hasPrefix $key "_")) (reflect.IsMap $item) $item.deponent }}
+    {{/* Get segment count and pages from referenced data file */}}
+    {{ $segmentCount := 0 }}
+    {{ $pages := dict }}
+    {{ with $item.data_file }}
+      {{ $dataFile := index site.Data.depositions . }}
+      {{ if $dataFile }}
+        {{ with $dataFile.segments }}{{ $segmentCount = len . }}{{ end }}
+        {{ with $dataFile.deposition }}{{ $pages = .pages }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ $depositions = $depositions | append (merge $item (dict
+      "slug" $key
+      "segment_count" $segmentCount
+      "pages" $pages
+    )) }}
   {{ end }}
 {{ end }}
-{{ $depositions = sort $depositions "date" "desc" }}
+{{ $depositions = sort $depositions "title" }}
 
 {{/* Count stats */}}
-{{ $withPdf := 0 }}
-{{ $totalQuotes := 0 }}
+{{ $totalPages := 0 }}
+{{ $totalSegments := 0 }}
 {{ range $depositions }}
-  {{ if .pdf_file }}{{ $withPdf = add $withPdf 1 }}{{ end }}
-  {{ with .key_quotes }}{{ $totalQuotes = add $totalQuotes (len .) }}{{ end }}
+  {{ with .pages }}
+    {{ $totalPages = add $totalPages (sub .end .start) }}
+  {{ end }}
+  {{ $totalSegments = add $totalSegments .segment_count }}
 {{ end }}
 
 {{ partial "list-header.html" (dict
   "page" .
   "icon" "documents"
   "title" "Depositions"
-  "description" "Sworn testimony from civil lawsuits, internal investigations, and legal proceedings involving St. Clair County Sheriff's Department personnel."
+  "description" "Sworn testimony from civil lawsuits and legal proceedings. Full transcripts searchable by keyword, topic, and page."
   "count" (len $depositions)
   "count_label" "Depositions"
 ) }}
@@ -36,17 +52,94 @@
   {{ if $depositions }}
 
   {{/* Stats bar */}}
-  {{ partial "case-file/stats-bar.html" (dict "stats" (slice
-    (dict "value" (len $depositions) "label" "Total" "color" "blue")
-    (dict "value" $withPdf "label" "PDFs Available" "color" "green")
-    (dict "value" $totalQuotes "label" "Key Quotes" "color" "purple")
-  )) }}
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+    <div class="bg-white rounded-xl border border-slate-200 p-4 text-center">
+      <div class="text-3xl font-bold text-navy">{{ len $depositions }}</div>
+      <div class="text-sm text-slate-500">Depositions</div>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-4 text-center">
+      <div class="text-3xl font-bold text-amber-600">{{ $totalPages }}</div>
+      <div class="text-sm text-slate-500">Pages</div>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-4 text-center">
+      <div class="text-3xl font-bold text-purple-600">{{ $totalSegments | lang.FormatNumber 0 }}</div>
+      <div class="text-sm text-slate-500">Q&A Exchanges</div>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-4 text-center">
+      <div class="text-3xl font-bold text-green-600">
+        <svg class="w-8 h-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <div class="text-sm text-slate-500">Searchable</div>
+    </div>
+  </div>
 
-  {{/* Depositions Grid */}}
-  <div class="grid gap-6 md:grid-cols-2">
-    {{ range $depositions }}
-    {{ partial "deposition/card.html" (dict "key" .key "data" .) }}
-    {{ end }}
+  {{/* Depositions Table */}}
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full" style="margin: 0;">
+        <thead>
+          <tr class="bg-slate-50 border-b border-slate-200">
+            <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Witness</th>
+            <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
+            <th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Case</th>
+            <th class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">Pages</th>
+            <th class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">Segments</th>
+            <th class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">View</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {{ range $depositions }}
+          <tr class="hover:bg-amber-50/50 transition-colors cursor-pointer" onclick="window.location='/depositions/{{ .slug }}/'">
+            <td class="px-6 py-4">
+              {{ with .deponent }}
+              {{ $personSlug := .id | default (.name | lower | replaceRE "\\s+" "-" | replaceRE "[^a-z0-9-]" "") }}
+              <a href="/people/{{ $personSlug }}/" onclick="event.stopPropagation()" class="font-semibold text-navy hover:text-amber-600 transition-colors">{{ .name }}</a>
+              {{ else }}
+              <span class="text-slate-400">—</span>
+              {{ end }}
+            </td>
+            <td class="px-6 py-4 text-sm text-slate-600">
+              {{ with .deponent }}{{ .role }}{{ else }}—{{ end }}
+            </td>
+            <td class="px-6 py-4">
+              <span class="text-sm text-slate-700">{{ .title }}</span>
+              {{ with .case_number }}
+              <span class="block text-xs text-slate-400 mt-0.5">{{ . }}</span>
+              {{ end }}
+            </td>
+            <td class="px-6 py-4 text-center">
+              {{ with .pages }}
+              <span class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-medium">
+                {{ sub .end .start }}
+              </span>
+              {{ else }}
+              <span class="text-slate-400">—</span>
+              {{ end }}
+            </td>
+            <td class="px-6 py-4 text-center">
+              {{ if .segment_count }}
+              <span class="inline-flex items-center px-2 py-1 rounded bg-purple-100 text-purple-700 text-xs font-medium">
+                {{ .segment_count }}
+              </span>
+              {{ else }}
+              <span class="text-slate-400">—</span>
+              {{ end }}
+            </td>
+            <td class="px-6 py-4 text-right">
+              <span class="inline-flex items-center gap-1 text-amber-600 font-medium text-sm">
+                <span>Read</span>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </td>
+          </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
   </div>
 
   {{ else }}

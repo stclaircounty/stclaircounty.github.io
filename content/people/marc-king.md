@@ -8,7 +8,7 @@ status: "active"
 
 ## Role in Key Incidents
 
-Deputy Marc King is a deputy with the St. Clair County Sheriff's Office. He is the brother of Sheriff Mat King.
+Deputy Marc King is a deputy with the St. Clair County Sheriff's Office. He is the brother of {{< person "mat-king" >}}.
 
 ## November 6, 2022 OWI Arrest
 
@@ -16,7 +16,7 @@ On November 6, 2022, Deputy Marc King was arrested for Operating While Intoxicat
 
 - Arrested for drunk driving while off-duty
 - Transported to Lapeer County Jail (not the St. Clair County Jail)
-- His brother, Sheriff Mat King, was notified the same day
+- His brother, {{< person "mat-king" >}}, was notified the same day
 - The subsequent investigation was handled internally by the St. Clair County Sheriff's Office
 
 ## Concerns Raised

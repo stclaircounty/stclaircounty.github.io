@@ -1,0 +1,52 @@
+{{/*
+  Legal Citation Shortcode - For case citations and legal references
+
+  Usage:
+    {{< legal-cite case="jones-v-scc" >}}                     - Case from database
+    {{< legal-cite statute="42 U.S.C. § 1983" >}}             - Statute reference
+    {{< legal-cite case="jones-v-scc" section="1983" >}}      - Case with statute
+
+  Parameters:
+    - case: Case slug from litigation data (optional)
+    - statute: Statute citation text (optional)
+    - section: Specific section reference (optional)
+    - url: External URL for case or statute (optional)
+*/}}
+
+{{ $caseSlug := .Get "case" }}
+{{ $statute := .Get "statute" }}
+{{ $section := .Get "section" }}
+{{ $url := .Get "url" }}
+
+{{ if $caseSlug }}
+  {{ $case := index site.Data.litigation $caseSlug }}
+  {{ if $case }}
+  <span class="inline-flex items-center gap-1.5 not-prose">
+    <svg class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+    </svg>
+    <a href="/litigation/{{ $caseSlug }}/" class="text-amber-600 hover:text-amber-700 font-medium italic">{{ $case.short_title | default $case.title }}</a>
+    {{ with $case.case_number }}
+    <span class="text-slate-500 text-sm">({{ . }})</span>
+    {{ end }}
+    {{ with $section }}
+    <span class="text-slate-400">|</span>
+    <span class="text-sm text-slate-600">{{ . }}</span>
+    {{ end }}
+  </span>
+  {{ else }}
+  <span class="text-slate-500">{{ $caseSlug | humanize }}</span>
+  {{ end }}
+{{ else if $statute }}
+  {{/* Standalone statute citation */}}
+  <span class="inline-flex items-center gap-1.5 not-prose">
+    <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    </svg>
+    {{ if $url }}
+    <a href="{{ $url }}" target="_blank" rel="noopener" class="text-slate-700 hover:text-amber-600 font-medium">{{ $statute }}</a>
+    {{ else }}
+    <span class="text-slate-700 font-medium">{{ $statute }}</span>
+    {{ end }}
+  </span>
+{{ end }}

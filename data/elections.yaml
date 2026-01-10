@@ -1,66 +1,352 @@
 # St. Clair County Public Accountability Project - Elections Database
-# Last Updated: 2026-01-09
+# Last Updated: 2026-01-10
 #
 # Tracks election history for elected officials.
 # Access: site.Data.elections["2020-sheriff-general"]
 #
-# Each election record includes candidates, results, and vote counts.
+# Sources:
+# - St. Clair County Clerk's Office (stclaircountyclerk.org)
+# - Enhanced Voting (app.enhancedvoting.com)
+# - WPHM, WGRT, WBTI local news coverage
+# - Ballotpedia
+# - Sanilac Broadcasting Company
 
 # =============================================================================
-# 2020 ELECTIONS
+# HISTORICAL CONTEXT - PREVIOUS SHERIFFS
 # =============================================================================
 
-2020-sheriff-general:
-  date: 2020-11-03
+# Tim Donnellon served as Sheriff 2009-2020 (elected November 2008)
+# E. Dan Lane served as Sheriff 1988-2007
+# See stclaircounty.org/Offices/sheriff/PastSheriffs.aspx for full history
+
+# =============================================================================
+# 2008 ELECTIONS - Tim Donnellon
+# =============================================================================
+
+2008-sheriff-general:
+  date: 2008-11-04
   type: general
   position: Sheriff
   jurisdiction: St. Clair County
+  state: Michigan
   candidates:
-    mat-king:
+    tim-donnellon:
+      name: Tim Donnellon
       party: Republican
       votes: null
       percentage: null
       incumbent: false
       result: won
-    # Add opponents as they're researched
+  winner: tim-donnellon
   notes: |
-    Mat King elected Sheriff of St. Clair County.
-  sources: []
+    Tim Donnellon elected Sheriff of St. Clair County, succeeding E. Dan Lane
+    who served from 1988-2007. Donnellon had served in St. Clair County as
+    deputy, detective, sergeant, and lieutenant before his election.
+    Term began January 2009.
+  sources:
+    - title: "Sheriff Donnellon Law Enforcement Fund"
+      url: "https://stclairfoundation.org/fund/sheriff-donnellon-law-enforcement-fund/"
+    - title: "Past Sheriffs - St. Clair County"
+      url: "https://www.stclaircounty.org/Offices/sheriff/PastSheriffs.aspx"
+
+# =============================================================================
+# 2012 ELECTIONS - Tim Donnellon Re-election
+# =============================================================================
+
+2012-sheriff-general:
+  date: 2012-11-06
+  type: general
+  position: Sheriff
+  jurisdiction: St. Clair County
+  state: Michigan
+  candidates:
+    tim-donnellon:
+      name: Tim Donnellon
+      party: Republican
+      votes: null
+      percentage: null
+      incumbent: true
+      result: won
+  winner: tim-donnellon
+  notes: |
+    Tim Donnellon re-elected as St. Clair County Sheriff.
+  sources:
+    - title: "St. Clair County Archived Election Results"
+      url: "https://www.stclairco.com/236/Archived-Election-Results"
+
+# =============================================================================
+# 2016 ELECTIONS - Tim Donnellon Re-election
+# =============================================================================
+
+2016-sheriff-general:
+  date: 2016-11-08
+  type: general
+  position: Sheriff
+  jurisdiction: St. Clair County
+  state: Michigan
+  candidates:
+    tim-donnellon:
+      name: Tim Donnellon
+      party: Republican
+      votes: null
+      percentage: null
+      incumbent: true
+      result: won
+  winner: tim-donnellon
+  notes: |
+    Tim Donnellon re-elected to his third term as St. Clair County Sheriff.
+    This would be his final term; he announced in early 2020 he would not
+    seek re-election and later retired early in November 2020.
+  sources:
+    - title: "St. Clair County Archived Election Results"
+      url: "https://www.stclairco.com/236/Archived-Election-Results"
+
+# =============================================================================
+# 2020 ELECTIONS - Mat King First Term
+# =============================================================================
 
 2020-sheriff-primary:
   date: 2020-08-04
   type: primary
   position: Sheriff
   jurisdiction: St. Clair County
+  state: Michigan
   party: Republican
   candidates:
     mat-king:
+      name: Mat King
       votes: null
-      percentage: null
+      percentage: 100
       incumbent: false
       result: won
-  notes: null
-  sources: []
+      unopposed: true
+  winner: mat-king
+  notes: |
+    Mat King ran unopposed in the Republican primary after incumbent
+    Sheriff Tim Donnellon announced he would not seek re-election.
+    No Democratic candidates filed for the position.
+  sources:
+    - title: "Local sheriff's races begin to shape up"
+      url: "https://www.wphm.net/2020/06/24/local-sheriffs-races-begin-to-shape-up/"
+
+2020-sheriff-general:
+  date: 2020-11-03
+  type: general
+  position: Sheriff
+  jurisdiction: St. Clair County
+  state: Michigan
+  candidates:
+    mat-king:
+      name: Mat King
+      party: Republican
+      votes: null
+      percentage: 100
+      incumbent: false
+      result: won
+      unopposed: true
+  winner: mat-king
+  total_votes: null
+  notes: |
+    Mat King elected Sheriff of St. Clair County unopposed. No Democratic
+    candidate ran for the position. King had served with the Sheriff's Office
+    since 1998, working his way up to the rank of Captain.
+
+    Following outgoing Sheriff Tim Donnellon's early retirement on November 8,
+    2020 (to accept a position with the Michigan Gaming Control Board), King
+    was appointed interim Sheriff by a panel consisting of Prosecutor Mike
+    Wendling, Probate Judge Elwood Brown, and County Clerk Jay DeBoyer, per
+    Michigan statute. His elected term officially began January 1, 2021.
+  context:
+    predecessor: Tim Donnellon
+    predecessor_reason: Retired early to join Michigan Gaming Control Board
+    interim_appointment:
+      date: 2020-11-08
+      appointed_by:
+        - Mike Wendling (Prosecutor)
+        - Elwood Brown (Probate Judge)
+        - Jay DeBoyer (County Clerk)
+    term_start: 2021-01-01
+  sources:
+    - title: "Sheriff-elect Mat King to fill remainder of Donnellon's term"
+      url: "https://www.wbti.com/2020/11/12/sheriff-elect-mat-king-to-fill-remainder-of-donnellons-term/"
+    - title: "Mat King Appointed Sheriff"
+      url: "https://wgrt.com/mat-king-appointed-sheriff/"
+    - title: "St. Clair County Sheriff retires early"
+      url: "http://www.sanilacbroadcasting.com/2020/10/21/st-clair-county-sheriff-retires-early/"
 
 # =============================================================================
-# 2024 ELECTIONS
+# 2024 ELECTIONS - Mat King Re-election
 # =============================================================================
+
+2024-sheriff-primary:
+  date: 2024-08-06
+  type: primary
+  position: Sheriff
+  jurisdiction: St. Clair County
+  state: Michigan
+  party: Republican
+  candidates:
+    mat-king:
+      name: Mathew King
+      votes: 13584
+      percentage: 55.9
+      incumbent: true
+      result: won
+    warren-head:
+      name: Warren L. Head
+      votes: 10725
+      percentage: 44.1
+      incumbent: false
+      result: lost
+      background: |
+        Yale Police Chief. 30 years as St. Clair County deputy (1978-2008),
+        11 years with Yale Police, 15 years as US Marshals Service district
+        security officer, 4 years as US Air Force policeman. Marysville native.
+        Appointed Yale Police Chief in late 2022.
+  winner: mat-king
+  vote_margin: 2856
+  total_votes: 24309
+  notes: |
+    Incumbent Sheriff Mat King defeated challenger Warren Head in the
+    Republican primary. Head, the Yale Police Chief, cited concerns about
+    departmental conduct and specifically referenced "the situation
+    surrounding the lawsuit by former Sheriff's Lieutenant Scott Jones"
+    as motivation for his candidacy. No Democratic candidate filed for
+    the position, making the primary effectively the general election.
+  sources:
+    - title: "King to remain Sheriff, Bohm loses primary"
+      url: "https://www.wphm.net/2024/08/07/king-to-remain-sheriff-bohm-loses-primary/"
+    - title: "St. Clair County Primary Election: Results & Key Highlights"
+      url: "https://wgrt.com/st-clair-county-primary-election-results-key-highlights/"
+    - title: "Despite primary defeat, write-in candidate Warren Head challenges incumbent"
+      url: "https://www.sanilacbroadcasting.com/2024/09/25/despite-primary-defeat-write-in-candidate-warren-head-challenges-incumbent-for-st-clair-county-sheriff/"
 
 2024-sheriff-general:
   date: 2024-11-05
   type: general
   position: Sheriff
   jurisdiction: St. Clair County
+  state: Michigan
   candidates:
     mat-king:
+      name: Mathew King
       party: Republican
       votes: null
       percentage: null
       incumbent: true
       result: won
+    warren-head:
+      name: Warren L. Head
+      party: Write-In
+      votes: null
+      percentage: null
+      incumbent: false
+      result: lost
+      campaign_type: write-in
+  winner: mat-king
   notes: |
-    Mat King re-elected as Sheriff despite ongoing litigation and accountability concerns.
-  sources: []
+    Mat King re-elected as Sheriff despite ongoing litigation (Jones v.
+    St. Clair County) and accountability concerns. Warren Head, who lost
+    the August primary by 2,856 votes, continued as a write-in candidate
+    in the general election. Head had specifically cited the Jones lawsuit
+    and concerns about departmental conduct as reasons for his candidacy.
+
+    This election occurred while federal litigation alleging First Amendment
+    retaliation was pending against Sheriff King and other department officials.
+  context:
+    litigation_pending:
+      - case: "Jones v. St. Clair County"
+        status: "Qualified immunity denied; case proceeding"
+    challenger_motivation: |
+      Warren Head stated he became aware of issues "that were not proper"
+      and cited the Jones lawsuit as an example of his concerns.
+  sources:
+    - title: "St. Clair County Sheriff 2024 General Election results"
+      url: "https://www.clickondetroit.com/decision-2024/2024/10/30/st-clair-county-sheriff-2024-general-election-results/"
+    - title: "Enhanced Voting - St. Clair County Sheriff Results"
+      url: "https://app.enhancedvoting.com/results/public/st.-clair-county-mi/elections/November2024GeneralElection/ballot-items/01000000-912e-8af0-6c2f-08dcea1d2a38"
+
+# =============================================================================
+# CANDIDATE PROFILES
+# =============================================================================
+
+_candidates:
+  mat-king:
+    full_name: Mathew King
+    common_name: Mat King
+    party: Republican
+    career:
+      - role: Sheriff
+        department: St. Clair County Sheriff's Office
+        start: 2020-11-08
+        status: current
+      - role: Captain
+        department: St. Clair County Sheriff's Office
+        end: 2020
+      - role: Various ranks
+        department: St. Clair County Sheriff's Office
+        start: 1998
+        notes: "Worked way up from entry level to Captain"
+    campaign_website: "https://www.matkingforsheriff.org/home"
+    elections:
+      - 2020-sheriff-primary
+      - 2020-sheriff-general
+      - 2024-sheriff-primary
+      - 2024-sheriff-general
+
+  tim-donnellon:
+    full_name: Tim Donnellon
+    party: Republican
+    career:
+      - role: Sheriff
+        department: St. Clair County Sheriff's Office
+        start: 2009-01-01
+        end: 2020-11-08
+        notes: "Retired early to join Michigan Gaming Control Board"
+      - role: Lieutenant
+        department: St. Clair County Sheriff's Office
+        end: 2008
+      - role: Various ranks (Deputy, Detective, Sergeant)
+        department: St. Clair County Sheriff's Office
+        notes: "Nearly 33 years of service total"
+    elections:
+      - 2008-sheriff-general
+      - 2012-sheriff-general
+      - 2016-sheriff-general
+    post_office:
+      position: Michigan Gaming Control Board
+      start: 2020-11-09
+
+  warren-head:
+    full_name: Warren L. Head
+    party: Republican
+    career:
+      - role: Police Chief
+        department: Yale Police Department
+        start: 2022
+        status: current
+      - role: Deputy
+        department: St. Clair County Sheriff's Office
+        start: 1978
+        end: 2008
+        duration: "30 years"
+      - role: District Security Officer
+        department: US Marshals Service
+        duration: "15 years"
+      - role: Air Policeman
+        department: US Air Force
+        start: 1967
+        end: 1970
+        duration: "4 years"
+    hometown: Marysville, Michigan
+    campaign_website: "https://head4sheriff.com/"
+    campaign_themes:
+      - Departmental accountability
+      - Concerns about Jones v. St. Clair County lawsuit
+      - Transparency in sheriff's office operations
+    elections:
+      - 2024-sheriff-primary
+      - 2024-sheriff-general
 
 # =============================================================================
 # TEMPLATE FOR ADDING ELECTIONS
@@ -71,33 +357,56 @@
 #   type: primary | general | special | recall
 #   position: Sheriff | County Commissioner | etc.
 #   jurisdiction: St. Clair County
+#   state: Michigan
 #   party: Republican | Democrat | null (for general)
 #   candidates:
 #     person-key:
-#       party: Republican | Democrat | Independent
+#       name: Full Name
+#       party: Republican | Democrat | Independent | Write-In
 #       votes: 12345
 #       percentage: 52.3
 #       incumbent: true | false
 #       result: won | lost
+#       unopposed: true | false (optional)
 #     opponent-key:
+#       name: Opponent Name
 #       party: Democrat
 #       votes: 10000
 #       percentage: 47.7
 #       incumbent: false
 #       result: lost
+#   winner: person-key
+#   vote_margin: 2345 (optional)
+#   total_votes: 22345 (optional)
 #   notes: |
 #     Any relevant context about the election.
 #   sources:
 #     - title: "Election Results"
 #       url: "https://..."
-#       date: 2024-11-06
 
 # =============================================================================
 # METADATA
 # =============================================================================
 
 _meta:
-  total_elections: 3
+  total_elections: 8
   positions_tracked:
     - Sheriff
-  last_updated: 2026-01-09
+  years_covered:
+    start: 2008
+    end: 2024
+  sheriffs_tracked:
+    - mat-king
+    - tim-donnellon
+  data_sources:
+    - name: St. Clair County Clerk's Office
+      url: https://stclaircountyclerk.org/Page/Election_Results
+    - name: Enhanced Voting
+      url: https://app.enhancedvoting.com/results/public/st.-clair-county-mi/
+    - name: Ballotpedia
+      url: https://ballotpedia.org/St._Clair_County,_Michigan,_elections,_2024
+  last_updated: 2026-01-10
+  notes: |
+    Vote counts for historical elections (2008-2016) require FOIA request
+    to St. Clair County Clerk's Office for archived election data.
+    2024 primary results are from unofficial election night reporting.

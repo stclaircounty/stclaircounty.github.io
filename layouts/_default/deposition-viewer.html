@@ -1,0 +1,329 @@
+{{ define "main" }}
+{{/* Get deposition data from the folder structure */}}
+{{ $slug := .Params.deposition_slug }}
+{{ $depoFolder := index site.Data.depositions $slug }}
+{{ $meta := $depoFolder.index.deposition }}
+{{ $pages := $depoFolder.pages }}
+
+{{/* Sort pages by page number */}}
+{{ $sortedPages := slice }}
+{{ range $pageNum, $pageData := $pages }}
+  {{ $sortedPages = $sortedPages | append (merge $pageData (dict "pageNum" $pageNum)) }}
+{{ end }}
+{{ $sortedPages = sort $sortedPages "page" }}
+
+{{/* Count total turns and collect topics */}}
+{{ $totalTurns := 0 }}
+{{ $allTopics := slice }}
+{{ range $sortedPages }}
+  {{ with .turns }}
+    {{ $totalTurns = add $totalTurns (len .) }}
+    {{ range . }}
+      {{ with .topics }}
+        {{ range . }}
+          {{ $allTopics = $allTopics | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $uniqueTopics := uniq $allTopics | sort }}
+
+{{/* Build badges for page header */}}
+{{ $badges := slice }}
+{{ with $meta.witness }}
+  {{ $badges = $badges | append (dict "label" .name "type" "neutral") }}
+{{ end }}
+
+{{/* Build stats for page header */}}
+{{ $stats := slice }}
+{{ $stats = $stats | append (dict "value" (len $sortedPages) "label" "Pages") }}
+{{ $stats = $stats | append (dict "value" $totalTurns "label" "Exchanges") }}
+
+{{/* Page Header - using same partial as deposition summary */}}
+{{ partial "page-header.html" (dict
+  "page" .
+  "icon" "documents"
+  "section" "Depositions"
+  "title" $meta.title
+  "subtitle" $meta.witness.role
+  "badges" $badges
+  "stats" $stats
+) }}
+
+<div class="bg-slate-50 min-h-screen">
+  {{/* Sticky Navigation Bar */}}
+  <div class="sticky top-16 z-40 bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex items-center justify-between gap-4">
+        {{/* Witness info */}}
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-amber-100 rounded-lg">
+            <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-navy text-sm">{{ $meta.witness.name }}</p>
+            <p class="text-xs text-slate-500">{{ $meta.witness.role }}</p>
+          </div>
+        </div>
+
+        {{/* Page navigation */}}
+        <div class="flex items-center gap-2">
+          <label for="page-select" class="text-sm text-slate-500 hidden sm:inline">Page:</label>
+          <select id="page-select" onchange="jumpToPage(this.value)" class="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white focus:border-amber-500 focus:ring-1 focus:ring-amber-500">
+            {{ range $sortedPages }}
+            <option value="page-{{ .page }}">{{ .page }}</option>
+            {{ end }}
+          </select>
+        </div>
+
+        {{ if $uniqueTopics }}
+        {{/* Topic filter */}}
+        <div class="flex items-center gap-2">
+          <label for="topic-filter" class="text-sm text-slate-500 hidden sm:inline">Topic:</label>
+          <select id="topic-filter" onchange="filterByTopic(this.value)" class="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white focus:border-amber-500 focus:ring-1 focus:ring-amber-500">
+            <option value="">All topics</option>
+            {{ range $uniqueTopics }}
+            <option value="{{ . }}">{{ . | humanize }}</option>
+            {{ end }}
+          </select>
+          <span id="filter-count" class="text-xs text-slate-500 hidden"></span>
+        </div>
+        {{ end }}
+
+        {{/* Search link */}}
+        <a href="/search/?q={{ $meta.witness.name | urlquery }}" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span class="hidden sm:inline">Search</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {{/* Transcript Content */}}
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {{/* Info Card */}}
+    <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div>
+          <p class="text-xs text-slate-500 uppercase tracking-wide mb-1">Witness</p>
+          <p class="font-semibold text-navy">{{ $meta.witness.name }}</p>
+          <p class="text-sm text-slate-600">{{ $meta.witness.role }}</p>
+        </div>
+        <div>
+          <p class="text-xs text-slate-500 uppercase tracking-wide mb-1">Jurisdiction</p>
+          <p class="font-semibold text-navy">{{ $meta.jurisdiction.county }} County, {{ $meta.jurisdiction.state }}</p>
+        </div>
+        <div>
+          <p class="text-xs text-slate-500 uppercase tracking-wide mb-1">Source</p>
+          <p class="text-sm text-slate-600">{{ $meta.source.file }}</p>
+          <p class="text-xs text-slate-400 font-mono mt-1">SHA256: {{ $meta.source.sha256 | truncate 20 }}...</p>
+        </div>
+      </div>
+    </div>
+
+    {{/* Transcript Pages */}}
+    <div class="space-y-6" id="transcript">
+      {{ range $sortedPages }}
+      {{ $pageData := . }}
+      <div id="page-{{ .page }}" class="transcript-page bg-white rounded-xl border border-slate-200 overflow-hidden scroll-mt-32">
+        {{/* Page Header */}}
+        <div class="bg-slate-50 border-b border-slate-200 px-6 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="text-lg font-bold text-navy">Page {{ .page }}</span>
+            {{ with .turns }}
+            <span class="text-sm text-slate-500">({{ len . }} exchanges)</span>
+            {{ end }}
+          </div>
+          <button onclick="copyPageLink({{ .page }})" class="text-sm text-slate-500 hover:text-amber-600 flex items-center gap-1 transition-colors">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            <span class="hidden sm:inline">Copy link</span>
+          </button>
+        </div>
+
+        {{/* Page Content */}}
+        <div class="p-6">
+          {{ range .turns }}
+          <div id="{{ .anchor }}" class="transcript-turn mb-4 scroll-mt-32 hover:bg-amber-50/50 -mx-2 px-2 py-1 rounded transition-colors" data-topics="{{ with .topics }}{{ delimit . "," }}{{ end }}">
+            {{ if eq .speaker "Q" }}
+            {{/* Question */}}
+            <div class="flex gap-3">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <span class="text-sm font-bold text-blue-600">Q</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-blue-600 mb-1">Question</p>
+                <p class="text-slate-700 leading-relaxed">{{ .text }}</p>
+              </div>
+            </div>
+            {{ else if eq .speaker "A" }}
+            {{/* Answer */}}
+            <div class="flex gap-3">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                <span class="text-sm font-bold text-green-600">A</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-green-600 mb-1">{{ $meta.witness.name }}</p>
+                <p class="text-slate-700 leading-relaxed">{{ .text }}</p>
+              </div>
+            </div>
+            {{ else }}
+            {{/* Meta/Other content */}}
+            <div class="text-slate-600 text-sm leading-relaxed whitespace-pre-wrap font-mono bg-slate-50 rounded-lg p-4 overflow-x-auto">{{ .text }}</div>
+            {{ end }}
+
+            {{/* Topics */}}
+            {{ with .topics }}
+            <div class="mt-2 ml-11 flex flex-wrap gap-1">
+              {{ range . }}
+              <span class="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded">{{ . | humanize }}</span>
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    {{/* Back to top */}}
+    <div class="mt-8 text-center">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-amber-600 transition-colors">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+        Back to top
+      </button>
+    </div>
+
+    {{/* Other Depositions */}}
+    <div class="mt-12 pt-8 border-t border-slate-200">
+      <h2 class="text-lg font-bold text-navy mb-4">Other Depositions</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        {{ range $otherSlug, $otherFolder := site.Data.depositions }}
+          {{ if and (reflect.IsMap $otherFolder) (ne $otherSlug $slug) }}
+            {{ with $otherFolder.index.deposition }}
+            <a href="/depositions/{{ $otherSlug }}/" class="flex items-center gap-3 p-4 bg-white rounded-lg border border-slate-200 hover:border-amber-500 hover:shadow transition-all">
+              <div class="p-2 bg-slate-100 rounded-lg">
+                <svg class="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div>
+                <p class="font-medium text-navy">{{ .witness.name }}</p>
+                <p class="text-sm text-slate-500">{{ .witness.role }}</p>
+              </div>
+            </a>
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function jumpToPage(pageId) {
+  const el = document.getElementById(pageId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+    history.replaceState(null, null, '#' + pageId);
+  }
+}
+
+function copyPageLink(pageNum) {
+  const url = window.location.origin + window.location.pathname + '#page-' + pageNum;
+  navigator.clipboard.writeText(url).then(() => {
+    // Could add a toast notification here
+    alert('Link copied!');
+  });
+}
+
+function filterByTopic(topic) {
+  const turns = document.querySelectorAll('.transcript-turn');
+  const pages = document.querySelectorAll('.transcript-page');
+  const filterCount = document.getElementById('filter-count');
+  let visibleCount = 0;
+
+  turns.forEach(turn => {
+    const turnTopics = turn.dataset.topics || '';
+    if (!topic || turnTopics.split(',').includes(topic)) {
+      turn.style.display = '';
+      visibleCount++;
+    } else {
+      turn.style.display = 'none';
+    }
+  });
+
+  // Hide pages that have no visible turns
+  pages.forEach(page => {
+    const visibleTurns = page.querySelectorAll('.transcript-turn:not([style*="display: none"])');
+    if (visibleTurns.length === 0) {
+      page.style.display = 'none';
+    } else {
+      page.style.display = '';
+    }
+  });
+
+  // Update filter count
+  if (topic && filterCount) {
+    filterCount.textContent = `(${visibleCount} matches)`;
+    filterCount.classList.remove('hidden');
+  } else if (filterCount) {
+    filterCount.classList.add('hidden');
+  }
+
+  // Update URL with filter
+  const url = new URL(window.location);
+  if (topic) {
+    url.searchParams.set('topic', topic);
+  } else {
+    url.searchParams.delete('topic');
+  }
+  history.replaceState(null, null, url);
+}
+
+// Update page selector on scroll
+document.addEventListener('DOMContentLoaded', function() {
+  const pages = document.querySelectorAll('.transcript-page');
+  const select = document.getElementById('page-select');
+  const topicSelect = document.getElementById('topic-filter');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const pageId = entry.target.id;
+        select.value = pageId;
+      }
+    });
+  }, { rootMargin: '-100px 0px -50% 0px' });
+
+  pages.forEach(page => observer.observe(page));
+
+  // Handle URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const topicParam = urlParams.get('topic');
+  if (topicParam && topicSelect) {
+    topicSelect.value = topicParam;
+    filterByTopic(topicParam);
+  }
+
+  // Handle direct link to page/anchor
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }
+});
+</script>
+{{ end }}

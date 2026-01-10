@@ -2,42 +2,188 @@
 {{ $personKey := .File.ContentBaseName }}
 {{ $person := index .Site.Data.people $personKey }}
 
-{{/* Build badges for page header */}}
-{{ $badges := slice }}
-{{ with $person.rank }}
-  {{ $badges = $badges | append (dict "label" . "type" "primary") }}
+{{/* Generate initials */}}
+{{ $initials := "" }}
+{{ $nameParts := split $person.name " " }}
+{{ range $nameParts }}
+  {{ $initials = printf "%s%s" $initials (substr . 0 1) }}
 {{ end }}
-{{ with $person.status }}
-  {{ $type := "neutral" }}
-  {{ if eq . "active" }}{{ $type = "success" }}{{ end }}
-  {{ if eq . "resigned" }}{{ $type = "warning" }}{{ end }}
-  {{ if eq . "terminated" }}{{ $type = "danger" }}{{ end }}
-  {{ if eq . "retired" }}{{ $type = "warning" }}{{ end }}
-  {{ $badges = $badges | append (dict "label" (. | title) "type" $type "icon" true) }}
-{{ end }}
-{{ if eq $person.credibility "compromised" }}
-  {{ $badges = $badges | append (dict "label" "Credibility Compromised" "type" "danger") }}
+
+{{/* Category-based icon styling */}}
+{{ $iconBg := "from-slate-700 to-slate-800" }}
+{{ $ringColor := "ring-slate-500/50" }}
+{{ if eq $person.category "law-enforcement" }}
+  {{ $iconBg = "from-blue-700 to-blue-900" }}
+  {{ $ringColor = "ring-blue-500/50" }}
+{{ else if eq $person.category "legal" }}
+  {{ $iconBg = "from-purple-700 to-purple-900" }}
+  {{ $ringColor = "ring-purple-500/50" }}
+{{ else if eq $person.category "judiciary" }}
+  {{ $iconBg = "from-amber-700 to-amber-900" }}
+  {{ $ringColor = "ring-amber-500/50" }}
 {{ end }}
 
 <article>
-  {{ partial "page-header.html" (dict
-    "page" .
-    "icon" "person"
-    "section" "People"
-    "badges" $badges
-    "title" (default .Title $person.name)
-  ) }}
+  {{/* Styled Hero Header - matching list-header style */}}
+  <header class="relative overflow-hidden">
+    {{ partial "header-bg.html" . }}
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {{/* Breadcrumb */}}
+      <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
+        <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <a href="/people/" class="text-slate-400 hover:text-white transition-colors">People</a>
+        <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span class="text-white font-medium">{{ $person.name }}</span>
+      </nav>
+
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        {{/* Left side - Icon, Name, Role */}}
+        <div class="flex items-start gap-6">
+          {{/* Avatar with initials */}}
+          <div class="hidden sm:flex flex-shrink-0 w-20 h-20 rounded-xl bg-gradient-to-br {{ $iconBg }} ring-4 {{ $ringColor }} shadow-2xl items-center justify-center">
+            <span class="text-2xl font-bold text-white">{{ $initials }}</span>
+          </div>
+
+          <div>
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3" style="margin-top: 0;">{{ default .Title $person.name }}</h1>
+            <div class="flex flex-wrap items-center gap-3">
+              {{ with $person.role }}
+              <span class="text-lg text-slate-300">{{ . }}</span>
+              {{ end }}
+              {{ with $person.department }}
+              <span class="text-slate-500">•</span>
+              <span class="text-slate-400">{{ . }}</span>
+              {{ end }}
+            </div>
+            {{ with $person.division }}
+            <p class="text-slate-400 mt-1 mb-0">{{ . }}</p>
+            {{ end }}
+          </div>
+        </div>
+
+        {{/* Right side - Status boxes */}}
+        <div class="flex flex-wrap items-center gap-4">
+          {{/* Status box */}}
+          {{ with $person.status }}
+          {{ $statusBg := "bg-slate-800/50" }}
+          {{ $statusBorder := "border-slate-700" }}
+          {{ $statusText := "text-slate-400" }}
+          {{ if eq . "active" }}
+            {{ $statusBg = "bg-green-900/30" }}
+            {{ $statusBorder = "border-green-700/50" }}
+            {{ $statusText = "text-green-400" }}
+          {{ else if eq . "retired" }}
+            {{ $statusBg = "bg-orange-900/30" }}
+            {{ $statusBorder = "border-orange-700/50" }}
+            {{ $statusText = "text-orange-400" }}
+          {{ else if eq . "terminated" }}
+            {{ $statusBg = "bg-red-900/30" }}
+            {{ $statusBorder = "border-red-700/50" }}
+            {{ $statusText = "text-red-400" }}
+          {{ end }}
+          <div class="text-center px-6 py-3 {{ $statusBg }} rounded-xl border {{ $statusBorder }}">
+            <div class="text-2xl font-bold {{ $statusText }}">{{ . | title }}</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide">Status</div>
+          </div>
+          {{ end }}
+
+          {{/* Credibility warning box */}}
+          {{ if eq $person.credibility "compromised" }}
+          <div class="text-center px-6 py-3 bg-red-900/40 rounded-xl border border-red-600/50">
+            <div class="flex items-center justify-center gap-2 text-red-400">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span class="text-lg font-bold">Compromised</span>
+            </div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide">Credibility</div>
+          </div>
+          {{ end }}
+
+          {{/* Tenure box */}}
+          {{ with $person.start_date }}
+          {{ $years := sub now.Year (time.Format "2006" . | int) }}
+          <div class="text-center px-6 py-3 bg-slate-800/50 rounded-xl border border-slate-700">
+            <div class="text-2xl font-bold text-amber-400">{{ $years }}+</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide">Years</div>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{/* Credibility Warning Banner - prominent alert for compromised officials */}}
+  {{ if eq $person.credibility "compromised" }}
+  {{ $credData := .Site.Data.people_directory.credibility }}
+  {{ $reason := "" }}
+  {{ with $credData }}
+    {{ with .levels.compromised.people }}
+      {{ $reason = index . $personKey }}
+    {{ end }}
+  {{ end }}
+  <div class="bg-gradient-to-r from-red-600 to-red-700 border-b-4 border-red-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 p-2 bg-red-800/50 rounded-lg">
+            <svg class="w-6 h-6 text-red-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-lg" style="margin: 0;">Credibility Compromised</h3>
+            {{ if $reason }}
+            <p class="text-red-100 text-sm mt-1 mb-0">{{ $reason }}</p>
+            {{ else }}
+            <p class="text-red-100 text-sm mt-1 mb-0">This official's credibility has been called into question based on documented evidence.</p>
+            {{ end }}
+          </div>
+        </div>
+        <a href="/credibility-dashboard/" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-red-700 rounded-lg font-semibold hover:bg-red-50 transition-colors shadow-lg flex-shrink-0">
+          <span>View Full Assessment</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+
+  {{/* Two-column content area */}}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     {{ if $person }}
-      {{ partial "person-profile.html" (dict
-        "person" $person
-        "personKey" $personKey
-        "content" .Content
-        "page" .
-      ) }}
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+      {{/* Left Column - Main Content */}}
+      <div class="lg:col-span-8 space-y-8">
+        {{ partial "person-content-main.html" (dict
+          "person" $person
+          "personKey" $personKey
+          "content" .Content
+          "page" .
+        ) }}
+      </div>
+
+      {{/* Right Column - Sticky Sidebar */}}
+      <div class="lg:col-span-4 mt-8 lg:mt-0">
+        <div class="sticky top-36 space-y-6">
+          {{ partial "person-content-sidebar.html" (dict
+            "person" $person
+            "personKey" $personKey
+            "page" .
+          ) }}
+        </div>
+      </div>
+    </div>
     {{ else }}
-      {{/* Fallback if no data in people.yaml - just show page content */}}
+      {{/* Fallback if no data */}}
       <div class="bg-white rounded-lg shadow-card p-8">
         {{ with .Content }}
         <div class="prose prose-lg max-w-none">
@@ -50,8 +196,8 @@
     {{ end }}
 
     {{/* Back link */}}
-    <div class="mt-8 pt-6 border-t border-gray-200">
-      <a href="/people/" class="text-accent hover:text-accent/80 flex items-center gap-2">
+    <div class="mt-12 pt-6 border-t border-gray-200">
+      <a href="/people/" class="text-amber-600 hover:text-amber-700 flex items-center gap-2 font-medium">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>

@@ -1,0 +1,33 @@
+{{/*
+  Expandable/Collapsible Section Shortcode
+
+  Usage:
+    {{< expandable title="Click to expand" >}}
+    Hidden content goes here. Supports **markdown**.
+    {{< /expandable >}}
+
+    {{< expandable title="Open by default" open="true" >}}
+    This section starts expanded.
+    {{< /expandable >}}
+
+  Parameters:
+    - title: The header text (required)
+    - open: Start expanded (optional, default: false)
+*/}}
+
+{{ $title := .Get "title" | default "Details" }}
+{{ $open := .Get "open" | default false }}
+{{ $content := .Inner | markdownify }}
+{{ $id := printf "expandable-%s" (md5 $title) }}
+
+<details class="my-4 bg-white border border-slate-200 rounded-lg overflow-hidden group not-prose" {{ if $open }}open{{ end }}>
+  <summary class="flex items-center justify-between px-4 py-3 cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors select-none">
+    <span class="font-medium text-navy">{{ $title }}</span>
+    <svg class="w-5 h-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </summary>
+  <div class="px-4 py-3 border-t border-slate-200 prose prose-sm max-w-none">
+    {{ $content }}
+  </div>
+</details>

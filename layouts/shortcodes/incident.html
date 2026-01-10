@@ -1,0 +1,87 @@
+{{/*
+  Incident Reference Shortcode - Link to incident pages with optional card display
+
+  Usage:
+    {{< incident "2022-11-06-owi-arrest" >}}           - Simple link
+    {{< incident slug="2022-11-06-owi-arrest" card="true" >}} - Card style with summary
+
+  Parameters:
+    - slug: Incident slug (required, positional or named)
+    - card: Show as card with summary (optional)
+*/}}
+
+{{/* Support both positional and named slug parameter */}}
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $showCard := .Get "card" }}
+
+{{/* Look up incident data */}}
+{{ $incident := index site.Data.incidents $slug }}
+{{ $url := printf "/incidents/%s/" $slug }}
+{{ $hasPage := site.GetPage (printf "/incidents/%s" $slug) }}
+
+{{ if $incident }}
+  {{/* Determine severity styling */}}
+  {{ $severityClass := "bg-slate-100 text-slate-700" }}
+  {{ $severityBg := "bg-slate-100" }}
+  {{ if eq $incident.severity "critical" }}
+    {{ $severityClass = "bg-red-100 text-red-700" }}
+    {{ $severityBg = "bg-red-100" }}
+  {{ else if eq $incident.severity "high" }}
+    {{ $severityClass = "bg-orange-100 text-orange-700" }}
+    {{ $severityBg = "bg-orange-100" }}
+  {{ else if eq $incident.severity "medium" }}
+    {{ $severityClass = "bg-yellow-100 text-yellow-700" }}
+    {{ $severityBg = "bg-yellow-100" }}
+  {{ end }}
+
+  {{ if $showCard }}
+  {{/* Card style with summary */}}
+  <div class="my-4 p-4 bg-white border border-slate-200 rounded-lg hover:border-red-300 hover:shadow-md transition-all not-prose">
+    {{ if $hasPage }}<a href="{{ $url }}" class="block">{{ end }}
+    <div class="flex items-start gap-3">
+      <div class="p-2 rounded-lg flex-shrink-0 {{ $severityBg }}">
+        <svg class="w-5 h-5 {{ if eq $incident.severity "critical" }}text-red-600{{ else if eq $incident.severity "high" }}text-orange-600{{ else }}text-slate-600{{ end }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h4 class="font-semibold text-navy {{ if $hasPage }}group-hover:text-amber-600{{ end }}">{{ $incident.title }}</h4>
+        {{ with $incident.summary }}
+        <p class="text-sm text-slate-600 mt-1 line-clamp-2">{{ . | plainify | truncate 150 }}</p>
+        {{ end }}
+        <div class="flex items-center gap-2 mt-2 text-xs text-slate-500">
+          <span class="px-1.5 py-0.5 rounded {{ $severityClass }}">{{ $incident.severity | title }}</span>
+          {{ with $incident.date }}<span>{{ . | time.Format "Jan 2, 2006" }}</span>{{ end }}
+          {{ with $incident.incident_type }}<span class="px-1.5 py-0.5 bg-slate-100 rounded">{{ . | humanize }}</span>{{ end }}
+        </div>
+      </div>
+      {{ if $hasPage }}
+      <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      {{ end }}
+    </div>
+    {{ if $hasPage }}</a>{{ end }}
+  </div>
+  {{ else }}
+  {{/* Simple inline link */}}
+  {{ if $hasPage }}
+  <a href="{{ $url }}" class="inline-flex items-center gap-1 text-red-600 hover:text-red-700 font-medium">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    {{ $incident.title }}
+  </a>
+  {{ else }}
+  <span class="inline-flex items-center gap-1 text-slate-600 font-medium">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    {{ $incident.title }}
+  </span>
+  {{ end }}
+  {{ end }}
+{{ else }}
+  <span class="text-slate-500" title="Incident not found">{{ $slug | humanize | title }}</span>
+{{ end }}

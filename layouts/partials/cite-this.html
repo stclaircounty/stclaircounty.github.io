@@ -1,0 +1,101 @@
+{{/* Cite This Partial - For researchers and journalists
+     Usage: {{ partial "cite-this.html" (dict "page" . "type" "deposition") }}
+*/}}
+
+{{ $page := .page }}
+{{ $type := .type | default "document" }}
+{{ $title := $page.Title }}
+{{ $url := $page.Permalink }}
+{{ $siteName := $page.Site.Title }}
+{{ $accessDate := now.Format "January 2, 2006" }}
+{{ $publishDate := "" }}
+{{ with $page.Date }}{{ $publishDate = .Format "January 2, 2006" }}{{ end }}
+
+<div class="cite-this no-print bg-slate-50 rounded-xl border border-slate-200 p-5 mt-6">
+  <button onclick="toggleCitation(this)" class="w-full flex items-center justify-between text-left">
+    <h4 class="text-sm font-bold text-navy flex items-center gap-2 mb-0">
+      <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      </svg>
+      Cite This {{ $type | title }}
+    </h4>
+    <svg class="w-4 h-4 text-slate-400 transition-transform cite-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <div class="cite-content hidden mt-4 space-y-4">
+    <!-- APA Style -->
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">APA Style</label>
+      <div class="relative">
+        <code class="block bg-white rounded-lg border border-slate-200 p-3 text-xs text-slate-700 pr-10 break-all">{{ $siteName }}. ({{ with $page.Date }}{{ .Format "2006" }}{{ else }}n.d.{{ end }}). <em>{{ $title }}</em>. Retrieved {{ $accessDate }}, from {{ $url }}</code>
+        <button onclick="copyCitation(this)" class="absolute top-2 right-2 p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Copy">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- MLA Style -->
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">MLA Style</label>
+      <div class="relative">
+        <code class="block bg-white rounded-lg border border-slate-200 p-3 text-xs text-slate-700 pr-10 break-all">"{{ $title }}." <em>{{ $siteName }}</em>, {{ with $publishDate }}{{ . }}, {{ end }}{{ $url }}. Accessed {{ $accessDate }}.</code>
+        <button onclick="copyCitation(this)" class="absolute top-2 right-2 p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Copy">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chicago Style -->
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Chicago Style</label>
+      <div class="relative">
+        <code class="block bg-white rounded-lg border border-slate-200 p-3 text-xs text-slate-700 pr-10 break-all">{{ $siteName }}. "{{ $title }}." Accessed {{ $accessDate }}. {{ $url }}.</code>
+        <button onclick="copyCitation(this)" class="absolute top-2 right-2 p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Copy">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Plain URL -->
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Direct Link</label>
+      <div class="relative">
+        <code class="block bg-white rounded-lg border border-slate-200 p-3 text-xs text-slate-700 pr-10 break-all">{{ $url }}</code>
+        <button onclick="copyCitation(this)" class="absolute top-2 right-2 p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Copy">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleCitation(btn) {
+  const content = btn.nextElementSibling;
+  const chevron = btn.querySelector('.cite-chevron');
+  content.classList.toggle('hidden');
+  chevron.classList.toggle('rotate-180');
+}
+
+function copyCitation(btn) {
+  const code = btn.previousElementSibling;
+  const text = code.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<svg class="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>';
+    setTimeout(() => {
+      btn.innerHTML = originalHTML;
+    }, 2000);
+  });
+}
+</script>

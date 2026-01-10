@@ -1,0 +1,150 @@
+{{ define "main" }}
+{{ $depositions := site.Data.depositions }}
+{{ $people := site.Data.people }}
+
+{{/* Collect all key quotes with context */}}
+{{ $allQuotes := slice }}
+{{ range $depoKey, $depo := $depositions }}
+  {{ if not (hasPrefix $depoKey "_") }}
+    {{ range $depo.key_quotes }}
+      {{ $allQuotes = $allQuotes | append (dict
+        "text" .text
+        "page" .page
+        "topic" .topic
+        "deponent" $depo.deponent.name
+        "deponent_id" $depo.deponent.id
+        "depo_title" $depo.title
+        "depo_key" $depoKey
+        "date" $depo.date
+      ) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Group quotes by topic */}}
+{{ $quotesByTopic := dict }}
+{{ range $allQuotes }}
+  {{ $topic := .topic | default "general" }}
+  {{ $existing := index $quotesByTopic $topic | default slice }}
+  {{ $quotesByTopic = merge $quotesByTopic (dict $topic ($existing | append .)) }}
+{{ end }}
+
+<article>
+  <!-- Header -->
+  <header class="relative overflow-hidden">
+    {{ partial "header-bg.html" . }}
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
+        <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span class="text-white font-medium">{{ .Title }}</span>
+      </nav>
+
+      <div class="flex items-center gap-4 mb-4">
+        <div class="p-3 bg-amber-500/20 rounded-xl">
+          <svg class="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-2" style="margin-top: 0;">{{ .Title }}</h1>
+          <p class="text-slate-300">{{ .Description }}</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap gap-4 mt-8">
+        <div class="bg-slate-800/50 border border-slate-700 rounded-xl px-6 py-3 text-center">
+          <div class="text-2xl font-bold text-amber-400">{{ len $allQuotes }}</div>
+          <div class="text-sm text-slate-400">Key Quotes</div>
+        </div>
+        <div class="bg-slate-800/50 border border-slate-700 rounded-xl px-6 py-3 text-center">
+          {{ $depoCount := 0 }}
+          {{ range $depoKey, $depo := $depositions }}
+            {{ if not (hasPrefix $depoKey "_") }}
+              {{ if $depo.key_quotes }}
+                {{ $depoCount = add $depoCount 1 }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          <div class="text-2xl font-bold text-amber-400">{{ $depoCount }}</div>
+          <div class="text-sm text-slate-400">Depositions</div>
+        </div>
+        <div class="bg-slate-800/50 border border-slate-700 rounded-xl px-6 py-3 text-center">
+          <div class="text-2xl font-bold text-amber-400">{{ len $quotesByTopic }}</div>
+          <div class="text-sm text-slate-400">Topics</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Intro -->
+    <div class="prose prose-lg max-w-none mb-12">
+      {{ .Content }}
+    </div>
+
+    <!-- Topic Navigation -->
+    <div class="flex flex-wrap gap-2 mb-8">
+      {{ range $topic, $quotes := $quotesByTopic }}
+      <a href="#{{ $topic }}" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded-full text-sm font-medium transition-colors">
+        {{ $topic | humanize | title }}
+        <span class="ml-1 text-amber-600">({{ len $quotes }})</span>
+      </a>
+      {{ end }}
+    </div>
+
+    <!-- Quotes by Topic -->
+    {{ range $topic, $quotes := $quotesByTopic }}
+    <section id="{{ $topic }}" class="mb-12 scroll-mt-24">
+      <h2 class="text-2xl font-bold text-navy mb-6 flex items-center gap-3">
+        <span class="p-2 bg-amber-100 rounded-lg">
+          <svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+          </svg>
+        </span>
+        {{ $topic | humanize | title }}
+      </h2>
+
+      <div class="space-y-6">
+        {{ range $quotes }}
+        <blockquote class="bg-white border-l-4 border-amber-400 rounded-r-lg shadow-sm p-6">
+          <p class="text-lg text-slate-700 italic mb-4">"{{ .text }}"</p>
+          <footer class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              {{ $person := index $people .deponent_id }}
+              {{ $hasPage := site.GetPage (printf "/people/%s" .deponent_id) }}
+              {{ if $hasPage }}
+              <a href="/people/{{ .deponent_id }}/" class="font-semibold text-navy hover:text-amber-600 transition-colors">{{ .deponent }}</a>
+              {{ else }}
+              <span class="font-semibold text-navy">{{ .deponent }}</span>
+              {{ end }}
+              <span class="text-slate-400">•</span>
+              <span class="text-slate-500">Page {{ .page }}</span>
+            </div>
+            <a href="/depositions/{{ .depo_key }}/" class="text-sm text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1">
+              {{ .depo_title }}
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </footer>
+        </blockquote>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    <!-- Disclaimer -->
+    <section class="bg-slate-50 rounded-xl p-8 mt-12">
+      <h2 class="text-xl font-bold text-navy mb-4">About These Quotes</h2>
+      <div class="prose prose-slate max-w-none">
+        <p>All quotes on this page are from sworn depositions taken under penalty of perjury. They represent official court records from federal civil litigation.</p>
+        <p>Context matters. These quotes are selected for their significance to the accountability issues documented on this site. For full context, please review the complete deposition transcripts linked from each quote.</p>
+      </div>
+    </section>
+  </div>
+</article>
+{{ end }}

@@ -1,0 +1,135 @@
+{{/*
+  Schema.org Structured Data
+  Generates JSON-LD for different content types
+*/}}
+
+{{/* Person Schema - for /people/ pages */}}
+{{ if eq .Section "people" }}
+{{ $personKey := .File.ContentBaseName }}
+{{ $person := index .Site.Data.people $personKey }}
+{{ if $person }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ $person.name | jsonify }},
+  {{ with $person.role }}"jobTitle": {{ . | jsonify }},{{ end }}
+  {{ with $person.department }}"worksFor": {
+    "@type": "Organization",
+    "name": {{ . | jsonify }}
+  },{{ end }}
+  "url": {{ .Permalink | jsonify }}
+  {{ with $person.description }},"description": {{ . | plainify | truncate 200 | jsonify }}{{ end }}
+}
+</script>
+{{ end }}
+{{ end }}
+
+{{/* LegalCase Schema - for /litigation/ pages */}}
+{{ if eq .Section "litigation" }}
+{{ $caseKey := .File.ContentBaseName }}
+{{ $case := index .Site.Data.litigation $caseKey }}
+{{ if $case }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LegalCase",
+  "name": {{ $case.title | jsonify }},
+  {{ with $case.case_number }}"identifier": {{ . | jsonify }},{{ end }}
+  {{ with $case.court }}"court": {
+    "@type": "Organization",
+    "name": {{ . | jsonify }}
+  },{{ end }}
+  {{ with $case.filed_date }}"datePublished": {{ . | time.Format "2006-01-02" | jsonify }},{{ end }}
+  "url": {{ .Permalink | jsonify }}
+}
+</script>
+{{ end }}
+{{ end }}
+
+{{/* Event Schema - for /timeline/ pages */}}
+{{ if eq .Section "timeline" }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": {{ .Title | jsonify }},
+  "startDate": {{ .Date.Format "2006-01-02" | jsonify }},
+  {{ with .Params.location }}"location": {
+    "@type": "Place",
+    "name": {{ . | jsonify }}
+  },{{ end }}
+  "url": {{ .Permalink | jsonify }}
+  {{ with .Description }},"description": {{ . | plainify | truncate 200 | jsonify }}{{ end }}
+}
+</script>
+{{ end }}
+
+{{/* CreativeWork Schema - for /depositions/ pages */}}
+{{ if eq .Section "depositions" }}
+{{ $depoKey := .File.ContentBaseName }}
+{{ $depo := index .Site.Data.depositions $depoKey }}
+{{ if $depo }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": {{ $depo.title | default .Title | jsonify }},
+  "additionalType": "Deposition",
+  {{ with $depo.date }}"dateCreated": {{ . | time.Format "2006-01-02" | jsonify }},{{ end }}
+  {{ with $depo.deponent }}"about": {
+    "@type": "Person",
+    "name": {{ .name | jsonify }}
+  },{{ end }}
+  "url": {{ .Permalink | jsonify }}
+}
+</script>
+{{ end }}
+{{ end }}
+
+{{/* BreadcrumbList Schema - for all pages with breadcrumbs */}}
+{{ if not .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ .Site.BaseURL | jsonify }}
+    }
+    {{ if .Section }},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ .Section | humanize | title | jsonify }},
+      "item": {{ printf "%s%s/" .Site.BaseURL .Section | jsonify }}
+    }
+    {{ end }}
+    {{ if and .Section (not .IsSection) }},
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ .Title | jsonify }},
+      "item": {{ .Permalink | jsonify }}
+    }
+    {{ end }}
+  ]
+}
+</script>
+{{ end }}
+
+{{/* Organization Schema - for homepage */}}
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ .Site.Title | jsonify }},
+  "url": {{ .Site.BaseURL | jsonify }},
+  "description": {{ .Site.Params.description | jsonify }}
+}
+</script>
+{{ end }}

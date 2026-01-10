@@ -1,0 +1,58 @@
+{{/*
+  Section Box - Reusable card section for detail pages
+
+  Usage:
+    {{ partial "components/section-box.html" (dict
+      "title" "Section Title"
+      "icon" "document"
+      "content" $content
+    ) }}
+
+  Parameters:
+    - title: string (required) - Section heading
+    - icon: string (optional) - Icon name from header-icon.html
+    - iconBg: string (optional) - Icon background color class (default: "bg-slate-100")
+    - iconColor: string (optional) - Icon color class (default: "text-slate-600")
+    - content: string (optional) - Inner HTML content
+    - class: string (optional) - Additional wrapper classes
+    - prose: bool (optional) - Wrap content in prose styling
+    - noPadding: bool (optional) - Remove padding from content area
+*/}}
+
+{{ $title := .title }}
+{{ $icon := .icon }}
+{{ $iconBg := .iconBg | default "bg-slate-100" }}
+{{ $iconColor := .iconColor | default "text-slate-600" }}
+{{ $content := .content }}
+{{ $class := .class | default "" }}
+{{ $prose := .prose | default false }}
+{{ $noPadding := .noPadding | default false }}
+
+<section class="bg-white rounded-xl border border-slate-200 overflow-hidden {{ $class }}">
+  {{/* Header */}}
+  {{ with $title }}
+  <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+    <h2 class="text-lg font-bold text-navy flex items-center gap-3" style="margin: 0;">
+      {{ with $icon }}
+      <div class="p-2 {{ $iconBg }} rounded-lg">
+        {{ partial "header-icon.html" (dict "icon" . "class" (printf "w-5 h-5 %s" $iconColor)) }}
+      </div>
+      {{ end }}
+      {{ . }}
+    </h2>
+  </div>
+  {{ end }}
+
+  {{/* Content */}}
+  {{ with $content }}
+  <div class="{{ if not $noPadding }}p-6{{ end }}">
+    {{ if $prose }}
+    <div class="prose prose-slate max-w-none">
+      {{ . }}
+    </div>
+    {{ else }}
+    {{ . }}
+    {{ end }}
+  </div>
+  {{ end }}
+</section>

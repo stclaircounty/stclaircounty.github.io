@@ -1,0 +1,58 @@
+{{/*
+  Stat - Icon with count/label display
+
+  Usage:
+    {{ partial "components/stat.html" (dict "icon" "document" "count" 5 "label" "Documents") }}
+
+  Parameters:
+    - icon: string (required) - Icon name from header-icon.html
+    - count: int/string (required) - Number or text to display
+    - label: string (optional) - Label text (shown on hover or below)
+    - title: string (optional) - Tooltip text
+    - color: string (optional) - Icon color class
+    - size: string (optional) - "sm", "md" (default), "lg"
+    - layout: string (optional) - "inline" (default), "stacked"
+    - class: string (optional) - Additional classes
+*/}}
+
+{{ $icon := .icon }}
+{{ $count := .count }}
+{{ $label := .label }}
+{{ $title := .title | default $label }}
+{{ $color := .color | default "text-slate-400" }}
+{{ $size := .size | default "md" }}
+{{ $layout := .layout | default "inline" }}
+{{ $class := .class | default "" }}
+
+{{/* Size classes */}}
+{{ $iconSize := "w-4 h-4" }}
+{{ $textSize := "text-sm" }}
+{{ $gap := "gap-1.5" }}
+
+{{ if eq $size "sm" }}
+  {{ $iconSize = "w-3.5 h-3.5" }}
+  {{ $textSize = "text-xs" }}
+  {{ $gap = "gap-1" }}
+{{ else if eq $size "lg" }}
+  {{ $iconSize = "w-5 h-5" }}
+  {{ $textSize = "text-base" }}
+  {{ $gap = "gap-2" }}
+{{ end }}
+
+{{ if eq $layout "stacked" }}
+<div class="text-center {{ $class }}" {{ with $title }}title="{{ . }}"{{ end }}>
+  <div class="flex justify-center mb-1">
+    {{ partial "header-icon.html" (dict "icon" $icon "class" (printf "%s %s" $iconSize $color)) }}
+  </div>
+  <div class="{{ $textSize }} font-bold text-slate-700">{{ $count }}</div>
+  {{ with $label }}
+  <div class="text-xs text-slate-500 uppercase tracking-wide">{{ . }}</div>
+  {{ end }}
+</div>
+{{ else }}
+<span class="inline-flex items-center {{ $gap }} {{ $textSize }} text-slate-500 {{ $class }}" {{ with $title }}title="{{ . }}"{{ end }}>
+  {{ partial "header-icon.html" (dict "icon" $icon "class" (printf "%s %s" $iconSize $color)) }}
+  <span>{{ $count }}</span>
+  {{ with $label }}<span class="text-slate-400">{{ . }}</span>{{ end }}
+</span>
+{{ end }}

@@ -16,13 +16,13 @@ tags:
 
 ## Overview
 
-This document analyzes the systemic governance failures exposed by the November 2022 OWI arrest of Deputy Marc King and its aftermath. These failures are structural, not accidental.
+This document analyzes the systemic governance failures exposed by the November 2022 OWI arrest of {{< person "marc-king" >}} and its aftermath. These failures are structural, not accidental.
 
 ## Failure 1: Unmitigated Conflict of Interest
 
 ### The Problem
 
-Sheriff Mat King is the brother of Deputy Marc King. When the deputy was arrested:
+{{< person "mat-king" >}} is the brother of {{< person "marc-king" >}}. When the deputy was arrested:
 
 - The Sheriff was notified the same day
 - The Sheriff did not recuse himself
@@ -41,7 +41,7 @@ When the highest law enforcement official in a county investigates his own broth
 
 ### What Should Have Happened
 
-- Immediate recusal by Sheriff King
+- Immediate recusal by {{< person "mat-king" >}}
 - Notification to county administrators
 - Engagement of Michigan State Police or neighboring sheriff
 - Documentation of all communications

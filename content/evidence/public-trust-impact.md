@@ -114,7 +114,9 @@ Trust can be rebuilt, but it requires:
 
 ### The Bottom Line
 
-> "Public confidence is undermined when family members receive perceived special treatment, evidence disappears, and investigations lack independence."
+{{< quote >}}
+Public confidence is undermined when family members receive perceived special treatment, evidence disappears, and investigations lack independence.
+{{< /quote >}}
 
 These aren't abstract concerns. They have real consequences for public safety and the effectiveness of law enforcement in St. Clair County.
 

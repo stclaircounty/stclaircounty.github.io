@@ -1,0 +1,59 @@
+{{/*
+  Get Deposition Data Partial
+
+  Looks up deposition data from data/depositions.yaml with consistent fallbacks.
+
+  Usage:
+    {{ $depo := partial "data/get-deposition.html" "mat-king-deposition" }}
+    {{ with $depo }}
+      Title: {{ .title }}
+      Deponent: {{ .deponent.name }}
+    {{ end }}
+
+  Returns: Deposition data map or nil if not found
+*/}}
+
+{{ $slug := . }}
+{{ $depo := index site.Data.depositions $slug }}
+
+{{ if $depo }}
+  {{/* Ensure nested structures have defaults */}}
+  {{ $deponent := merge (dict
+    "id" ""
+    "name" "Unknown"
+    "role" "Unknown"
+  ) ($depo.deponent | default dict) }}
+
+  {{ $case := merge (dict
+    "number" ""
+    "court" ""
+    "type" "civil"
+  ) ($depo.case | default dict) }}
+
+  {{/* Merge with defaults */}}
+  {{ $depo = merge (dict
+    "slug" $slug
+    "title" ($slug | humanize | title)
+    "date" now
+    "data_file" ""
+    "transcript_slug" ""
+    "deponent" $deponent
+    "case" $case
+    "pdf_file" ""
+    "pdf_size" ""
+    "status" "pending"
+    "key_quotes" (slice)
+    "topics" (slice)
+    "related_people" (slice)
+    "related_incidents" (slice)
+    "related_timeline" (slice)
+    "related_evidence" (slice)
+    "significance" ""
+    "tags" (slice)
+  ) $depo }}
+
+  {{/* Re-apply nested structures after merge */}}
+  {{ $depo = merge $depo (dict "deponent" $deponent "case" $case) }}
+{{ end }}
+
+{{ return $depo }}

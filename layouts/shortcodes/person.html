@@ -1,0 +1,49 @@
+{{/*
+  Person Link Shortcode - Auto-linked person references with optional details
+
+  Usage:
+    {{< person "mat-king" >}}                    - Just the linked name (positional)
+    {{< person slug="mat-king" role="true" >}}   - Name with role badge (all named)
+    {{< person slug="mat-king" full="true" >}}   - Full card with details (all named)
+
+  Parameters:
+    - slug: Person slug (required, positional or named)
+    - role: Show role badge (optional)
+    - full: Show full mini-card (optional)
+*/}}
+
+{{/* Support both positional and named slug parameter */}}
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $showRole := .Get "role" }}
+{{ $showFull := .Get "full" }}
+
+{{/* Use data partial for consistent lookups with defaults */}}
+{{ $person := partial "data/get-person.html" $slug }}
+
+{{ if $person }}
+  {{ if $showFull }}
+  {{/* Full mini-card style */}}
+  <a href="/people/{{ $slug }}/" class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors not-prose">
+    <span class="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center flex-shrink-0">
+      <svg class="w-3 h-3 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    </span>
+    <span class="font-medium text-slate-700">{{ $person.name }}</span>
+    {{ with $person.role }}
+    <span class="text-xs px-1.5 py-0.5 bg-slate-200 text-slate-600 rounded">{{ . }}</span>
+    {{ end }}
+  </a>
+  {{ else if $showRole }}
+  {{/* Name with role badge */}}
+  <a href="/people/{{ $slug }}/" class="text-amber-600 hover:text-amber-700 font-medium">{{ $person.name }}</a>
+  <span class="text-xs px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded ml-1">{{ $person.role }}</span>
+  {{ else }}
+  {{/* Simple linked name */}}
+  <a href="/people/{{ $slug }}/" class="text-amber-600 hover:text-amber-700 font-medium">{{ $person.name }}</a>
+  {{ end }}
+{{ else }}
+  {{/* Fallback if person not found */}}
+  <span class="text-slate-500" title="Person not found in database">{{ $slug | humanize | title }}</span>
+{{ end }}

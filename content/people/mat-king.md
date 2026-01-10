@@ -8,14 +8,14 @@ status: "active"
 
 ## Role in Key Incidents
 
-Sheriff Mat King is the elected Sheriff of St. Clair County, Michigan. He is the brother of Deputy Marc King, who was arrested for Operating While Intoxicated (OWI) on November 6, 2022.
+Sheriff Mat King is the elected Sheriff of St. Clair County, Michigan. He is the brother of {{< person "marc-king" >}}, who was arrested for Operating While Intoxicated (OWI) on November 6, 2022.
 
 ## November 2022 OWI Incident
 
 When his brother was arrested for drunk driving, Sheriff King did not recuse himself from the matter. According to sworn testimony and documented evidence:
 
 - Sheriff King was notified of his brother's arrest the same day it occurred
-- He contacted Captain Matthew Pohl and the Undersheriff regarding the incident
+- He contacted {{< person "matthew-pohl" >}} and {{< person "jim-spadafore" >}} regarding the incident
 - No independent investigation was initiated
 - No external agency was engaged to handle the matter
 - The Sheriff maintained involvement despite the obvious familial conflict of interest

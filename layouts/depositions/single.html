@@ -1,7 +1,22 @@
 {{ define "main" }}
 {{/* Get deposition key from URL */}}
 {{ $key := .File.ContentBaseName }}
-{{ $data := index site.Data.depositions $key }}
+{{ $registryData := index site.Data.depositions $key }}
+
+{{/* Merge registry data with segment file data if available */}}
+{{ $data := $registryData }}
+{{ $segments := slice }}
+{{ with $registryData.data_file }}
+  {{ $segmentFile := index site.Data.depositions . }}
+  {{ if $segmentFile }}
+    {{ with $segmentFile.segments }}{{ $segments = . }}{{ end }}
+    {{ with $segmentFile.deposition }}
+      {{/* Merge segment file's deposition metadata (pages, etc.) */}}
+      {{ $data = merge $registryData (dict "pages" .pages "source_pdf" .source_pdf) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $data = merge $data (dict "segments" $segments) }}
 
 {{ if $data }}
 {{/* Build badges for page header */}}
@@ -32,16 +47,28 @@
     "date" $date
   ) }}
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    {{/* Deposition detail content */}}
-    {{ partial "deposition/detail.html" (dict "key" $key "data" $data "content" .Content) }}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+      {{/* Main Content - Left Column */}}
+      <div class="lg:col-span-8">
+        {{ partial "deposition/content-main.html" (dict "key" $key "data" $data "content" .Content) }}
+      </div>
+
+      {{/* Sidebar - Right Column */}}
+      <aside class="mt-8 lg:mt-0 lg:col-span-4">
+        <div class="lg:sticky lg:top-24 space-y-6">
+          {{ partial "deposition/content-sidebar.html" (dict "key" $key "data" $data "page" .) }}
+        </div>
+      </aside>
+    </div>
   </div>
 
   {{/* Navigation */}}
   {{ $depositionsData := site.Data.depositions }}
   {{ $allDepositions := slice }}
   {{ range $k, $depo := $depositionsData }}
-    {{ if not (hasPrefix $k "_") }}
+    {{/* Only include registry entries (those with deponent) */}}
+    {{ if and (not (hasPrefix $k "_")) (reflect.IsMap $depo) $depo.deponent }}
       {{ $allDepositions = $allDepositions | append (merge $depo (dict "key" $k)) }}
     {{ end }}
   {{ end }}
@@ -54,7 +81,7 @@
 
   {{ if gt (len $allDepositions) 1 }}
   <nav class="bg-gray-50 border-t py-8">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between">
         {{ if and (ge $currentIndex 0) (lt (add $currentIndex 1) (len $allDepositions)) }}
         {{ $next := index $allDepositions (add $currentIndex 1) }}
@@ -82,7 +109,7 @@
 <article>
   {{ partial "page-header.html" (dict "page" . "icon" "documents" "section" "Depositions") }}
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-card p-8">
       <div class="prose prose-lg max-w-none">
         {{ .Content }}

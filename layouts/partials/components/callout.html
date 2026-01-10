@@ -1,0 +1,94 @@
+{{/*
+  Callout - Colored alert/highlight box
+
+  Usage:
+    {{ partial "components/callout.html" (dict
+      "type" "warning"
+      "title" "Important Notice"
+      "content" "This is the message content"
+    ) }}
+
+  Parameters:
+    - type: string - "info", "success", "warning", "danger", "note", "important"
+    - title: string (optional) - Callout heading
+    - content: string (required) - Main content (supports markdown)
+    - icon: bool (optional) - Show icon (default: true)
+    - class: string (optional) - Additional CSS classes
+    - compact: bool (optional) - Smaller padding
+*/}}
+
+{{ $type := .type | default "info" }}
+{{ $title := .title }}
+{{ $content := .content }}
+{{ $showIcon := .icon | default true }}
+{{ $class := .class | default "" }}
+{{ $compact := .compact | default false }}
+
+{{/* Type-based styling */}}
+{{ $bgColor := "" }}
+{{ $borderColor := "" }}
+{{ $titleColor := "" }}
+{{ $textColor := "" }}
+{{ $iconName := "" }}
+
+{{ if eq $type "info" }}
+  {{ $bgColor = "bg-blue-50" }}
+  {{ $borderColor = "border-blue-200" }}
+  {{ $titleColor = "text-blue-800" }}
+  {{ $textColor = "text-blue-700" }}
+  {{ $iconName = "info" }}
+{{ else if eq $type "success" }}
+  {{ $bgColor = "bg-green-50" }}
+  {{ $borderColor = "border-green-200" }}
+  {{ $titleColor = "text-green-800" }}
+  {{ $textColor = "text-green-700" }}
+  {{ $iconName = "check-circle" }}
+{{ else if eq $type "warning" }}
+  {{ $bgColor = "bg-amber-50" }}
+  {{ $borderColor = "border-amber-200" }}
+  {{ $titleColor = "text-amber-800" }}
+  {{ $textColor = "text-amber-700" }}
+  {{ $iconName = "warning" }}
+{{ else if eq $type "danger" }}
+  {{ $bgColor = "bg-red-50" }}
+  {{ $borderColor = "border-red-200" }}
+  {{ $titleColor = "text-red-800" }}
+  {{ $textColor = "text-red-700" }}
+  {{ $iconName = "warning" }}
+{{ else if eq $type "important" }}
+  {{ $bgColor = "bg-purple-50" }}
+  {{ $borderColor = "border-purple-200" }}
+  {{ $titleColor = "text-purple-800" }}
+  {{ $textColor = "text-purple-700" }}
+  {{ $iconName = "shield" }}
+{{ else }}
+  {{/* note */}}
+  {{ $bgColor = "bg-slate-50" }}
+  {{ $borderColor = "border-slate-200" }}
+  {{ $titleColor = "text-slate-700" }}
+  {{ $textColor = "text-slate-600" }}
+  {{ $iconName = "document" }}
+{{ end }}
+
+{{ $padding := "p-4" }}
+{{ if $compact }}
+  {{ $padding = "p-3" }}
+{{ end }}
+
+<div class="rounded-lg {{ $bgColor }} border {{ $borderColor }} {{ $padding }} {{ $class }}">
+  <div class="flex gap-3">
+    {{ if $showIcon }}
+    <div class="flex-shrink-0 mt-0.5">
+      {{ partial "header-icon.html" (dict "icon" $iconName "class" (printf "w-5 h-5 %s" $titleColor)) }}
+    </div>
+    {{ end }}
+    <div class="flex-1 min-w-0">
+      {{ with $title }}
+      <h4 class="text-sm font-semibold {{ $titleColor }} mb-1" style="margin-top: 0;">{{ . }}</h4>
+      {{ end }}
+      <div class="text-sm {{ $textColor }}">
+        {{ $content | markdownify }}
+      </div>
+    </div>
+  </div>
+</div>

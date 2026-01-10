@@ -16,50 +16,34 @@
 <div class="space-y-8">
   {{/* Summary */}}
   {{ with $data.summary }}
-  <section class="bg-white rounded-lg shadow-card p-6">
-    <h2 class="text-lg font-bold text-navy mb-3 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      Overview
-    </h2>
-    <div class="prose prose-lg max-w-none">
-      {{ . | markdownify }}
-    </div>
-  </section>
+  {{ partial "components/section-box.html" (dict
+    "title" "Overview"
+    "icon" "info"
+    "content" (. | markdownify)
+    "prose" true
+    "class" "shadow-card"
+  ) }}
   {{ end }}
 
   {{/* Page Content (Markdown) */}}
   {{ with $content }}
-  <section class="bg-white rounded-lg shadow-card p-6">
-    <h2 class="text-lg font-bold text-navy mb-3 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-      Details
-    </h2>
-    <div class="prose prose-lg max-w-none">
-      {{ . }}
-    </div>
-  </section>
+  {{ partial "components/section-box.html" (dict
+    "title" "Details"
+    "icon" "document"
+    "content" .
+    "prose" true
+    "class" "shadow-card"
+  ) }}
   {{ end }}
 
   {{/* Key Issues */}}
   {{ with $data.issues }}
   <section class="bg-red-50 rounded-lg shadow-card p-6">
     <h2 class="text-lg font-bold text-red-800 mb-4 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
+      {{ partial "header-icon.html" (dict "icon" "warning" "class" "w-5 h-5 text-red-600") }}
       Key Issues Identified
     </h2>
-    <div class="flex flex-wrap gap-2">
-      {{ range . }}
-      <span class="px-3 py-1.5 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-        {{ . | humanize }}
-      </span>
-      {{ end }}
-    </div>
+    {{ partial "components/tag-list.html" (dict "tags" . "color" "red") }}
   </section>
   {{ end }}
 
@@ -305,15 +289,13 @@
 
   {{/* People Involved */}}
   {{ with $data.people_involved }}
-  <section class="bg-white rounded-lg shadow-card p-6">
-    <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-      People Involved
-    </h2>
-    {{ partial "case-file/people-involved.html" (dict "people" . "compact" false) }}
-  </section>
+  {{ $peopleContent := partial "case-file/people-involved.html" (dict "people" . "compact" false) }}
+  {{ partial "components/section-box.html" (dict
+    "title" "People Involved"
+    "icon" "users"
+    "content" $peopleContent
+    "class" "shadow-card"
+  ) }}
   {{ end }}
 
   {{/* ================================================================ */}}
@@ -392,17 +374,13 @@
   {{ with $data.undisputed_facts }}
   <section class="bg-blue-50 rounded-lg shadow-card p-6">
     <h2 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+      {{ partial "header-icon.html" (dict "icon" "check-circle" "class" "w-5 h-5 text-blue-600") }}
       Undisputed Facts
     </h2>
     <ul class="space-y-2">
       {{ range . }}
       <li class="flex items-start gap-2">
-        <svg class="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-        </svg>
+        {{ partial "header-icon.html" (dict "icon" "check-circle" "class" "h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5") }}
         <span class="text-blue-900">{{ . }}</span>
       </li>
       {{ end }}
@@ -412,18 +390,16 @@
 
   {{/* Open Questions */}}
   {{ with $data.questions }}
-  <section class="bg-yellow-50 rounded-lg shadow-card p-6">
-    <h2 class="text-lg font-bold text-yellow-800 mb-4 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+  <section class="bg-amber-50 rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-amber-800 mb-4 flex items-center gap-2" style="margin-top: 0;">
+      {{ partial "header-icon.html" (dict "icon" "search" "class" "w-5 h-5 text-amber-600") }}
       Questions Remaining
     </h2>
     <ul class="space-y-2">
       {{ range . }}
       <li class="flex items-start gap-2">
-        <span class="text-yellow-600 font-bold">?</span>
-        <span class="text-yellow-900">{{ . }}</span>
+        <span class="text-amber-600 font-bold">?</span>
+        <span class="text-amber-900">{{ . }}</span>
       </li>
       {{ end }}
     </ul>
@@ -434,9 +410,7 @@
   {{ with $data.legal_exposure }}
   <section class="bg-white rounded-lg shadow-card p-6">
     <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-      </svg>
+      {{ partial "header-icon.html" (dict "icon" "scale" "class" "w-5 h-5 text-slate-light") }}
       Legal Exposure
     </h2>
     <div class="grid gap-4 md:grid-cols-2">
@@ -472,14 +446,12 @@
 
   {{/* Tags */}}
   {{ with $data.tags }}
-  <section class="bg-white rounded-lg shadow-card p-6">
-    <h2 class="text-lg font-bold text-navy mb-3 flex items-center gap-2" style="margin-top: 0;">
-      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-      </svg>
-      Tags
-    </h2>
-    {{ partial "case-file/tags.html" (dict "tags" .) }}
-  </section>
+  {{ $tagsContent := partial "case-file/tags.html" (dict "tags" .) }}
+  {{ partial "components/section-box.html" (dict
+    "title" "Tags"
+    "icon" "tag"
+    "content" $tagsContent
+    "class" "shadow-card"
+  ) }}
   {{ end }}
 </div>

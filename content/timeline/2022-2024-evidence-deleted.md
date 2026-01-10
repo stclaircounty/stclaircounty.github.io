@@ -21,19 +21,19 @@ tags:
 
 ## Event Summary
 
-Between 2022 and 2024, multiple officers involved in the Marc King OWI matter admitted in sworn testimony that text messages relevant to the incident were deleted or lost.
+Between 2022 and 2024, multiple officers involved in the {{< person "marc-king" >}} OWI matter admitted in sworn testimony that text messages relevant to the incident were deleted or lost.
 
 ## Who Deleted Evidence
 
-### Captain Matthew Pohl
+### {{< person "matthew-pohl" >}}
 - Admitted in deposition to deleting text messages
 - These messages were relevant to the November 2022 incident
-- Close personal friend of Deputy Marc King
+- Close personal friend of {{< person "marc-king" >}}
 
-### Deputy Duva
+### {{< person "damon-duva" >}}
 - Admitted in sworn testimony to deleted or lost text messages
 - Communications from the relevant time period are missing
-- Close personal friend of Deputy Marc King
+- Close personal friend of {{< person "marc-king" >}}
 
 ## Why This Matters
 
@@ -43,7 +43,7 @@ The deletion of evidence relevant to a foreseeable legal matter has serious cons
 
 - **Adverse Inference**: Courts may instruct juries to assume the deleted evidence was unfavorable to the party that destroyed it
 - **Discovery Sanctions**: Parties can face penalties for destroying relevant evidence
-- **Evidence Tampering**: Under Michigan law (MCL 750.491), tampering with evidence is a criminal offense
+- **Evidence Tampering**: Under Michigan law ({{< legal-cite statute="MCL 750.491" >}}), tampering with evidence is a criminal offense
 - **Spoliation Doctrine**: The intentional destruction of evidence can result in severe legal consequences
 
 ### Pattern of Behavior

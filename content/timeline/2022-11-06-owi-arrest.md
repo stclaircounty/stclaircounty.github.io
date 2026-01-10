@@ -21,20 +21,20 @@ tags:
 
 ## Incident Summary
 
-On November 6, 2022, Deputy Marc King of the St. Clair County Sheriff's Office was arrested for Operating While Intoxicated (OWI). This arrest set in motion a series of events that would expose systemic governance failures within the department.
+On November 6, 2022, {{< person "marc-king" >}} of the St. Clair County Sheriff's Office was arrested for Operating While Intoxicated (OWI). This arrest set in motion a series of events that would expose systemic governance failures within the department.
 
 ## What Happened
 
 ### The Arrest
 
-- Deputy Marc King was arrested for drunk driving while off-duty
+- {{< person "marc-king" >}} was arrested for drunk driving while off-duty
 - He was transported to Lapeer County Jail (notably, not St. Clair County)
 - The arrest was made by an outside agency
 
 ### Immediate Aftermath
 
-- Sheriff Mat King (the arrestee's brother) was notified the same day
-- The Sheriff contacted Captain Matthew Pohl and the Undersheriff
+- {{< person "mat-king" >}} (the arrestee's brother) was notified the same day
+- The Sheriff contacted {{< person "matthew-pohl" >}} and {{< person "jim-spadafore" >}}
 - Command-level calls were made regarding the incident
 
 ## The Problem
@@ -43,7 +43,7 @@ On November 6, 2022, Deputy Marc King of the St. Clair County Sheriff's Office w
 
 **The issue is what happened next:**
 
-1. Sheriff Mat King did not recuse himself despite being the arrestee's brother
+1. {{< person "mat-king" >}} did not recuse himself despite being the arrestee's brother
 2. No independent investigation was initiated
 3. No external agency was engaged to handle the matter
 4. Close friends of the arrestee were involved in the internal handling

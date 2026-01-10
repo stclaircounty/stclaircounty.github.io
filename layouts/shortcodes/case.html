@@ -1,0 +1,102 @@
+{{/*
+  Litigation Case Reference Shortcode - Link to litigation pages with status badge
+
+  Usage:
+    {{< case "jones-v-scc" >}}                    - Simple link with status
+    {{< case slug="jones-v-scc" card="true" >}}   - Card style with details
+
+  Parameters:
+    - slug: Case slug (required, positional or named)
+    - card: Show as card with details (optional)
+*/}}
+
+{{/* Support both positional and named slug parameter */}}
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $showCard := .Get "card" }}
+
+{{/* Look up litigation data */}}
+{{ $case := index site.Data.litigation $slug }}
+{{ $url := printf "/litigation/%s/" $slug }}
+{{ $hasPage := site.GetPage (printf "/litigation/%s" $slug) }}
+
+{{ if $case }}
+  {{/* Determine status styling */}}
+  {{ $statusClass := "bg-slate-100 text-slate-700" }}
+  {{ $statusIcon := "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" }}
+  {{ if eq $case.status "active" }}
+    {{ $statusClass = "bg-blue-100 text-blue-700" }}
+  {{ else if eq $case.status "settled" }}
+    {{ $statusClass = "bg-amber-100 text-amber-700" }}
+  {{ else if eq $case.status "dismissed" }}
+    {{ $statusClass = "bg-red-100 text-red-700" }}
+  {{ else if eq $case.status "won" }}
+    {{ $statusClass = "bg-green-100 text-green-700" }}
+  {{ end }}
+
+  {{/* Check for qualified immunity denied - significant milestone */}}
+  {{ $immunityDenied := false }}
+  {{ range $case.parties.defendants }}
+    {{ if eq .immunity_status "qualified-immunity-denied" }}
+      {{ $immunityDenied = true }}
+    {{ end }}
+  {{ end }}
+
+  {{ if $showCard }}
+  {{/* Card style with details */}}
+  <div class="my-4 p-4 bg-white border border-slate-200 rounded-lg hover:border-purple-300 hover:shadow-md transition-all not-prose">
+    {{ if $hasPage }}<a href="{{ $url }}" class="block">{{ end }}
+    <div class="flex items-start gap-3">
+      <div class="p-2 rounded-lg flex-shrink-0 bg-purple-100">
+        <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h4 class="font-semibold text-navy">{{ $case.title }}</h4>
+        <p class="text-sm text-slate-500 mt-1">{{ $case.court }}</p>
+        {{ with $case.case_number }}
+        <p class="text-xs text-slate-400">Case No. {{ . }}</p>
+        {{ end }}
+        <div class="flex flex-wrap items-center gap-2 mt-2 text-xs">
+          <span class="px-1.5 py-0.5 rounded {{ $statusClass }}">{{ $case.status | humanize | title }}</span>
+          {{ if $immunityDenied }}
+          <span class="px-1.5 py-0.5 rounded bg-green-100 text-green-700 font-medium">Qualified Immunity Denied</span>
+          {{ end }}
+          {{ with $case.filed_date }}<span class="text-slate-500">Filed {{ . | time.Format "Jan 2006" }}</span>{{ end }}
+        </div>
+      </div>
+      {{ if $hasPage }}
+      <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      {{ end }}
+    </div>
+    {{ if $hasPage }}</a>{{ end }}
+  </div>
+  {{ else }}
+  {{/* Simple inline link with status badge */}}
+  {{ if $hasPage }}
+  <a href="{{ $url }}" class="inline-flex items-center gap-1.5 text-purple-600 hover:text-purple-700 font-medium">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+    </svg>
+    {{ $case.short_title | default $case.title }}
+  </a>
+  <span class="ml-1 px-1.5 py-0.5 rounded text-xs {{ $statusClass }}">{{ $case.status | humanize }}</span>
+  {{ if $immunityDenied }}
+  <span class="ml-1 px-1.5 py-0.5 rounded text-xs bg-green-100 text-green-700">QI Denied</span>
+  {{ end }}
+  {{ else }}
+  <span class="inline-flex items-center gap-1 text-slate-600">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+    </svg>
+    {{ $case.short_title | default $case.title }}
+    <span class="ml-1 px-1.5 py-0.5 rounded text-xs {{ $statusClass }}">{{ $case.status | humanize }}</span>
+  </span>
+  {{ end }}
+  {{ end }}
+{{ else }}
+  <span class="text-slate-500" title="Case not found">{{ $slug | humanize | title }}</span>
+{{ end }}

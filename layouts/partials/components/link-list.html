@@ -1,0 +1,103 @@
+{{/*
+  Link List - Styled list of links with icons
+
+  Usage:
+    {{ partial "components/link-list.html" (dict
+      "title" "Related Documents"
+      "icon" "document"
+      "items" $items
+      "color" "amber"
+    ) }}
+
+  Parameters:
+    - title: string (optional) - Section heading
+    - icon: string (optional) - Icon for the header
+    - items: slice of dicts (required) - Each item: {text, href, badge (optional)}
+    - color: string (optional) - "slate" (default), "amber", "red", "blue", "green", "purple"
+    - compact: bool (optional) - Smaller padding/spacing
+    - class: string (optional) - Additional wrapper classes
+*/}}
+
+{{ $title := .title }}
+{{ $icon := .icon }}
+{{ $items := .items }}
+{{ $color := .color | default "slate" }}
+{{ $compact := .compact | default false }}
+{{ $class := .class | default "" }}
+
+{{/* Color classes */}}
+{{ $bgColor := "bg-slate-50" }}
+{{ $borderColor := "border-slate-200" }}
+{{ $titleColor := "text-slate-700" }}
+{{ $dotColor := "bg-slate-400" }}
+{{ $hoverColor := "hover:text-slate-900" }}
+
+{{ if eq $color "amber" }}
+  {{ $bgColor = "bg-amber-50" }}
+  {{ $borderColor = "border-amber-200" }}
+  {{ $titleColor = "text-amber-800" }}
+  {{ $dotColor = "bg-amber-500" }}
+  {{ $hoverColor = "hover:text-amber-700" }}
+{{ else if eq $color "red" }}
+  {{ $bgColor = "bg-red-50" }}
+  {{ $borderColor = "border-red-200" }}
+  {{ $titleColor = "text-red-800" }}
+  {{ $dotColor = "bg-red-500" }}
+  {{ $hoverColor = "hover:text-red-700" }}
+{{ else if eq $color "blue" }}
+  {{ $bgColor = "bg-blue-50" }}
+  {{ $borderColor = "border-blue-200" }}
+  {{ $titleColor = "text-blue-800" }}
+  {{ $dotColor = "bg-blue-500" }}
+  {{ $hoverColor = "hover:text-blue-700" }}
+{{ else if eq $color "green" }}
+  {{ $bgColor = "bg-green-50" }}
+  {{ $borderColor = "border-green-200" }}
+  {{ $titleColor = "text-green-800" }}
+  {{ $dotColor = "bg-green-500" }}
+  {{ $hoverColor = "hover:text-green-700" }}
+{{ else if eq $color "purple" }}
+  {{ $bgColor = "bg-purple-50" }}
+  {{ $borderColor = "border-purple-200" }}
+  {{ $titleColor = "text-purple-800" }}
+  {{ $dotColor = "bg-purple-500" }}
+  {{ $hoverColor = "hover:text-purple-700" }}
+{{ end }}
+
+{{ $padding := "p-4" }}
+{{ $spacing := "space-y-2" }}
+{{ if $compact }}
+  {{ $padding = "p-3" }}
+  {{ $spacing = "space-y-1.5" }}
+{{ end }}
+
+{{ with $items }}
+<div class="{{ $bgColor }} rounded-lg {{ $padding }} border {{ $borderColor }} {{ $class }}">
+  {{ with $title }}
+  <h4 class="text-sm font-semibold {{ $titleColor }} mb-3 flex items-center gap-2" style="margin-top: 0;">
+    {{ with $icon }}
+    {{ partial "header-icon.html" (dict "icon" . "class" (printf "w-4 h-4 %s" $titleColor)) }}
+    {{ end }}
+    {{ . }}
+  </h4>
+  {{ end }}
+
+  <ul class="{{ $spacing }} list-none pl-0 mb-0">
+    {{ range $items }}
+    <li class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full {{ $dotColor }} flex-shrink-0"></span>
+      {{ if .href }}
+      <a href="{{ .href }}" class="text-sm text-slate-600 {{ $hoverColor }} transition-colors">
+        {{ .text }}
+      </a>
+      {{ else }}
+      <span class="text-sm text-slate-600">{{ .text }}</span>
+      {{ end }}
+      {{ with .badge }}
+      <span class="text-xs px-1.5 py-0.5 bg-white/50 text-slate-500 rounded">{{ . }}</span>
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

@@ -1,0 +1,88 @@
+{{/*
+  Get Incident Data Partial
+
+  Looks up incident data from data/incidents.yaml with consistent fallbacks.
+
+  Usage:
+    {{ $incident := partial "data/get-incident.html" "2022-11-06-owi-arrest" }}
+    {{ with $incident }}
+      Title: {{ .title }}
+      Severity: {{ .severity }}
+    {{ end }}
+
+  Returns: Incident data map or nil if not found
+*/}}
+
+{{ $slug := . }}
+{{ $incident := index site.Data.incidents $slug }}
+
+{{ if $incident }}
+  {{/* Ensure nested structures have defaults */}}
+  {{ $arrest := merge (dict
+    "arresting_agency" ""
+    "transport_location" ""
+    "bac_hold" false
+    "bac_hold_reason" ""
+    "initial_handling" ""
+  ) ($incident.arrest_details | default dict) }}
+
+  {{ $investigation := merge (dict
+    "conducted_by" ""
+    "external_agency" false
+    "start_date" nil
+    "findings" ""
+    "discipline_imposed" ""
+    "issues" (slice)
+  ) ($incident.internal_investigation | default dict) }}
+
+  {{ $retaliation := merge (dict
+    "victim" ""
+    "protected_activity" ""
+    "protected_activity_date" nil
+    "adverse_action" ""
+    "adverse_action_date" nil
+    "causal_connection" ""
+    "legal_claim" ""
+    "claim_status" ""
+  ) ($incident.retaliation_alleged | default dict) }}
+
+  {{/* Merge with defaults */}}
+  {{ $incident = merge (dict
+    "slug" $slug
+    "title" ($slug | humanize | title)
+    "date" now
+    "time" ""
+    "location" ""
+    "arrest_location" ""
+    "jail_location" ""
+    "incident_type" "unknown"
+    "category" "other"
+    "severity" "medium"
+    "status" "unknown"
+    "outcome" ""
+    "arrest_details" $arrest
+    "summary" ""
+    "issues" (slice)
+    "people_involved" (dict)
+    "related_depositions" (slice)
+    "internal_investigation" $investigation
+    "retaliation_alleged" $retaliation
+    "related_timeline" (slice)
+    "related_evidence" (slice)
+    "policy_failures" (dict)
+    "legal_exposure" (dict)
+    "media_coverage" (slice)
+    "undisputed_facts" (slice)
+    "questions" (slice)
+    "tags" (slice)
+  ) $incident }}
+
+  {{/* Re-apply nested structures after merge */}}
+  {{ $incident = merge $incident (dict
+    "arrest_details" $arrest
+    "internal_investigation" $investigation
+    "retaliation_alleged" $retaliation
+  ) }}
+{{ end }}
+
+{{ return $incident }}

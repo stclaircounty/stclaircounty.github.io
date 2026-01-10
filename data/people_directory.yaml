@@ -51,6 +51,55 @@ sections:
       - damon-duva
       - josh-goodrich
       - chad-cronkright
+      - phil-pokriefka
+      - joe-schoof
+      - george-clark
+      - april-seavolt
+      - andy-teichow
+
+  lieutenants:
+    title: "Lieutenants"
+    description: "Lieutenant-rank officers involved in documented incidents."
+    icon: shield
+    icon_color: text-amber-600
+    bg_color: bg-amber-50
+    border_color: border-amber-200
+    badge_bg: bg-amber-100
+    badge_text: text-amber-700
+    order: 3
+    people:
+      - scott-braun
+      - mark-dedenbach
+      - george-maschke
+
+  sergeants:
+    title: "Sergeants"
+    description: "Sergeant-rank officers involved in documented incidents."
+    icon: shield
+    icon_color: text-orange-600
+    bg_color: bg-orange-50
+    border_color: border-orange-200
+    badge_bg: bg-orange-100
+    badge_text: text-orange-700
+    order: 4
+    people:
+      - nate-zuzga
+      - john-maxey
+      - sergeant-landon
+
+  detectives:
+    title: "Detectives"
+    description: "Detective-rank officers involved in documented incidents."
+    icon: search
+    icon_color: text-indigo-600
+    bg_color: bg-indigo-50
+    border_color: border-indigo-200
+    badge_bg: bg-indigo-100
+    badge_text: text-indigo-700
+    order: 5
+    people:
+      - kelsey-wade
+      - detective-bonner
 
   former-law-enforcement:
     title: "Former Law Enforcement"
@@ -61,9 +110,48 @@ sections:
     border_color: border-slate-200
     badge_bg: bg-slate-100
     badge_text: text-slate-600
-    order: 3
+    order: 6
     people:
       - scott-jones
+
+  external-law-enforcement:
+    title: "External Law Enforcement"
+    description: "Law enforcement from other jurisdictions involved in documented matters."
+    icon: building
+    icon_color: text-teal-600
+    bg_color: bg-teal-50
+    border_color: border-teal-200
+    badge_bg: bg-teal-100
+    badge_text: text-teal-700
+    order: 7
+    people:
+      - sheriff-mckenna
+
+  union-representatives:
+    title: "Union Representatives"
+    description: "Union officials involved in documented matters."
+    icon: users
+    icon_color: text-green-600
+    bg_color: bg-green-50
+    border_color: border-green-200
+    badge_bg: bg-green-100
+    badge_text: text-green-700
+    order: 8
+    people:
+      - steve-sellers
+
+  administrative-staff:
+    title: "Administrative Staff"
+    description: "Administrative personnel referenced in documented matters."
+    icon: file
+    icon_color: text-stone-600
+    bg_color: bg-stone-50
+    border_color: border-stone-200
+    badge_bg: bg-stone-100
+    badge_text: text-stone-700
+    order: 9
+    people:
+      - andrea-blair
 
   plaintiffs-counsel:
     title: "Plaintiff's Counsel"
@@ -74,7 +162,7 @@ sections:
     border_color: border-blue-200
     badge_bg: bg-blue-100
     badge_text: text-blue-700
-    order: 4
+    order: 10
     people:
       - deborah-gordon
       - elizabeth-marzotto-taylor
@@ -88,7 +176,7 @@ sections:
     border_color: border-gray-200
     badge_bg: bg-gray-100
     badge_text: text-gray-600
-    order: 5
+    order: 11
     people:
       - todd-shoudy
 
@@ -102,7 +190,7 @@ sections:
     badge_bg: bg-purple-100
     badge_text: text-purple-700
     note: "Judges preside impartially. No evaluation of judicial decisions is made."
-    order: 6
+    order: 12
     people:
       - nancy-edmunds
 
@@ -146,11 +234,40 @@ relationships:
         - from: damon-duva
           to: marc-king
           type: Close Friends
-          significance: "Compromises independence of internal investigation."
+          significance: "15-20 year friendship; compromises independence of internal investigation."
+        - from: damon-duva
+          to: mat-king
+          type: Former Partners
+          significance: "20+ year relationship; former patrol car partners."
         - from: matthew-pohl
           to: josh-goodrich
           type: Regular Contact
           significance: "Pohl texted Goodrich about arrest at 5:44 PM (per deposition)."
+        - from: josh-goodrich
+          to: george-clark
+          type: Prior Dispute
+          significance: "Goodrich upset about prior encounter with Clark; threatened FOIA request (per deposition)."
+
+    notification-chain:
+      title: "Notification Chain (Nov 6, 2022)"
+      bg_color: bg-blue-50
+      border_color: border-blue-200
+      badge_bg: bg-blue-100
+      badge_text: text-blue-800
+      order: 3
+      items:
+        - from: marc-king
+          to: phil-pokriefka
+          type: Called
+          significance: "Marc King called Pokriefka after his arrest."
+        - from: phil-pokriefka
+          to: damon-duva
+          type: Called
+          significance: "Pokriefka called Duva at approximately 3 AM to inform him of arrest."
+        - from: damon-duva
+          to: mat-king
+          type: Called
+          significance: "Duva called Sheriff King to inform him of his brother's arrest."
 
 # =============================================================================
 # CREDIBILITY ASSESSMENT
@@ -178,4 +295,5 @@ credibility:
       people:
         mat-king: "Brother of arrestee; no recusal from investigation"
         matthew-pohl: "Admitted deleting text messages (sworn testimony)"
-        damon-duva: "Admitted deleting text messages (sworn testimony)"
+        damon-duva: "Admitted deleting text messages (sworn testimony); close friend of arrestee"
+        chad-cronkright: "Deleted text messages after notification of investigation (sworn testimony)"

@@ -18,7 +18,7 @@ Key questions and issue clusters for legal proceedings or oversight hearings.
 
 ### Cluster 1: Why No Recusal?
 
-**Core Question:** Why did Sheriff King remain involved in a matter concerning his own brother?
+**Core Question:** Why did {{< person "mat-king" >}} remain involved in a matter concerning his own brother?
 
 #### Follow-up Questions:
 
@@ -48,7 +48,7 @@ Key questions and issue clusters for legal proceedings or oversight hearings.
 
 **Core Question:** Why were text messages deleted, and what did they contain?
 
-#### For Captain Pohl:
+#### For {{< person "matthew-pohl" >}}:
 
 1. "Did you have text message communications regarding the November 2022 arrest?"
 
@@ -70,7 +70,7 @@ Key questions and issue clusters for legal proceedings or oversight hearings.
 
 10. "Do you understand that deleting evidence can create legal liability?"
 
-#### For Deputy Duva:
+#### For {{< person "damon-duva" >}}:
 
 1. "You testified that text messages are 'no longer available.' What does that mean?"
 
@@ -170,7 +170,7 @@ Key questions and issue clusters for legal proceedings or oversight hearings.
 
 **Key documents to reference:**
 
-- Sheriff King deposition
-- Captain Pohl deposition (deleted texts admission)
-- Deputy Duva transcript (missing messages admission)
+- {{< evidence "mat-king-deposition" >}}
+- {{< evidence "pohl-deposition" >}} (deleted texts admission)
+- {{< evidence "duva-transcripts" >}} (missing messages admission)
 - Any written policies (or lack thereof)

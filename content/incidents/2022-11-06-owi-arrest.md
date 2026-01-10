@@ -26,36 +26,43 @@ tags:
 
 ## Incident Overview
 
-On November 6, 2022, Deputy Marc King of the St. Clair County Sheriff's Office was arrested for Operating While Intoxicated (OWI). The arrest itself was handled properly by an outside agency. **What happened afterward is the focus of this documentation.**
+On November 6, 2022, {{< person "marc-king" >}} of the St. Clair County Sheriff's Office was arrested for Operating While Intoxicated (OWI). The arrest itself was handled properly by an outside agency. **What happened afterward is the focus of this documentation.**
 
 ## The Core Problem
 
-Deputy Marc King is the **brother** of Sheriff Mat King, the elected Sheriff of St. Clair County. When a deputy is arrested for a crime, standard practice calls for an independent investigation, typically by an external agency, to avoid any appearance of impropriety.
+{{< person "marc-king" >}} is the **brother** of {{< person "mat-king" >}}, the elected Sheriff of St. Clair County. When a deputy is arrested for a crime, standard practice calls for an independent investigation, typically by an external agency, to avoid any appearance of impropriety.
 
 **That did not happen here.**
+
+### Key Figures
+
+{{< person slug="mat-king" full="true" >}}
+{{< person slug="marc-king" full="true" >}}
+{{< person slug="matthew-pohl" full="true" >}}
+{{< person slug="damon-duva" full="true" >}}
 
 ## Sequence of Events
 
 ### November 6, 2022
 
-1. Deputy Marc King arrested for OWI
+1. {{< person "marc-king" >}} arrested for OWI
 2. Transported to Lapeer County Jail
-3. Sheriff Mat King notified the same day
-4. Sheriff contacts Captain Matthew Pohl
-5. Sheriff contacts the Undersheriff
+3. {{< person "mat-king" >}} notified the same day
+4. Sheriff contacts {{< person "matthew-pohl" >}}
+5. Sheriff contacts {{< person "jim-spadafore" >}}
 6. Command-level discussions begin
 
 ### Post-Arrest Handling
 
-- **No recusal**: Sheriff King did not recuse himself
+- **No recusal**: {{< person "mat-king" >}} did not recuse himself
 - **No external agency**: Investigation handled internally
 - **Personal relationships**: Close friends of the arrestee involved
 - **Informal communications**: Off-the-record discussions occurred
 
 ### 2022-2024
 
-- Text messages deleted by Captain Pohl
-- Text messages deleted/lost by Deputy Duva
+- Text messages deleted by {{< person "matthew-pohl" >}}
+- Text messages deleted/lost by {{< person "damon-duva" >}}
 - No litigation hold established
 - No evidence retention protocols followed
 
@@ -83,8 +90,8 @@ Multiple officers destroyed relevant communications:
 
 | Officer | Relationship | Action |
 |---------|--------------|--------|
-| Captain Pohl | Close Friend | Deleted texts |
-| Deputy Duva | Close Friend | Deleted texts |
+| {{< person "matthew-pohl" >}} | Close Friend | Deleted texts |
+| {{< person "damon-duva" >}} | Close Friend | Deleted texts |
 
 ### 4. No Preservation Protocols
 
@@ -98,17 +105,33 @@ Despite foreseeable litigation:
 
 ### Michigan Law
 
-- **MCL 750.491**: Evidence tampering
+- {{< legal-cite statute="MCL 750.491" >}}: Evidence tampering
 - **FOIA violations**: Destruction of public records
 
 ### Federal Law
 
-- **42 U.S.C. § 1983**: Civil rights implications
+- {{< legal-cite statute="42 U.S.C. § 1983" >}}: Civil rights implications
 - **Spoliation doctrine**: Adverse inference in litigation
 
 ## Why This Matters
 
-> "This case is about what happens when the law applies to the Sheriff's own family. Instead of stepping back, leadership stepped in."
+{{< quote >}}
+This case is about what happens when the law applies to the Sheriff's own family. Instead of stepping back, leadership stepped in.
+{{< /quote >}}
+
+### Key Testimony
+
+{{< quote source="Sheriff Mat King" page="74" deposition="mat-king-deposition" type="answer" >}}
+He deliberately withheld information from myself and admitted so.
+{{< /quote >}}
+
+{{< quote source="Captain Matthew Pohl" page="246" deposition="pohl-deposition" type="answer" >}}
+Whatever text messages or phone calls that I'd referenced in my internal report, I no longer have those on my phone.
+{{< /quote >}}
+
+{{< quote source="Deputy Duva" page="17" deposition="duva-transcripts" type="answer" >}}
+Have you deleted call logs or text messages reflecting communications between yourself and the sheriff in November of 2022? I'm sure I have, yes.
+{{< /quote >}}
 
 The integrity of law enforcement depends on public trust. When an officer is arrested:
 
@@ -145,7 +168,7 @@ Based on the evidence documented here, appropriate responses include:
 
 ## Available Evidence
 
-- Sheriff Mat King Deposition
-- Captain Matthew Pohl Deposition
-- Deputy Duva Transcripts
+- {{< evidence "mat-king-deposition" >}}
+- {{< evidence "pohl-deposition" >}}
+- {{< evidence "duva-transcripts" >}}
 - Documentation packages with detailed analysis

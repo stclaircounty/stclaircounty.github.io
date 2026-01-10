@@ -1,0 +1,31 @@
+{{/*
+  Get Person Data Partial
+
+  Looks up person data from data/people.yaml with consistent fallbacks.
+
+  Usage:
+    {{ $person := partial "data/get-person.html" "mat-king" }}
+    {{ with $person }}
+      Name: {{ .name }}
+      Role: {{ .role }}
+    {{ end }}
+
+  Returns: Person data map or nil if not found
+*/}}
+
+{{ $slug := . }}
+{{ $person := index site.Data.people $slug }}
+
+{{ if $person }}
+  {{/* Ensure required fields have defaults */}}
+  {{ $person = merge (dict
+    "slug" $slug
+    "name" ($person.name | default ($slug | humanize | title))
+    "role" ($person.role | default "Unknown")
+    "status" ($person.status | default "unknown")
+    "department" ($person.department | default "")
+    "category" ($person.category | default "other")
+  ) $person }}
+{{ end }}
+
+{{ return $person }}

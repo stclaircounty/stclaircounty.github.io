@@ -1,0 +1,10 @@
+# robots.txt for St. Clair Under Oath
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://stclairunderoath.com/sitemap.xml
+
+# Crawl-delay suggestion (optional, not all bots respect this)
+Crawl-delay: 1

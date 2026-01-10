@@ -1,0 +1,88 @@
+{{ define "main" }}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-navy via-slate-800 to-slate-900 overflow-hidden">
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="law-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#law-grid)" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div>
+        <!-- Jurisdiction Badge -->
+        <div class="flex items-center gap-2 mb-4">
+          {{ if eq .Params.jurisdiction "Federal" }}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-red-500/20 text-red-200 border border-red-400/30">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z" clip-rule="evenodd"/>
+            </svg>
+            Federal Law
+          </span>
+          {{ else }}
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-200 border border-blue-400/30">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+            </svg>
+            Michigan State Law
+          </span>
+          {{ end }}
+
+          {{ with .Params.category }}
+          <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-white/10 text-gray-300">
+            {{ . }}
+          </span>
+          {{ end }}
+        </div>
+
+        <!-- Citation -->
+        <p class="text-gold font-mono text-lg mb-2">{{ .Params.citation }}</p>
+
+        <!-- Title -->
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-0">
+          {{ .Title | replaceRE "^.*—\\s*" "" }}
+        </h1>
+      </div>
+
+      <!-- Scale Icon -->
+      <div class="hidden md:flex items-center justify-center w-20 h-20 rounded-2xl bg-white/10 backdrop-blur flex-shrink-0">
+        <svg class="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Content -->
+<article class="relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    {{ with .Description }}
+    <div class="bg-gray-50 rounded-xl border border-gray-200 p-6 mb-10">
+      <p class="text-slate leading-relaxed mb-0">{{ . }}</p>
+    </div>
+    {{ end }}
+
+    <div class="prose prose-lg max-w-none">
+      {{ .Content }}
+    </div>
+
+    <!-- Back Link -->
+    <div class="mt-12 pt-8 border-t border-gray-200">
+      <a href="/resources/#legal-framework" class="inline-flex items-center gap-2 text-sm font-medium text-slate hover:text-accent transition-colors">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Back to Resources
+      </a>
+    </div>
+
+  </div>
+</article>
+{{ end }}

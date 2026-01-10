@@ -1,0 +1,29 @@
+topics:
+  -
+    id: conflict-of-interest
+    label: "Conflict of interest"
+    description: "Familial or close personal ties affecting official action"
+  -
+    id: evidence-spoliation
+    label: "Evidence spoliation"
+    description: "Deletion/loss of messages, logs, or relevant records"
+  -
+    id: records-retention
+    label: "Records retention"
+    description: "Policy or practice governing preservation of communications"
+  -
+    id: off-channel-communication
+    label: "Off-channel communication"
+    description: "Use of personal devices or undocumented channels for official matters"
+  -
+    id: employment-threat
+    label: "Employment threat"
+    description: "Threatened discipline/termination or forced retirement implications"
+  -
+    id: jail-placement
+    label: "Jail placement"
+    description: "Statements about where someone was housed or held"
+  -
+    id: procedural
+    label: "Procedural / meta"
+    description: "Appearances, stipulations, off-the-record, exhibit marking"

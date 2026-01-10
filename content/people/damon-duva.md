@@ -8,11 +8,11 @@ status: "active"
 
 ## Role in Key Incidents
 
-Deputy Duva is a deputy with the St. Clair County Sheriff's Office. Deputy Duva is a close personal friend of Deputy Marc King.
+Deputy Duva is a deputy with the St. Clair County Sheriff's Office. Deputy Duva is a close personal friend of {{< person "marc-king" >}}.
 
 ## November 2022 OWI Incident
 
-Deputy Duva was involved in communications following Deputy Marc King's OWI arrest:
+Deputy Duva was involved in communications following {{< person "marc-king" >}}'s OWI arrest:
 
 - Had communications with other department personnel regarding the incident
 - Was a close friend of the arrested deputy

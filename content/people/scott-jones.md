@@ -10,7 +10,7 @@ Scott E. Jones served as a Lieutenant within the St. Clair County Sheriff's Offi
 
 ## Whistleblower Actions
 
-Following the November 6, 2022 OWI arrest of Deputy Marc King (Sheriff Mat King's brother), Lieutenant Jones reported concerns about the handling of the matter to Human Resources. According to court filings, he raised issues regarding:
+Following the November 6, 2022 OWI arrest of {{< person "marc-king" >}} ({{< person "mat-king" >}}'s brother), Lieutenant Jones reported concerns about the handling of the matter to Human Resources. According to court filings, he raised issues regarding:
 
 - Conflicts of interest in the internal investigation
 - Failure to engage an independent outside agency
@@ -22,13 +22,13 @@ Lieutenant Jones is the plaintiff in *Jones v. St. Clair County, et al.* (Case N
 
 ### Claims
 
-- **First Amendment Retaliation** (42 U.S.C. § 1983): Alleging retaliation for protected speech when he reported concerns about misconduct
+- **First Amendment Retaliation** ({{< legal-cite statute="42 U.S.C. § 1983" >}}): Alleging retaliation for protected speech when he reported concerns about misconduct
 - **Procedural Due Process** (Fourteenth Amendment): Constitutional claims related to his separation from employment
 - **Monell Liability**: Municipal liability claims against St. Clair County
 
 ### Key Rulings
 
-In 2025, Judge Nancy G. Edmunds denied summary judgment in part:
+In 2025, {{< person "nancy-edmunds" >}} denied summary judgment in part:
 
 - First Amendment retaliation claim **survived** summary judgment
 - Qualified immunity was **denied** for surviving claims

@@ -5,30 +5,36 @@ date: 2024-01-01
 
 ## Case Background
 
-This federal civil rights lawsuit was filed in the U.S. District Court for the Eastern District of Michigan following events that began on November 6, 2022. The case centers on allegations that Lieutenant Scott Jones was retaliated against for reporting concerns about how the St. Clair County Sheriff's Office handled the OWI arrest of Deputy Marc King, who is the brother of Sheriff Mat King.
+This federal civil rights lawsuit was filed in the U.S. District Court for the Eastern District of Michigan following events that began on November 6, 2022. The case centers on allegations that Lt. Scott Jones was retaliated against for reporting concerns about how the St. Clair County Sheriff's Office handled the OWI arrest of Deputy Marc King, who is the brother of Sheriff Mat King.
+
+### Key Parties
+
+{{< person slug="scott-jones" full="true" >}}
+{{< person slug="mat-king" full="true" >}}
+{{< person slug="marc-king" full="true" >}}
 
 ## The Underlying Events
 
-On November 6, 2022, Deputy Marc King was arrested for Operating While Intoxicated (OWI). What followed raised significant questions about conflicts of interest and proper procedure:
+On November 6, 2022, {{< person "marc-king" >}} was arrested for Operating While Intoxicated (OWI). What followed raised significant questions about conflicts of interest and proper procedure:
 
-- **Sheriff Mat King remained involved** in decisions about how to handle the arrest of his own brother
+- **{{< person "mat-king" >}} remained involved** in decisions about how to handle the arrest of his own brother
 - **No external agency was brought in** to handle the investigation despite the obvious conflict
-- **Lt. Scott Jones reported concerns** to Human Resources about the handling of the matter
+- **{{< person "scott-jones" >}} reported concerns** to Human Resources about the handling of the matter
 - **Lt. Jones was subsequently pressured to retire**, allegedly in retaliation for his protected speech
 
 ## Legal Claims
 
-### First Amendment Retaliation (42 U.S.C. § 1983)
+### First Amendment Retaliation ({{< legal-cite statute="42 U.S.C. § 1983" >}})
 
-The core claim alleges that Lt. Jones was retaliated against for engaging in protected speech when he reported his concerns about the handling of the Marc King arrest. The First Amendment protects public employees who speak on matters of public concern, and allegations of misconduct in a law enforcement agency clearly qualify.
+The core claim alleges that {{< person "scott-jones" >}} was retaliated against for engaging in protected speech when he reported his concerns about the handling of the {{< person "marc-king" >}} arrest. The First Amendment protects public employees who speak on matters of public concern, and allegations of misconduct in a law enforcement agency clearly qualify.
 
 ### Procedural Due Process (Fourteenth Amendment)
 
-The lawsuit also raises due process claims related to the circumstances of Lt. Jones's departure from the department.
+The lawsuit also raises due process claims related to the circumstances of {{< person "scott-jones" >}}'s departure from the department.
 
 ### Municipal Liability (Monell)
 
-Beyond the individual defendants, the case seeks to hold St. Clair County liable under *Monell v. Department of Social Services*, arguing that the county's policies, customs, or deliberate indifference enabled the alleged constitutional violations.
+Beyond the individual defendants, the case seeks to hold St. Clair County liable under {{< legal-cite case="Monell v. Department of Social Services" >}}, arguing that the county's policies, customs, or deliberate indifference enabled the alleged constitutional violations.
 
 ## Key Ruling: Summary Judgment Opinion (2025)
 

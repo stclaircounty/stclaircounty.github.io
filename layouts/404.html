@@ -1,0 +1,82 @@
+{{ define "main" }}
+<section class="min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+    <!-- 404 Badge -->
+    <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-100 border border-red-200 rounded-full text-red-600 text-sm font-medium mb-6">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      Error 404
+    </div>
+
+    <!-- Main Heading -->
+    <h1 class="text-5xl md:text-6xl font-extrabold text-navy mb-4">
+      Page Not Found
+    </h1>
+
+    <p class="text-xl text-slate-600 mb-8 max-w-lg mx-auto">
+      The page you're looking for doesn't exist or may have been moved.
+      Unlike some evidence in this case, this page wasn't deliberately deleted.
+    </p>
+
+    <!-- Search Suggestion -->
+    <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-6 mb-8">
+      <p class="text-slate-600 mb-4">Try exploring one of these sections:</p>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <a href="/timeline/" class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors group">
+          <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <p class="font-semibold text-navy text-sm group-hover:text-amber-700 transition-colors mb-0">Timeline</p>
+            <p class="text-xs text-slate-500 mb-0">Chronological events</p>
+          </div>
+        </a>
+        <a href="/depositions/" class="flex items-center gap-3 p-3 rounded-lg bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors group">
+          <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <p class="font-semibold text-navy text-sm group-hover:text-purple-700 transition-colors mb-0">Depositions</p>
+            <p class="text-xs text-slate-500 mb-0">Sworn testimony</p>
+          </div>
+        </a>
+        <a href="/incidents/" class="flex items-center gap-3 p-3 rounded-lg bg-red-50 hover:bg-red-100 border border-red-200 transition-colors group">
+          <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <p class="font-semibold text-navy text-sm group-hover:text-red-700 transition-colors mb-0">Incidents</p>
+            <p class="text-xs text-slate-500 mb-0">Documented events</p>
+          </div>
+        </a>
+        <a href="/evidence/" class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors group">
+          <div class="w-10 h-10 bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+            </svg>
+          </div>
+          <div class="text-left">
+            <p class="font-semibold text-navy text-sm group-hover:text-slate-700 transition-colors mb-0">Evidence</p>
+            <p class="text-xs text-slate-500 mb-0">Documents & files</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Home Button -->
+    <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-900 font-bold rounded-lg shadow-lg hover:shadow-xl transition-all">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+      Back to Home
+    </a>
+  </div>
+</section>
+{{ end }}

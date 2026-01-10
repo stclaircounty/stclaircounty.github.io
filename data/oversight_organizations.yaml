@@ -1,0 +1,74 @@
+# Oversight Organizations
+# Add new organizations by copying the template below
+
+- name: MCOLES
+  full_name: Michigan Commission on Law Enforcement Standards
+  category: Officer Licensing
+  description: Officer licensing, training standards, and decertification complaints.
+  address: |
+    106 W. Allegan St., Suite 600
+    Lansing, MI 48933
+  phone: (517) 322-5610
+  website: https://www.michigan.gov/mcoles
+  website_display: michigan.gov/mcoles
+  icon: shield-check
+
+- name: Judicial Tenure Commission
+  full_name: Judicial Tenure Commission
+  category: Judicial Conduct Oversight
+  description: Investigates complaints of judicial misconduct and disability.
+  address: |
+    3034 W. Grand Blvd., Suite 8-450
+    Detroit, MI 48202
+  phone: (313) 875-5110
+  website: https://jtc.courts.mi.gov
+  website_display: jtc.courts.mi.gov
+  icon: scale
+
+- name: Michigan Attorney General
+  full_name: Michigan Attorney General
+  category: State Law Enforcement
+  description: Public integrity investigations and government misconduct.
+  address: |
+    G. Mennen Williams Building
+    525 W. Ottawa St., Lansing, MI 48909
+  phone: (517) 335-7622
+  website: https://www.michigan.gov/ag
+  website_display: michigan.gov/ag
+  icon: building
+
+- name: Michigan State Police
+  full_name: Michigan State Police
+  category: Independent Investigations
+  description: Independent investigations of local law enforcement agencies.
+  address: |
+    7150 Harris Dr.
+    Dimondale, MI 48821
+  phone: (517) 332-2521
+  website: https://www.michigan.gov/msp
+  website_display: michigan.gov/msp
+  icon: star
+
+- name: ACLU of Michigan
+  full_name: ACLU of Michigan
+  category: Civil Liberties Advocacy
+  description: Civil rights advocacy, legal assistance, and constitutional litigation.
+  address: |
+    2966 Woodward Ave.
+    Detroit, MI 48201
+  phone: (313) 578-6800
+  website: https://www.aclumich.org
+  website_display: aclumich.org
+  icon: user
+
+- name: Michigan Press Association
+  full_name: Michigan Press Association
+  category: Transparency Advocacy
+  description: FOIA assistance, open meetings advocacy, and press freedom.
+  address: |
+    827 N. Washington Ave.
+    Lansing, MI 48906
+  phone: (517) 372-2424
+  website: https://www.michiganpress.org
+  website_display: michiganpress.org
+  icon: newspaper

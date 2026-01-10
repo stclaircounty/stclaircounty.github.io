@@ -18,7 +18,7 @@ tags:
 
 ## Overview
 
-This analysis documents the destruction of evidence by St. Clair County Sheriff's Office personnel in connection with the November 2022 OWI arrest of Deputy Marc King.
+This analysis documents the destruction of evidence by St. Clair County Sheriff's Office personnel in connection with the November 2022 OWI arrest of {{< person "marc-king" >}}.
 
 ## What Was Destroyed
 
@@ -26,15 +26,34 @@ This analysis documents the destruction of evidence by St. Clair County Sheriff'
 
 Multiple officers admitted under oath to deleting text messages from the time period surrounding the November 6, 2022 incident:
 
-**Captain Matthew Pohl**
-- Admitted to deleting text messages
-- Close personal friend of Deputy Marc King
-- Contacted by Sheriff Mat King on day of arrest
+#### Officers Involved in Evidence Destruction
 
-**Deputy Duva**
-- Admitted text messages are "no longer available"
-- Close personal friend of Deputy Marc King
-- Involved in post-arrest communications
+{{< person slug="matthew-pohl" full="true" >}}
+{{< person slug="damon-duva" full="true" >}}
+
+**{{< person "matthew-pohl" >}}**
+
+{{< quote source="Captain Matthew Pohl" page="246" deposition="pohl-deposition" type="answer" >}}
+Whatever text messages or phone calls that I'd referenced in my internal report, I no longer have those on my phone.
+{{< /quote >}}
+
+{{< quote source="Captain Matthew Pohl" page="246" deposition="pohl-deposition" type="answer" >}}
+We don't have a policy.
+{{< /quote >}}
+
+**{{< person "damon-duva" >}}**
+
+{{< quote source="Deputy Duva" page="16" deposition="duva-transcripts" type="question" >}}
+Do you still have records of those calls and text messages?
+{{< /quote >}}
+
+{{< quote source="Deputy Duva" page="16" deposition="duva-transcripts" type="answer" >}}
+I doubt it, no.
+{{< /quote >}}
+
+{{< quote source="Deputy Duva" page="17" deposition="duva-transcripts" type="answer" >}}
+Have you deleted call logs or text messages reflecting communications between yourself and the sheriff in November of 2022? I'm sure I have, yes.
+{{< /quote >}}
 
 ## Why It Matters
 
@@ -50,7 +69,7 @@ When a party destroys evidence relevant to litigation, courts apply the "spoliat
    - Adverse jury instructions
    - Case dismissal (in extreme cases)
 
-3. **Criminal Liability**: Under Michigan law (MCL 750.491), tampering with evidence is a criminal offense
+3. **Criminal Liability**: Under Michigan law ({{< legal-cite statute="MCL 750.491" >}}), tampering with evidence is a criminal offense
 
 ### Pattern Analysis
 
@@ -126,6 +145,6 @@ Based on this analysis:
 
 The following depositions and transcripts document the evidence spoliation:
 
-- Sheriff Mat King Deposition
-- Captain Matthew Pohl Deposition
-- Deputy Duva Transcripts
+- {{< evidence "mat-king-deposition" >}}
+- {{< evidence "pohl-deposition" >}}
+- {{< evidence "duva-transcripts" >}}

@@ -1,0 +1,80 @@
+{{ define "main" }}
+{{ partial "list-header.html" (dict
+  "page" .
+  "icon" "documents"
+  "title" "Deposition Transcripts"
+  "description" "Full searchable transcripts of sworn depositions. Read the complete Q&A exchanges with page references."
+  "count" (len .Pages)
+  "count_label" "Transcripts"
+) }}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  {{ with .Content }}
+  <div class="prose prose-lg max-w-none mb-8">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {{ range .Pages }}
+    {{ $slug := .Params.deposition_slug }}
+    {{ $data := index site.Data.depositions $slug }}
+    {{ if $data }}
+    {{ $depo := $data.deposition }}
+    {{ $segments := $data.segments }}
+    <a href="{{ .RelPermalink }}" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-200 overflow-hidden border border-slate-200 hover:border-purple-300">
+      <div class="bg-gradient-to-br from-purple-600 to-indigo-700 p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-lg">{{ $depo.witness.name }}</h3>
+            <p class="text-purple-200 text-sm">{{ $depo.witness.role }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="p-5">
+        <h4 class="font-semibold text-navy mb-2 group-hover:text-purple-600 transition-colors">{{ $depo.title }}</h4>
+        <div class="flex items-center gap-4 text-sm text-slate-500">
+          {{ with $depo.pages }}
+          <span class="flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            {{ sub .end .start }} pages
+          </span>
+          {{ end }}
+          {{ with $segments }}
+          <span class="flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            {{ len . }} segments
+          </span>
+          {{ end }}
+        </div>
+        <div class="mt-4 flex items-center text-purple-600 font-medium text-sm group-hover:text-purple-700">
+          <span>Read Transcript</span>
+          <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
+      </div>
+    </a>
+    {{ end }}
+    {{ end }}
+  </div>
+
+  <div class="mt-10 text-center">
+    <a href="/depositions/" class="inline-flex items-center gap-2 text-slate-600 hover:text-navy font-medium">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Deposition Summaries
+    </a>
+  </div>
+</div>
+{{ end }}

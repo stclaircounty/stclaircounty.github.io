@@ -32,13 +32,33 @@
   <!-- Filter Controls -->
   <div class="bg-white rounded-lg shadow-card p-4 mb-8 sticky top-20 z-10">
     <div class="flex flex-wrap gap-4 items-center">
-      <span class="text-sm font-medium text-slate">Filter:</span>
-      <div class="flex flex-wrap gap-2">
-        <button class="badge badge-severity-critical hover:opacity-80 cursor-pointer transition-opacity" data-filter="critical">Critical</button>
-        <button class="badge badge-severity-high hover:opacity-80 cursor-pointer transition-opacity" data-filter="high">High</button>
-        <button class="badge badge-severity-medium hover:opacity-80 cursor-pointer transition-opacity" data-filter="medium">Medium</button>
-        <button class="badge bg-blue-100 text-blue-800 hover:opacity-80 cursor-pointer transition-opacity" data-filter="litigation">Litigation</button>
-        <button class="badge bg-gray-100 text-slate hover:bg-gray-200 cursor-pointer transition-opacity" data-filter="all">All</button>
+      <div class="flex flex-wrap gap-4 items-center">
+        <span class="text-sm font-medium text-slate">Severity:</span>
+        <div class="flex flex-wrap gap-2">
+          <button class="badge badge-severity-critical hover:opacity-80 cursor-pointer transition-opacity" data-filter="critical">Critical</button>
+          <button class="badge badge-severity-high hover:opacity-80 cursor-pointer transition-opacity" data-filter="high">High</button>
+          <button class="badge badge-severity-medium hover:opacity-80 cursor-pointer transition-opacity" data-filter="medium">Medium</button>
+          <button class="badge bg-blue-100 text-blue-800 hover:opacity-80 cursor-pointer transition-opacity" data-filter="litigation">Litigation</button>
+          <button class="badge bg-gray-100 text-slate hover:bg-gray-200 cursor-pointer transition-opacity" data-filter="all">All</button>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-4 items-center border-l border-slate-200 pl-4">
+        <span class="text-sm font-medium text-slate">Person:</span>
+        <select id="person-filter" class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400">
+          <option value="all">All People</option>
+          {{ $involvedPeople := slice }}
+          {{ range $events }}
+            {{ range $personKey, $inv := .people_involved }}
+              {{ if not (in $involvedPeople $personKey) }}
+                {{ $involvedPeople = $involvedPeople | append $personKey }}
+              {{ end }}
+            {{ end }}
+          {{ end }}
+          {{ range $involvedPeople }}
+          {{ $person := index $people . }}
+          <option value="{{ . }}">{{ if $person }}{{ $person.name }}{{ else }}{{ . | humanize }}{{ end }}</option>
+          {{ end }}
+        </select>
       </div>
     </div>
   </div>
@@ -68,7 +88,9 @@
       {{/* Event card */}}
       {{ $severity := .severity | default "medium" }}
       {{ $isLitigation := eq .event_type "litigation" }}
-      <div class="relative pl-16 timeline-event" data-severity="{{ $severity }}" data-type="{{ .event_type }}">
+      {{ $eventPeople := slice }}
+      {{ range $personKey, $inv := .people_involved }}{{ $eventPeople = $eventPeople | append $personKey }}{{ end }}
+      <div class="relative pl-16 timeline-event" data-severity="{{ $severity }}" data-type="{{ .event_type }}" data-people="{{ delimit $eventPeople "," }}">
         <!-- Timeline dot -->
         <div class="absolute left-4 w-5 h-5 rounded-full border-4 border-white shadow
           {{ if eq $severity "critical" }}bg-red-500
@@ -295,24 +317,50 @@
 
 {{ define "scripts" }}
 <script>
-// Filter functionality
+// Combined filter state
+let currentSeverityFilter = 'all';
+let currentPersonFilter = 'all';
+
+function applyFilters() {
+  document.querySelectorAll('.timeline-event').forEach(event => {
+    let showBySeverity = true;
+    let showByPerson = true;
+
+    // Check severity filter
+    if (currentSeverityFilter !== 'all') {
+      if (currentSeverityFilter === 'litigation') {
+        showBySeverity = event.dataset.type === 'litigation';
+      } else {
+        showBySeverity = event.dataset.severity === currentSeverityFilter;
+      }
+    }
+
+    // Check person filter
+    if (currentPersonFilter !== 'all') {
+      const eventPeople = (event.dataset.people || '').split(',');
+      showByPerson = eventPeople.includes(currentPersonFilter);
+    }
+
+    event.style.display = (showBySeverity && showByPerson) ? 'block' : 'none';
+  });
+}
+
+// Severity filter buttons
 document.querySelectorAll('[data-filter]').forEach(btn => {
   btn.addEventListener('click', function() {
-    const filter = this.dataset.filter;
-    document.querySelectorAll('.timeline-event').forEach(event => {
-      if (filter === 'all') {
-        event.style.display = 'block';
-      } else if (filter === 'litigation') {
-        event.style.display = event.dataset.type === 'litigation' ? 'block' : 'none';
-      } else {
-        event.style.display = event.dataset.severity === filter ? 'block' : 'none';
-      }
-    });
+    currentSeverityFilter = this.dataset.filter;
+    applyFilters();
 
     // Update active state
     document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('ring-2', 'ring-offset-1'));
     this.classList.add('ring-2', 'ring-offset-1');
   });
+});
+
+// Person filter dropdown
+document.getElementById('person-filter').addEventListener('change', function() {
+  currentPersonFilter = this.value;
+  applyFilters();
 });
 </script>
 {{ end }}

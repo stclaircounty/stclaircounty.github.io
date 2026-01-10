@@ -1,0 +1,259 @@
+{{ define "main" }}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-navy via-slate-800 to-slate-900 overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="contact-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#contact-grid)" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+    <div class="text-center">
+      <!-- Icon -->
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur mb-6">
+        <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+        </svg>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+        {{ .Title }}
+      </h1>
+
+      {{ with .Description }}
+      <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        {{ . }}
+      </p>
+      {{ end }}
+    </div>
+  </div>
+
+  <!-- Decorative bottom wave -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg class="w-full h-12 text-offwhite" preserveAspectRatio="none" viewBox="0 0 1200 120" fill="currentColor">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- Main Content -->
+<article class="relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    <!-- Primary Contact Card -->
+    <section class="mb-12">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-navy to-slate-800 px-6 py-4">
+          <h2 class="text-lg font-bold text-white flex items-center gap-3 mb-0">
+            <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            Primary Contact
+          </h2>
+        </div>
+        <div class="px-8 py-8">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+              <svg class="w-7 h-7 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-slate-light uppercase tracking-wide font-medium mb-1">Email</p>
+              <a href="mailto:contact@stclaircounty.net" class="text-2xl sm:text-3xl font-bold text-navy hover:text-accent transition-colors">
+                contact@stclaircounty.net
+              </a>
+            </div>
+          </div>
+          <p class="text-slate leading-relaxed">
+            This is the primary contact point for all inquiries, submissions, and correspondence related to this project. We monitor this inbox regularly and respond to all legitimate inquiries.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What You Can Send -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-navy">What You Can Send Us</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-gray-300 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-navy mb-2">Documents & Evidence</h3>
+              <p class="text-sm text-slate-light">Court filings, FOIA responses, official correspondence, internal memos, photographs, videos, or any documentation related to accountability issues.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-gray-300 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-navy mb-2">Tips & Information</h3>
+              <p class="text-sm text-slate-light">Firsthand accounts, leads on developing stories, information about incidents not yet documented, or context that helps us understand existing cases.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-gray-300 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-navy mb-2">Corrections</h3>
+              <p class="text-sm text-slate-light">If you find any errors, outdated information, or inaccuracies on this site, please let us know. We take accuracy seriously and correct verified errors promptly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md hover:border-gray-300 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-navy mb-2">General Inquiries</h3>
+              <p class="text-sm text-slate-light">Questions about the project, media inquiries, collaboration requests, or any other correspondence related to our mission.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Source Protection -->
+    <section class="mb-12">
+      <div class="bg-gradient-to-br from-slate-800 to-navy rounded-2xl p-8 text-white">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white mb-3">Source Protection</h2>
+            <p class="text-gray-300 leading-relaxed mb-4">
+              We understand that sharing information about government misconduct can be sensitive. We take source protection seriously and will maintain confidentiality when requested.
+            </p>
+            <ul class="space-y-2 text-gray-300 text-sm">
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Anonymous submissions are accepted</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>We never reveal sources without explicit permission</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Documents are verified independently before publication</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Before You Send -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-navy">Before You Send</h2>
+      </div>
+
+      <div class="bg-amber-50 rounded-xl border border-amber-200 p-6">
+        <ul class="space-y-3 text-slate">
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-amber-200 text-amber-800 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+            <span><strong class="text-navy">Verify authenticity.</strong> We only publish documents we can verify. Include information about the source and how you obtained the materials.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-amber-200 text-amber-800 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+            <span><strong class="text-navy">Provide context.</strong> Help us understand what the documents show and why they matter. The more context, the faster we can review.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-amber-200 text-amber-800 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+            <span><strong class="text-navy">Indicate confidentiality needs.</strong> Let us know if you need to remain anonymous or if there are any restrictions on how the information can be used.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-amber-200 text-amber-800 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+            <span><strong class="text-navy">Be patient.</strong> We review all submissions carefully. Complex materials may take time to verify and publish.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Response Times -->
+    <section>
+      <div class="bg-gray-50 rounded-xl border border-gray-200 p-6">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-slate" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold text-navy mb-2">Response Times</h3>
+            <p class="text-sm text-slate-light">
+              We aim to acknowledge all emails within 48 hours. Document review and verification may take longer depending on complexity. If your matter is time-sensitive, please indicate that in your subject line.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</article>
+
+<!-- Bottom CTA -->
+<section class="bg-gradient-to-r from-navy to-slate-800 text-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+    <p class="text-xl font-semibold text-white mb-2">
+      Ready to get in touch?
+    </p>
+    <a href="mailto:contact@stclaircounty.net" class="inline-flex items-center gap-2 text-gold hover:text-amber-300 transition-colors text-lg">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+      </svg>
+      contact@stclaircounty.net
+    </a>
+  </div>
+</section>
+{{ end }}

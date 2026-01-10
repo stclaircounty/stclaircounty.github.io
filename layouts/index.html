@@ -1,4 +1,5 @@
 {{ define "main" }}
+<div data-pagefind-ignore="all">
 {{/* Pull all data */}}
 {{ $depositionsData := site.Data.depositions }}
 {{ $incidentsData := site.Data.incidents }}
@@ -6,11 +7,23 @@
 {{ $timelineData := site.Data.timeline }}
 {{ $peopleData := site.Data.people }}
 
-{{/* Build slices from data */}}
+{{/* Build slices from data - depositions.yaml is source of truth */}}
 {{ $depositions := slice }}
 {{ range $key, $item := $depositionsData }}
-  {{ if not (hasPrefix $key "_") }}
-    {{ $depositions = $depositions | append (merge $item (dict "key" $key)) }}
+  {{ if and (not (hasPrefix $key "_")) (reflect.IsMap $item) $item.deponent }}
+    {{/* Main depositions.yaml format - contains key_quotes, metadata, etc. */}}
+    {{ $urlSlug := $key | replaceRE "_" "-" }}
+    {{/* Get segment count from referenced data file if available */}}
+    {{ $segmentCount := 0 }}
+    {{ $pages := dict }}
+    {{ with $item.data_file }}
+      {{ $dataFile := index site.Data.depositions . }}
+      {{ if $dataFile }}
+        {{ with $dataFile.segments }}{{ $segmentCount = len . }}{{ end }}
+        {{ with $dataFile.deposition }}{{ $pages = .pages }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ $depositions = $depositions | append (merge $item (dict "key" $urlSlug "segment_count" $segmentCount "pages" $pages)) }}
   {{ end }}
 {{ end }}
 {{ $depositions = sort $depositions "date" "desc" }}
@@ -258,8 +271,8 @@
               <span class="w-2 h-2 mt-2 rounded-full bg-yellow-500 flex-shrink-0"></span>
               {{ end }}
               <div class="flex-1 min-w-0">
-                <p class="font-semibold text-navy text-sm truncate">{{ .title }}</p>
-                <p class="text-xs text-slate-500 mt-1">{{ with .date }}{{ (time .).Format "Jan 2, 2006" }}{{ end }}</p>
+                <p class="font-semibold text-navy text-sm truncate mb-0">{{ .title }}</p>
+                <p class="text-xs text-slate-500 mt-1 mb-0">{{ with .date }}{{ (time .).Format "Jan 2, 2006" }}{{ end }}</p>
               </div>
             </div>
           </a>
@@ -286,8 +299,8 @@
             <div class="flex items-start gap-3">
               <span class="w-2 h-2 mt-2 rounded-full bg-amber-500 flex-shrink-0"></span>
               <div class="flex-1 min-w-0">
-                <p class="font-semibold text-navy text-sm truncate">{{ .title }}</p>
-                <p class="text-xs text-slate-500 mt-1">{{ with .deponent }}{{ .name }}{{ end }}</p>
+                <p class="font-semibold text-navy text-sm truncate mb-0">{{ .title }}</p>
+                <p class="text-xs text-slate-500 mt-1 mb-0">{{ with .deponent }}{{ .name }}{{ end }}</p>
               </div>
             </div>
           </a>
@@ -314,8 +327,8 @@
             <div class="flex items-start gap-3">
               <span class="w-2 h-2 mt-2 rounded-full bg-purple-500 flex-shrink-0"></span>
               <div class="flex-1 min-w-0">
-                <p class="font-semibold text-navy text-sm truncate">{{ .title }}</p>
-                <p class="text-xs text-slate-500 mt-1">{{ .evidence_type | humanize }}</p>
+                <p class="font-semibold text-navy text-sm truncate mb-0">{{ .title }}</p>
+                <p class="text-xs text-slate-500 mt-1 mb-0">{{ .evidence_type | humanize }}</p>
               </div>
             </div>
           </a>
@@ -331,7 +344,9 @@
 {{ range $depositions }}
   {{ $depo := . }}
   {{ range .key_quotes }}
-    {{ $allQuotes = $allQuotes | append (dict "text" .text "page" .page "deponent" $depo.deponent.name "depo_key" $depo.key "depo_title" $depo.title) }}
+    {{ $deponentName := "" }}
+    {{ with $depo.deponent }}{{ $deponentName = .name }}{{ end }}
+    {{ $allQuotes = $allQuotes | append (dict "text" .text "page" .page "deponent" $deponentName "depo_key" $depo.key "depo_title" $depo.title) }}
   {{ end }}
 {{ end }}
 
@@ -344,17 +359,21 @@
       <p class="text-slate-400 text-lg">Direct quotes from sworn depositions</p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-6">
-      {{ range first 4 $allQuotes }}
-      <blockquote class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
+    {{/* Store all quotes as JSON for JavaScript randomization */}}
+    <script id="quotes-data" type="application/json">{{ $allQuotes | jsonify | safeJS }}</script>
+
+    <div id="quotes-container" class="grid md:grid-cols-2 gap-6">
+      {{/* Render 4 placeholders that will be populated by JavaScript */}}
+      {{ range seq 4 }}
+      <blockquote class="quote-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
         <div class="text-5xl text-amber-500/30 leading-none mb-2">"</div>
-        <p class="text-lg text-slate-200 italic mb-4 -mt-6">{{ .text }}</p>
+        <p class="quote-text text-lg text-slate-200 italic mb-4 -mt-6"></p>
         <footer class="flex items-center justify-between">
           <div>
-            <cite class="text-amber-400 font-medium not-italic">{{ .deponent }}</cite>
-            <p class="text-slate-500 text-sm">Page {{ .page }}</p>
+            <cite class="quote-deponent text-amber-400 font-medium not-italic"></cite>
+            <p class="quote-page text-slate-500 text-sm"></p>
           </div>
-          <a href="/depositions/{{ .depo_key }}/" class="text-slate-400 hover:text-white transition-colors">
+          <a class="quote-link text-slate-400 hover:text-white transition-colors" href="#">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
@@ -363,6 +382,35 @@
       </blockquote>
       {{ end }}
     </div>
+
+    <script>
+      (function() {
+        const quotesData = JSON.parse(document.getElementById('quotes-data').textContent);
+        const cards = document.querySelectorAll('.quote-card');
+
+        // Fisher-Yates shuffle
+        function shuffle(array) {
+          const arr = [...array];
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+          return arr;
+        }
+
+        const randomQuotes = shuffle(quotesData).slice(0, 4);
+
+        cards.forEach((card, i) => {
+          if (randomQuotes[i]) {
+            const q = randomQuotes[i];
+            card.querySelector('.quote-text').textContent = q.text;
+            card.querySelector('.quote-deponent').textContent = q.deponent;
+            card.querySelector('.quote-page').textContent = 'Page ' + q.page;
+            card.querySelector('.quote-link').href = '/depositions/' + q.depo_key + '/';
+          }
+        });
+      })();
+    </script>
   </div>
 </section>
 {{ end }}
@@ -548,4 +596,5 @@
     </div>
   </div>
 </section>
+</div>
 {{ end }}

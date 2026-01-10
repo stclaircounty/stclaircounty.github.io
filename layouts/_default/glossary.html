@@ -1,0 +1,177 @@
+{{ define "main" }}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-navy via-slate-800 to-slate-900 overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="glossary-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#glossary-grid)" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+    <div class="text-center">
+      <!-- Icon -->
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur mb-6">
+        <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Legal Glossary</h1>
+
+      <p class="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        Understanding the legal terminology used in court documents, depositions, and official records.
+      </p>
+    </div>
+  </div>
+
+  <!-- Decorative bottom wave -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg class="w-full h-12 text-slate-50" preserveAspectRatio="none" viewBox="0 0 1200 120" fill="currentColor">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- Quick Navigation -->
+<section class="bg-white border-b border-slate-200 sticky top-16 z-10">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <div class="flex items-center gap-2 overflow-x-auto">
+      <span class="text-sm font-medium text-slate-500 flex-shrink-0">Jump to:</span>
+      {{ range (slice "A" "B" "C" "D" "E" "F" "G" "I" "J" "L" "M" "O" "P" "R" "S" "T" "W") }}
+      <a href="#{{ . }}" class="px-2 py-1 text-sm font-medium text-slate-600 hover:text-amber-600 hover:bg-amber-50 rounded transition-colors">{{ . }}</a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<!-- Glossary Content -->
+<section class="py-12 bg-slate-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {{ $terms := dict
+      "A" (slice
+        (dict "term" "Affidavit" "definition" "A written statement of facts made under oath. Unlike testimony, an affidavit is prepared in writing and signed before a notary public or other authorized official.")
+        (dict "term" "Allegation" "definition" "A claim or assertion that someone has done something wrong or illegal, which has not yet been proven in court. Allegations are not evidence of guilt.")
+        (dict "term" "Appeal" "definition" "A request to a higher court to review and change the decision of a lower court. Appeals focus on whether the law was correctly applied, not on re-examining facts.")
+      )
+      "B" (slice
+        (dict "term" "Brady Material" "definition" "Evidence that is favorable to the defendant in a criminal case and material to guilt or punishment. Prosecutors are constitutionally required to disclose this evidence to the defense.")
+        (dict "term" "Burden of Proof" "definition" "The obligation to prove one's assertions. In civil cases, this is typically 'preponderance of the evidence' (more likely than not). In criminal cases, it's 'beyond a reasonable doubt.'")
+      )
+      "C" (slice
+        (dict "term" "Civil Rights Violation" "definition" "An infringement on a person's rights guaranteed by the Constitution or federal law, often actionable under 42 U.S.C. § 1983 when committed by someone acting under color of law.")
+        (dict "term" "Color of Law" "definition" "Actions taken by government officials (including law enforcement) using their authority. Misconduct under color of law can give rise to federal civil rights claims.")
+        (dict "term" "Complaint" "definition" "The initial legal document filed to begin a lawsuit, stating the plaintiff's claims against the defendant and the relief sought.")
+        (dict "term" "Contempt of Court" "definition" "Willful disobedience of a court order or disrespectful behavior toward the court. Can result in fines or jail time.")
+      )
+      "D" (slice
+        (dict "term" "Defendant" "definition" "The person or entity being sued (in a civil case) or accused of a crime (in a criminal case).")
+        (dict "term" "Deposition" "definition" "Sworn, out-of-court testimony given by a witness and recorded for later use in court. Witnesses can be cross-examined, and false statements constitute perjury.")
+        (dict "term" "Discovery" "definition" "The pre-trial process where parties exchange information and evidence relevant to the case. Includes depositions, interrogatories, and document requests.")
+        (dict "term" "Due Process" "definition" "Constitutional guarantee that legal proceedings will be fair and that individuals will receive notice and an opportunity to be heard before the government deprives them of life, liberty, or property.")
+      )
+      "E" (slice
+        (dict "term" "Evidence" "definition" "Information presented in court to prove or disprove facts in dispute. Includes testimony, documents, physical objects, and digital records.")
+        (dict "term" "Exhibit" "definition" "A document, photograph, or other item introduced as evidence during a trial or deposition.")
+        (dict "term" "Exculpatory Evidence" "definition" "Evidence that tends to show a defendant is not guilty or that mitigates the severity of the offense.")
+      )
+      "F" (slice
+        (dict "term" "FOIA (Freedom of Information Act)" "definition" "Federal law that provides the public right to request access to records from federal agencies. Michigan has a similar state law (Michigan FOIA).")
+        (dict "term" "Fourth Amendment" "definition" "Constitutional protection against unreasonable searches and seizures. Requires warrants to be supported by probable cause.")
+      )
+      "G" (slice
+        (dict "term" "Grand Jury" "definition" "A group of citizens that reviews evidence presented by prosecutors to determine whether there is probable cause to charge someone with a crime.")
+        (dict "term" "Governmental Immunity" "definition" "Legal doctrine that protects government entities and officials from lawsuits. Has various exceptions, particularly for intentional misconduct.")
+      )
+      "I" (slice
+        (dict "term" "Indictment" "definition" "A formal accusation of a crime, typically issued by a grand jury after reviewing evidence presented by prosecutors.")
+        (dict "term" "Injunction" "definition" "A court order requiring a party to do or stop doing a specific action. Violation can result in contempt of court.")
+        (dict "term" "Interrogatories" "definition" "Written questions sent by one party to another during discovery, which must be answered under oath in writing.")
+      )
+      "J" (slice
+        (dict "term" "Judgment" "definition" "The final decision of a court resolving the dispute and determining the rights and obligations of the parties.")
+        (dict "term" "Jurisdiction" "definition" "The authority of a court to hear and decide a case. Can be based on geography, subject matter, or the parties involved.")
+      )
+      "L" (slice
+        (dict "term" "Liability" "definition" "Legal responsibility for one's actions or omissions. In civil cases, liability often results in an obligation to pay damages.")
+        (dict "term" "Litigation" "definition" "The process of taking legal action through the court system. Includes all phases from filing a complaint through trial and appeals.")
+      )
+      "M" (slice
+        (dict "term" "Motion" "definition" "A formal request to the court for a specific ruling or order. Common motions include motions to dismiss, motions for summary judgment, and motions to compel discovery.")
+        (dict "term" "Municipal Liability" "definition" "Legal responsibility of a city or county for constitutional violations by its employees, typically requiring proof of an official policy or custom that caused the violation.")
+      )
+      "O" (slice
+        (dict "term" "Objection" "definition" "A formal protest raised during proceedings claiming that something is improper. In depositions, objections are noted for the record but the witness typically still answers.")
+      )
+      "P" (slice
+        (dict "term" "Perjury" "definition" "The crime of deliberately lying under oath. Applies to testimony in court, depositions, and sworn written statements.")
+        (dict "term" "Plaintiff" "definition" "The person or entity who initiates a lawsuit by filing a complaint against the defendant.")
+        (dict "term" "Preponderance of the Evidence" "definition" "The standard of proof in most civil cases, meaning the evidence shows it is more likely than not that the claim is true.")
+        (dict "term" "Probable Cause" "definition" "Reasonable grounds to believe that a person has committed a crime. Required for arrests and search warrants.")
+      )
+      "Q" (slice
+        (dict "term" "Qualified Immunity" "definition" "Legal doctrine that protects government officials from civil liability unless they violated 'clearly established' statutory or constitutional rights.")
+      )
+      "R" (slice
+        (dict "term" "Record" "definition" "The official collection of all documents, evidence, and transcripts from a legal proceeding.")
+        (dict "term" "Respondeat Superior" "definition" "Legal doctrine holding employers responsible for actions of employees performed within the scope of their employment.")
+      )
+      "S" (slice
+        (dict "term" "Section 1983" "definition" "Federal civil rights law (42 U.S.C. § 1983) allowing individuals to sue state and local officials for constitutional violations.")
+        (dict "term" "Settlement" "definition" "An agreement between parties to resolve a dispute without a full trial. Terms may include payment and/or changes in policy.")
+        (dict "term" "Spoliation" "definition" "The intentional, reckless, or negligent destruction or alteration of evidence. Can result in sanctions and negative inferences at trial.")
+        (dict "term" "Subpoena" "definition" "A legal order requiring someone to appear in court or at a deposition, or to produce documents.")
+        (dict "term" "Summary Judgment" "definition" "A court ruling that no trial is necessary because there are no disputed material facts and one party is entitled to judgment as a matter of law.")
+        (dict "term" "Sworn Testimony" "definition" "Statements made under oath, subject to penalties for perjury if false. Includes testimony at trial, depositions, and affidavits.")
+      )
+      "T" (slice
+        (dict "term" "Testimony" "definition" "Statements made by a witness under oath, either in court or during a deposition.")
+        (dict "term" "Tort" "definition" "A civil wrong that causes harm to another person, for which the law provides a remedy (usually monetary damages).")
+        (dict "term" "Transcript" "definition" "A written, word-for-word record of what was said during a legal proceeding, such as a trial or deposition.")
+      )
+      "W" (slice
+        (dict "term" "Witness" "definition" "A person who provides testimony under oath about facts relevant to a legal proceeding.")
+        (dict "term" "Writ" "definition" "A formal written order issued by a court, requiring the performance of a specific act.")
+      )
+    }}
+
+    <div class="space-y-12">
+      {{ range $letter, $termList := $terms }}
+      <div id="{{ $letter }}" class="scroll-mt-32">
+        <h2 class="text-2xl font-bold text-navy mb-6 pb-2 border-b-2 border-amber-400 inline-block">{{ $letter }}</h2>
+        <div class="space-y-6">
+          {{ range $termList }}
+          <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-bold text-navy mb-2">{{ .term }}</h3>
+            <p class="text-slate-600 leading-relaxed mb-0">{{ .definition }}</p>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-12 bg-white border-t border-slate-200">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-slate-600 mb-4">
+      Understanding these terms will help you better comprehend the documents and testimony on this site.
+    </p>
+    <a href="/depositions/" class="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      Read the Depositions
+    </a>
+  </div>
+</section>
+{{ end }}

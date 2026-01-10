@@ -18,15 +18,15 @@ tags:
 
 ## Event Summary
 
-On the same day as Deputy Marc King's OWI arrest, Sheriff Mat King was notified of his brother's arrest. Rather than recusing himself from the matter, the Sheriff became directly involved.
+On the same day as {{< person "marc-king" >}}'s OWI arrest, {{< person "mat-king" >}} was notified of his brother's arrest. Rather than recusing himself from the matter, the Sheriff became directly involved.
 
 ## What Happened
 
 According to sworn testimony:
 
-- Sheriff Mat King learned of his brother's arrest on November 6, 2022
-- He contacted Captain Matthew Pohl regarding the incident
-- He contacted the Undersheriff
+- {{< person "mat-king" >}} learned of his brother's arrest on November 6, 2022
+- He contacted {{< person "matthew-pohl" >}} regarding the incident
+- He contacted {{< person "jim-spadafore" >}}
 - Command-level discussions occurred about how to handle the matter
 
 ## The Failure Point
@@ -35,7 +35,7 @@ This was the critical moment where proper governance should have intervened:
 
 ### What Should Have Happened
 
-- Sheriff King should have immediately recused himself
+- {{< person "mat-king" >}} should have immediately recused himself
 - An external agency should have been contacted to handle the investigation
 - All communications should have been documented and preserved
 - A clear chain of custody should have been established

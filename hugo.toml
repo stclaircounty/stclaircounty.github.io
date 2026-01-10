@@ -79,10 +79,16 @@ title = 'St. Clair Under Oath'
 
 # Output formats
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "sitemap"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML"]
   term = ["HTML"]
+
+# Sitemap configuration
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
 
 # Permalink structure
 [permalinks]
@@ -93,6 +99,29 @@ title = 'St. Clair Under Oath'
   evidence = "/evidence/:contentbasename/"
   take-action = "/take-action/:contentbasename/"
   resources = "/resources/:contentbasename/"
+
+# Related content configuration
+# Use in templates: {{ $related := .Site.RegularPages.Related . | first 5 }}
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+
+  [[related.indices]]
+    name = "incident_types"
+    weight = 80
+
+  [[related.indices]]
+    name = "date"
+    weight = 10
+
+  [[related.indices]]
+    name = "keywords"
+    weight = 60
 
 # Security settings for Hugo
 [security]

@@ -1,11 +1,13 @@
 # St. Clair County Public Accountability Project - Depositions Database
-# Last Updated: 2026-01-09
+# Last Updated: 2026-01-10
 #
 # Access: site.Data.depositions["mat-king-deposition"]
 
 mat-king-deposition:
   title: "Sheriff Mat King Deposition"
   date: 2024-01-15
+  data_file: mat_king  # References data/depositions/mat_king.yaml for segments
+  transcript_slug: mat-king  # Links to /deposition-transcripts/mat-king/
   deponent:
     id: mat-king
     name: Sheriff Mat King
@@ -52,10 +54,33 @@ mat-king-deposition:
     - internal-investigation
     - governance-failure
   related_people:
-    - mat-king
-    - marc-king
-    - matthew-pohl
-    - jim-spadafore
+    # Command Staff
+    - mat-king           # Deponent
+    - jim-spadafore      # Undersheriff, mentioned in meetings
+    - matthew-pohl       # Captain, conducted investigation
+    # Deputies
+    - marc-king          # Subject of arrest, Sheriff's brother
+    - damon-duva         # Retrieved Marc from Lapeer jail
+    - chad-cronkright    # Present at meetings, deleted texts
+    - phil-pokriefka     # Union VP, notification chain
+    - joe-schoof         # At arrest scene
+    - george-clark       # Arresting officer
+    - april-seavolt      # At arrest scene
+    # Lieutenants
+    - scott-jones        # Plaintiff, on-scene supervisor
+    - scott-braun        # Lieutenant Braun, at DB during processing
+    - mark-dedenbach     # Referenced in prior incidents
+    - john-maxey   # Referenced in testimony
+    - george-maschke # Referenced in supervisory chain
+    # Sergeants
+    - sergeant-landon    # Referenced in supervisory chain
+    # Detectives
+    - kelsey-wade        # Detective Wade, present during events
+    - detective-bonner   # Present during events
+    # External
+    - sheriff-mckenna    # Lapeer County Sheriff
+    # Union
+    - steve-sellers      # Business Agent, extensively discussed
   related_incidents:
     - 2022-11-06-owi-arrest
   related_timeline:
@@ -75,6 +100,8 @@ mat-king-deposition:
 pohl-deposition:
   title: "Captain Matthew Pohl Deposition"
   date: 2024-01-20
+  data_file: matthew_pohl  # References data/depositions/matthew_pohl.yaml for segments
+  transcript_slug: matthew-pohl  # Links to /deposition-transcripts/matthew-pohl/
   deponent:
     id: matthew-pohl
     name: Captain Matthew Pohl
@@ -118,9 +145,27 @@ pohl-deposition:
     - personal-relationships
     - command-involvement
   related_people:
-    - matthew-pohl
-    - mat-king
-    - marc-king
+    # Command Staff
+    - matthew-pohl       # Deponent
+    - mat-king           # Sheriff, friend of deponent
+    - jim-spadafore      # Undersheriff, mentioned in memo
+    # Deputies
+    - marc-king          # Subject of arrest
+    - damon-duva         # Deputy Duva, involved in response
+    - josh-goodrich      # Pohl texted him at 5:44 PM about arrest
+    - chad-cronkright    # Mentioned, deleted texts
+    - phil-pokriefka     # Union VP, notification chain
+    - joe-schoof         # At arrest scene, interviewed
+    - george-clark       # Arresting officer, interviewed
+    - april-seavolt      # At arrest scene, interviewed
+    - andy-teichow       # Interviewed during investigation
+    # Lieutenants
+    - scott-jones        # Plaintiff, on-scene supervisor
+    - scott-braun        # Lieutenant Braun, received memo
+    # Other
+    - mark-dedenbach     # Referenced in prior incidents
+    - steve-sellers      # Business Agent, present at meetings
+    - andrea-blair       # Secretary, present at meetings
   related_incidents:
     - 2022-11-06-owi-arrest
   related_timeline:
@@ -140,6 +185,8 @@ pohl-deposition:
 duva-transcripts:
   title: "Deputy Duva Transcripts"
   date: 2024-02-01
+  data_file: damon_duva  # References data/depositions/damon_duva.yaml for segments
+  transcript_slug: damon-duva  # Links to /deposition-transcripts/damon-duva/
   deponent:
     id: damon-duva
     name: Deputy Damon Duva
@@ -182,8 +229,20 @@ duva-transcripts:
     - conflict-of-interest
     - personal-relationships
   related_people:
-    - damon-duva
-    - marc-king
+    # Command Staff
+    - mat-king           # Sheriff, known 20+ years, former patrol partners
+    - jim-spadafore      # Undersheriff, contacted during notification chain
+    - matthew-pohl       # Captain, contacted during notification chain
+    # Deputies
+    - damon-duva         # Deponent
+    - marc-king          # Subject of arrest, close friend for 15-20 years
+    - phil-pokriefka     # Union VP, called Duva to inform of arrest
+    - joe-schoof         # Provided info to Pokriefka about arrest
+    # Lieutenants
+    - scott-jones        # On-scene supervisor, Duva contacted him
+    - scott-braun        # Lieutenant Braun, at DB during processing
+    # Sergeants
+    - nate-zuzga     # At DB, witnessed PBT tests, relieved Duva
   related_incidents:
     - 2022-11-06-owi-arrest
   related_timeline:
@@ -193,6 +252,8 @@ duva-transcripts:
   significance: |
     Establishes pattern of evidence destruction by multiple officers. Deputy Duva's
     admission corroborates the pattern of evidence spoliation by close friends of the arrestee.
+    Also documents the notification chain and Duva's long-standing relationships with both
+    King brothers.
   tags:
     - evidence-spoliation
     - deleted-texts

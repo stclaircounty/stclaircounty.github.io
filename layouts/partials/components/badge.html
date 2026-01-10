@@ -1,0 +1,100 @@
+{{/*
+  Badge - Unified badge component for status, severity, and custom types
+
+  Usage:
+    {{ partial "components/badge.html" (dict "type" "status" "value" "active") }}
+    {{ partial "components/badge.html" (dict "type" "severity" "value" "critical") }}
+    {{ partial "components/badge.html" (dict "type" "custom" "value" "QI Denied" "color" "red") }}
+
+  Parameters:
+    - type: string - "status", "severity", "category", or "custom"
+    - value: string - The badge text/value
+    - color: string (optional) - For custom type: red, orange, yellow, green, blue, purple, slate
+    - size: string (optional) - "sm", "md" (default), "lg"
+    - class: string (optional) - Additional CSS classes
+*/}}
+
+{{ $type := .type | default "custom" }}
+{{ $value := .value }}
+{{ $color := .color | default "slate" }}
+{{ $size := .size | default "md" }}
+{{ $class := .class | default "" }}
+
+{{/* Size classes */}}
+{{ $sizeClass := "text-xs px-2.5 py-1" }}
+{{ if eq $size "sm" }}
+  {{ $sizeClass = "text-[10px] px-2 py-0.5" }}
+{{ else if eq $size "lg" }}
+  {{ $sizeClass = "text-sm px-3 py-1.5" }}
+{{ end }}
+
+{{/* Color mapping based on type and value */}}
+{{ $colorClass := "" }}
+
+{{ if eq $type "severity" }}
+  {{ if eq $value "critical" }}
+    {{ $colorClass = "bg-red-100 text-red-700 border-red-200" }}
+  {{ else if eq $value "high" }}
+    {{ $colorClass = "bg-orange-100 text-orange-700 border-orange-200" }}
+  {{ else if eq $value "medium" }}
+    {{ $colorClass = "bg-yellow-100 text-yellow-700 border-yellow-200" }}
+  {{ else if eq $value "low" }}
+    {{ $colorClass = "bg-blue-100 text-blue-700 border-blue-200" }}
+  {{ else }}
+    {{ $colorClass = "bg-slate-100 text-slate-600 border-slate-200" }}
+  {{ end }}
+
+{{ else if eq $type "status" }}
+  {{ if eq $value "active" }}
+    {{ $colorClass = "bg-green-100 text-green-700 border-green-200" }}
+  {{ else if eq $value "retired" }}
+    {{ $colorClass = "bg-orange-100 text-orange-700 border-orange-200" }}
+  {{ else if eq $value "terminated" }}
+    {{ $colorClass = "bg-red-100 text-red-700 border-red-200" }}
+  {{ else if eq $value "resigned" }}
+    {{ $colorClass = "bg-yellow-100 text-yellow-700 border-yellow-200" }}
+  {{ else if eq $value "pending" }}
+    {{ $colorClass = "bg-amber-100 text-amber-700 border-amber-200" }}
+  {{ else if eq $value "dismissed" }}
+    {{ $colorClass = "bg-slate-100 text-slate-600 border-slate-200" }}
+  {{ else if or (eq $value "survived-summary-judgment") (eq $value "survived summary judgment") }}
+    {{ $colorClass = "bg-green-100 text-green-700 border-green-200" }}
+  {{ else }}
+    {{ $colorClass = "bg-slate-100 text-slate-600 border-slate-200" }}
+  {{ end }}
+
+{{ else if eq $type "category" }}
+  {{ if eq $value "law-enforcement" }}
+    {{ $colorClass = "bg-blue-100 text-blue-700 border-blue-200" }}
+  {{ else if eq $value "legal" }}
+    {{ $colorClass = "bg-purple-100 text-purple-700 border-purple-200" }}
+  {{ else if eq $value "judiciary" }}
+    {{ $colorClass = "bg-amber-100 text-amber-700 border-amber-200" }}
+  {{ else }}
+    {{ $colorClass = "bg-slate-100 text-slate-600 border-slate-200" }}
+  {{ end }}
+
+{{ else }}
+  {{/* Custom color */}}
+  {{ if eq $color "red" }}
+    {{ $colorClass = "bg-red-100 text-red-700 border-red-200" }}
+  {{ else if eq $color "orange" }}
+    {{ $colorClass = "bg-orange-100 text-orange-700 border-orange-200" }}
+  {{ else if eq $color "yellow" }}
+    {{ $colorClass = "bg-yellow-100 text-yellow-700 border-yellow-200" }}
+  {{ else if eq $color "amber" }}
+    {{ $colorClass = "bg-amber-100 text-amber-700 border-amber-200" }}
+  {{ else if eq $color "green" }}
+    {{ $colorClass = "bg-green-100 text-green-700 border-green-200" }}
+  {{ else if eq $color "blue" }}
+    {{ $colorClass = "bg-blue-100 text-blue-700 border-blue-200" }}
+  {{ else if eq $color "purple" }}
+    {{ $colorClass = "bg-purple-100 text-purple-700 border-purple-200" }}
+  {{ else }}
+    {{ $colorClass = "bg-slate-100 text-slate-600 border-slate-200" }}
+  {{ end }}
+{{ end }}
+
+<span class="inline-flex items-center rounded-full font-medium border {{ $sizeClass }} {{ $colorClass }} {{ $class }}">
+  {{ $value | humanize | title }}
+</span>

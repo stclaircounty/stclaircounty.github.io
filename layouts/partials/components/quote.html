@@ -1,0 +1,79 @@
+{{/*
+  Quote - Styled blockquote with optional attribution
+
+  Usage:
+    {{ partial "components/quote.html" (dict
+      "text" "The quoted text goes here"
+      "page" 45
+      "source" "Deposition"
+      "topic" "Training"
+    ) }}
+
+  Parameters:
+    - text: string (required) - The quote text
+    - page: int/string (optional) - Page number reference
+    - source: string (optional) - Source description (e.g., "Deposition", "Court Filing")
+    - topic: string (optional) - Topic badge
+    - author: string (optional) - Person who said the quote
+    - variant: string (optional) - "default", "featured", "compact"
+    - borderColor: string (optional) - "amber" (default), "red", "blue", "slate"
+    - class: string (optional) - Additional classes
+*/}}
+
+{{ $text := .text }}
+{{ $page := .page }}
+{{ $source := .source }}
+{{ $topic := .topic }}
+{{ $author := .author }}
+{{ $variant := .variant | default "default" }}
+{{ $borderColor := .borderColor | default "amber" }}
+{{ $class := .class | default "" }}
+
+{{/* Border color classes */}}
+{{ $borderClass := "border-amber-400" }}
+{{ if eq $borderColor "red" }}
+  {{ $borderClass = "border-red-400" }}
+{{ else if eq $borderColor "blue" }}
+  {{ $borderClass = "border-blue-400" }}
+{{ else if eq $borderColor "slate" }}
+  {{ $borderClass = "border-slate-400" }}
+{{ end }}
+
+{{/* Variant styling */}}
+{{ $bgClass := "bg-slate-50" }}
+{{ $padding := "p-5" }}
+{{ $textClass := "text-lg" }}
+
+{{ if eq $variant "featured" }}
+  {{ $bgClass = "bg-gradient-to-br from-amber-50 to-orange-50" }}
+  {{ $padding = "p-6" }}
+  {{ $textClass = "text-xl" }}
+{{ else if eq $variant "compact" }}
+  {{ $padding = "p-4" }}
+  {{ $textClass = "text-base" }}
+{{ end }}
+
+<blockquote class="{{ $bgClass }} rounded-lg {{ $padding }} border-l-4 {{ $borderClass }} {{ $class }}">
+  <p class="text-slate-700 italic {{ $textClass }} leading-relaxed" style="margin: 0;">
+    "{{ $text }}"
+  </p>
+
+  {{ if or $page $source $topic $author }}
+  <footer class="mt-4 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+      {{ with $author }}
+      <span class="font-medium text-slate-700">— {{ . }}</span>
+      {{ end }}
+      {{ with $source }}
+      <span>{{ . }}</span>
+      {{ end }}
+      {{ with $page }}
+      <span class="text-slate-400">Page {{ . }}</span>
+      {{ end }}
+    </div>
+    {{ with $topic }}
+    <span class="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded">{{ . }}</span>
+    {{ end }}
+  </footer>
+  {{ end }}
+</blockquote>

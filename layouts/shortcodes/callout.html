@@ -1,0 +1,73 @@
+{{/*
+  Callout Shortcode - Styled alert boxes for important information
+
+  Usage:
+    {{< callout type="warning" >}}Important warning text{{< /callout >}}
+    {{< callout type="info" title="Note" >}}Informational content{{< /callout >}}
+    {{< callout type="danger" >}}Critical information{{< /callout >}}
+    {{< callout type="success" >}}Positive outcome{{< /callout >}}
+
+  Parameters:
+    - type: warning | info | danger | success | note (default: info)
+    - title: Optional custom title
+*/}}
+
+{{ $type := .Get "type" | default "info" }}
+{{ $title := .Get "title" }}
+{{ $content := .Inner | markdownify }}
+
+{{/* Type-based styling */}}
+{{ $bgClass := "bg-blue-50 border-blue-200" }}
+{{ $iconClass := "text-blue-600" }}
+{{ $titleClass := "text-blue-800" }}
+{{ $textClass := "text-blue-700" }}
+{{ $icon := "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" }}
+{{ $defaultTitle := "Note" }}
+
+{{ if eq $type "warning" }}
+  {{ $bgClass = "bg-amber-50 border-amber-200" }}
+  {{ $iconClass = "text-amber-600" }}
+  {{ $titleClass = "text-amber-800" }}
+  {{ $textClass = "text-amber-700" }}
+  {{ $icon = "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" }}
+  {{ $defaultTitle = "Warning" }}
+{{ else if eq $type "danger" }}
+  {{ $bgClass = "bg-red-50 border-red-200" }}
+  {{ $iconClass = "text-red-600" }}
+  {{ $titleClass = "text-red-800" }}
+  {{ $textClass = "text-red-700" }}
+  {{ $icon = "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" }}
+  {{ $defaultTitle = "Important" }}
+{{ else if eq $type "success" }}
+  {{ $bgClass = "bg-green-50 border-green-200" }}
+  {{ $iconClass = "text-green-600" }}
+  {{ $titleClass = "text-green-800" }}
+  {{ $textClass = "text-green-700" }}
+  {{ $icon = "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" }}
+  {{ $defaultTitle = "Success" }}
+{{ else if eq $type "note" }}
+  {{ $bgClass = "bg-slate-50 border-slate-200" }}
+  {{ $iconClass = "text-slate-600" }}
+  {{ $titleClass = "text-slate-800" }}
+  {{ $textClass = "text-slate-700" }}
+  {{ $icon = "M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" }}
+  {{ $defaultTitle = "Note" }}
+{{ end }}
+
+<div class="my-4 p-4 rounded-lg border {{ $bgClass }} not-prose">
+  <div class="flex gap-3">
+    <div class="flex-shrink-0">
+      <svg class="w-5 h-5 {{ $iconClass }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $icon }}" />
+      </svg>
+    </div>
+    <div class="flex-1 min-w-0">
+      {{ if or $title (ne $type "info") }}
+      <h4 class="font-semibold {{ $titleClass }} mb-1">{{ $title | default $defaultTitle }}</h4>
+      {{ end }}
+      <div class="{{ $textClass }} text-sm prose-sm prose-{{ $type }}">
+        {{ $content }}
+      </div>
+    </div>
+  </div>
+</div>
