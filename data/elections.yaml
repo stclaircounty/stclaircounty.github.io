@@ -1,0 +1,103 @@
+# St. Clair County Public Accountability Project - Elections Database
+# Last Updated: 2026-01-09
+#
+# Tracks election history for elected officials.
+# Access: site.Data.elections["2020-sheriff-general"]
+#
+# Each election record includes candidates, results, and vote counts.
+
+# =============================================================================
+# 2020 ELECTIONS
+# =============================================================================
+
+2020-sheriff-general:
+  date: 2020-11-03
+  type: general
+  position: Sheriff
+  jurisdiction: St. Clair County
+  candidates:
+    mat-king:
+      party: Republican
+      votes: null
+      percentage: null
+      incumbent: false
+      result: won
+    # Add opponents as they're researched
+  notes: |
+    Mat King elected Sheriff of St. Clair County.
+  sources: []
+
+2020-sheriff-primary:
+  date: 2020-08-04
+  type: primary
+  position: Sheriff
+  jurisdiction: St. Clair County
+  party: Republican
+  candidates:
+    mat-king:
+      votes: null
+      percentage: null
+      incumbent: false
+      result: won
+  notes: null
+  sources: []
+
+# =============================================================================
+# 2024 ELECTIONS
+# =============================================================================
+
+2024-sheriff-general:
+  date: 2024-11-05
+  type: general
+  position: Sheriff
+  jurisdiction: St. Clair County
+  candidates:
+    mat-king:
+      party: Republican
+      votes: null
+      percentage: null
+      incumbent: true
+      result: won
+  notes: |
+    Mat King re-elected as Sheriff despite ongoing litigation and accountability concerns.
+  sources: []
+
+# =============================================================================
+# TEMPLATE FOR ADDING ELECTIONS
+# =============================================================================
+#
+# election-id:
+#   date: YYYY-MM-DD
+#   type: primary | general | special | recall
+#   position: Sheriff | County Commissioner | etc.
+#   jurisdiction: St. Clair County
+#   party: Republican | Democrat | null (for general)
+#   candidates:
+#     person-key:
+#       party: Republican | Democrat | Independent
+#       votes: 12345
+#       percentage: 52.3
+#       incumbent: true | false
+#       result: won | lost
+#     opponent-key:
+#       party: Democrat
+#       votes: 10000
+#       percentage: 47.7
+#       incumbent: false
+#       result: lost
+#   notes: |
+#     Any relevant context about the election.
+#   sources:
+#     - title: "Election Results"
+#       url: "https://..."
+#       date: 2024-11-06
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+_meta:
+  total_elections: 3
+  positions_tracked:
+    - Sheriff
+  last_updated: 2026-01-09

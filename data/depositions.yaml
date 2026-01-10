@@ -1,0 +1,200 @@
+# St. Clair County Public Accountability Project - Depositions Database
+# Last Updated: 2026-01-09
+#
+# Access: site.Data.depositions["mat-king-deposition"]
+
+mat-king-deposition:
+  title: "Sheriff Mat King Deposition"
+  date: 2024-01-15
+  deponent:
+    id: mat-king
+    name: Sheriff Mat King
+    role: Sheriff
+  case:
+    number: ""
+    court: ""
+    type: civil
+  pdf_file: mat-king-deposition.pdf
+  pdf_size: "921 KB"
+  status: available
+  key_quotes:
+    - page: 73
+      text: "When asked why he didn't call me to tell me that one of our deputies got arrested, he told me it was a conflict of interest."
+      topic: conflict-of-interest
+    - page: 73
+      text: "Was he wrong? Yes."
+      topic: conflict-of-interest
+    - page: 72
+      text: "If Scott's already picked his date for retirement, we don't need to proceed with this internal investigation."
+      topic: investigation-termination
+    - page: 72
+      text: "Therefore, we wouldn't have to continue with the investigation."
+      topic: investigation-termination
+    - page: 74
+      text: "He deliberately withheld information from myself and admitted so."
+      topic: alleged-dishonesty
+    - page: 74
+      text: "The first thing I said, he deliberately refused to tell me information of something that was going on in our department."
+      topic: alleged-dishonesty
+    - page: 110
+      text: "And Jones did not conduct the arrest himself, correct? Correct."
+      topic: arrest-procedure
+    - page: 110
+      text: "Was this appropriate? No."
+      topic: arrest-procedure
+    - page: 111
+      text: "It was against the direction he had been given."
+      topic: policy-violation-claim
+  topics:
+    - conflict-of-interest
+    - no-recusal
+    - command-involvement
+    - internal-investigation
+    - governance-failure
+  related_people:
+    - mat-king
+    - marc-king
+    - matthew-pohl
+    - jim-spadafore
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  related_timeline:
+    - 2022-11-06-owi-arrest
+    - 2022-11-06-sheriff-notified
+  related_evidence:
+    - governance-failures-documentation
+  significance: |
+    Critical testimony establishing the Sheriff's knowledge of his conflict of interest
+    and his decision to remain involved despite the family relationship.
+  tags:
+    - conflict-of-interest
+    - governance-failure
+    - sheriff
+    - primary-source
+
+pohl-deposition:
+  title: "Captain Matthew Pohl Deposition"
+  date: 2024-01-20
+  deponent:
+    id: matthew-pohl
+    name: Captain Matthew Pohl
+    role: Captain
+  case:
+    number: ""
+    court: ""
+    type: civil
+  pdf_file: pohl-deposition.pdf
+  pdf_size: "992 KB"
+  status: available
+  key_quotes:
+    - page: 200
+      text: "Did you know that Marc King and Chad Cronkright were friends or buddies? To some respect."
+      topic: conflict-of-interest
+    - page: 200
+      text: "Later that evening at 5:44 p.m. I texted Josh Goodrich, who I am friends with and talk daily with that Marc got an OWI."
+      topic: information-dissemination
+    - page: 201
+      text: "I'm certainly not happy with that."
+      topic: policy-awareness
+    - page: 246
+      text: "Whatever text messages or phone calls that I'd referenced in my internal report, I no longer have those on my phone."
+      topic: evidence-spoliation
+    - page: 246
+      text: "We don't have a policy."
+      topic: records-retention
+    - page: 247
+      text: "You cannot lose this position."
+      topic: coercion-pressure
+    - page: 247
+      text: "The most important thing in his life is his daughter."
+      topic: coercion-pressure
+    - page: 247
+      text: "This might be a termination for you."
+      topic: employment-threat
+  topics:
+    - evidence-spoliation
+    - deleted-texts
+    - conflict-of-interest
+    - personal-relationships
+    - command-involvement
+  related_people:
+    - matthew-pohl
+    - mat-king
+    - marc-king
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  related_timeline:
+    - 2022-11-06-sheriff-notified
+    - 2022-2024-evidence-deleted
+  related_evidence:
+    - evidence-spoliation-analysis
+  significance: |
+    Contains critical admission of evidence destruction. Captain Pohl admitted under
+    oath to deleting text messages from the time period surrounding the incident.
+  tags:
+    - evidence-spoliation
+    - deleted-texts
+    - conflict-of-interest
+    - admission
+
+duva-transcripts:
+  title: "Deputy Duva Transcripts"
+  date: 2024-02-01
+  deponent:
+    id: damon-duva
+    name: Deputy Damon Duva
+    role: Deputy
+  case:
+    number: ""
+    court: ""
+    type: civil
+  pdf_file: duva-transcripts.pdf
+  pdf_size: "653 KB"
+  status: available
+  key_quotes:
+    - page: 16
+      text: "You're texting and calling with Mat, the sheriff, on your personal phone? Uh-huh."
+      topic: off-channel-communication
+    - page: 16
+      text: "Do you still have records of those calls and text messages? I doubt it, no."
+      topic: evidence-retention
+    - page: 17
+      text: "Have you deleted call logs or text messages reflecting communications between yourself and the sheriff in November of 2022? I'm sure I have, yes."
+      topic: evidence-spoliation
+    - page: 17
+      text: "Do you remember when you would have deleted those? I don't."
+      topic: evidence-spoliation
+    - page: 11
+      text: "I've known Mat King for probably around 20 years or more."
+      topic: long-term-relationship
+    - page: 11
+      text: "We were acquaintances. We're friends, sure."
+      topic: relationship-acknowledgment
+    - page: 12
+      text: "We were partners for a while in the car."
+      topic: professional-relationship
+    - page: 12
+      text: "You also call and text with Mat King, correct? Sure."
+      topic: off-channel-communication
+  topics:
+    - evidence-spoliation
+    - deleted-texts
+    - conflict-of-interest
+    - personal-relationships
+  related_people:
+    - damon-duva
+    - marc-king
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  related_timeline:
+    - 2022-2024-evidence-deleted
+  related_evidence:
+    - evidence-spoliation-analysis
+  significance: |
+    Establishes pattern of evidence destruction by multiple officers. Deputy Duva's
+    admission corroborates the pattern of evidence spoliation by close friends of the arrestee.
+  tags:
+    - evidence-spoliation
+    - deleted-texts
+    - conflict-of-interest
+    - pattern-evidence

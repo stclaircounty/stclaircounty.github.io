@@ -1,0 +1,268 @@
+{{ define "main" }}
+{{/* Page Header */}}
+{{ partial "list-header.html" (dict
+  "page" .
+  "icon" "search"
+  "title" "Search"
+  "description" "Search depositions, incidents, people, timeline events, and evidence."
+) }}
+
+<div class="bg-gradient-to-b from-slate-50 to-white min-h-[60vh]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Search Tips Card -->
+    <div class="bg-white rounded-xl shadow-card border border-slate-200 p-6 mb-8">
+      <div class="flex items-start gap-4">
+        <div class="p-2 bg-amber-100 rounded-lg flex-shrink-0">
+          <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-semibold text-navy mb-1" style="margin-top: 0;">Search Tips</h2>
+          <p class="text-sm text-slate-600">
+            Try searching for names like <span class="font-medium text-navy">"Pohl"</span> or <span class="font-medium text-navy">"King"</span>,
+            topics like <span class="font-medium text-navy">"deleted texts"</span> or <span class="font-medium text-navy">"OWI"</span>,
+            or dates like <span class="font-medium text-navy">"November 2022"</span>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Container -->
+    <div id="search" class="search-container"></div>
+
+    <!-- No Results Help -->
+    <div id="search-help" class="hidden mt-8">
+      <div class="bg-slate-50 rounded-xl p-8 text-center">
+        <svg class="w-12 h-12 text-slate-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="text-lg font-semibold text-navy mb-2">No results found</h3>
+        <p class="text-slate-600 mb-4">Try different keywords or browse our content directly:</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/depositions/" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-navy hover:border-amber-500 hover:shadow-sm transition-all">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            Depositions
+          </a>
+          <a href="/people/" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-navy hover:border-amber-500 hover:shadow-sm transition-all">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            People
+          </a>
+          <a href="/timeline/" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-navy hover:border-amber-500 hover:shadow-sm transition-all">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Timeline
+          </a>
+          <a href="/incidents/" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-navy hover:border-amber-500 hover:shadow-sm transition-all">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            Incidents
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagefind UI -->
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      showImages: false,
+      excerptLength: 30,
+      resetStyles: false
+    });
+  });
+</script>
+
+<style>
+  /* Reset Pagefind default styles and apply custom theme */
+  .search-container {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: #dc2626;
+    --pagefind-ui-text: #334155;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #e2e8f0;
+    --pagefind-ui-tag: #f1f5f9;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 12px;
+    --pagefind-ui-font: inherit;
+  }
+
+  /* Search form wrapper */
+  .search-container .pagefind-ui__form {
+    position: relative;
+  }
+
+  /* Search input container */
+  .search-container .pagefind-ui__search-input {
+    width: 100% !important;
+    height: auto !important;
+    font-size: 1.125rem !important;
+    padding: 1rem 1rem 1rem 3rem !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: white !important;
+    color: #0f172a !important;
+    outline: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+  }
+
+  .search-container .pagefind-ui__search-input::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  .search-container .pagefind-ui__search-input:focus {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15) !important;
+  }
+
+  /* Search icon */
+  .search-container .pagefind-ui__search-icon {
+    position: absolute !important;
+    left: 1rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    color: #94a3b8 !important;
+  }
+
+  /* Clear button */
+  .search-container .pagefind-ui__search-clear {
+    position: absolute !important;
+    right: 1rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: #f1f5f9 !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    cursor: pointer !important;
+    color: #64748b !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .search-container .pagefind-ui__search-clear:hover {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+  }
+
+  /* Results container */
+  .search-container .pagefind-ui__results-area {
+    margin-top: 1.5rem !important;
+  }
+
+  /* Result count message */
+  .search-container .pagefind-ui__message {
+    color: #64748b !important;
+    font-size: 0.875rem !important;
+    padding: 0.5rem 0 1rem 0 !important;
+  }
+
+  /* Individual result cards */
+  .search-container .pagefind-ui__result {
+    padding: 1.25rem !important;
+    margin-bottom: 1rem !important;
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .search-container .pagefind-ui__result:hover {
+    border-color: #f59e0b !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Result link/title */
+  .search-container .pagefind-ui__result-link {
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    text-decoration: none !important;
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .search-container .pagefind-ui__result-link:hover {
+    color: #dc2626 !important;
+  }
+
+  /* Result excerpt text */
+  .search-container .pagefind-ui__result-excerpt {
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
+    color: #64748b !important;
+  }
+
+  /* Highlighted matches */
+  .search-container mark.pagefind-ui__result-highlight,
+  .search-container .pagefind-ui__result-excerpt mark {
+    background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%) !important;
+    color: #92400e !important;
+    padding: 0.125rem 0.25rem !important;
+    border-radius: 3px !important;
+    font-weight: 500 !important;
+  }
+
+  /* Result nested/sub-results */
+  .search-container .pagefind-ui__result-nested {
+    margin-top: 0.75rem !important;
+    padding-top: 0.75rem !important;
+    border-top: 1px dashed #e2e8f0 !important;
+  }
+
+  .search-container .pagefind-ui__result-nested .pagefind-ui__result-link {
+    font-size: 0.9375rem !important;
+    color: #475569 !important;
+  }
+
+  /* Result tags/badges */
+  .search-container .pagefind-ui__result-tag {
+    display: inline-block !important;
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.5rem !important;
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    border-radius: 6px !important;
+    margin-right: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Load more button */
+  .search-container .pagefind-ui__button {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.875rem 1.5rem !important;
+    margin-top: 1rem !important;
+    background: #0f172a !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 0.9375rem !important;
+    border: none !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+  }
+
+  .search-container .pagefind-ui__button:hover {
+    background: #1e293b !important;
+  }
+
+  /* Drawer (for filters if enabled) */
+  .search-container .pagefind-ui__drawer {
+    margin-top: 1rem !important;
+    padding: 1rem !important;
+    background: #f8fafc !important;
+    border-radius: 10px !important;
+  }
+</style>
+{{ end }}

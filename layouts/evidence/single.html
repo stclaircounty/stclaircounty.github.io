@@ -1,0 +1,95 @@
+{{ define "main" }}
+{{/* Get evidence key from URL */}}
+{{ $key := .File.ContentBaseName }}
+{{ $data := index site.Data.evidence $key }}
+
+{{ if $data }}
+{{/* Build badges for page header */}}
+{{ $badges := slice }}
+{{ with $data.evidence_type }}
+  {{ $badges = $badges | append (dict "label" (. | humanize | title) "type" "primary") }}
+{{ end }}
+{{ with $data.source }}
+  {{ $badges = $badges | append (dict "label" . "type" "neutral") }}
+{{ end }}
+{{ if $data.redacted }}
+  {{ $badges = $badges | append (dict "label" "Redacted" "type" "warning" "icon" true) }}
+{{ end }}
+
+{{/* Parse date for header */}}
+{{ $date := time "0001-01-01" }}
+{{ with $data.date }}
+  {{ $date = time . }}
+{{ end }}
+
+<article>
+  {{/* Header */}}
+  {{ partial "page-header.html" (dict
+    "page" .
+    "icon" "folder"
+    "section" "Evidence"
+    "title" $data.title
+    "badges" $badges
+    "date" $date
+  ) }}
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {{/* Evidence detail content */}}
+    {{ partial "evidence-item/detail.html" (dict "key" $key "data" $data "content" .Content) }}
+  </div>
+
+  {{/* Navigation */}}
+  {{ $evidenceData := site.Data.evidence }}
+  {{ $allEvidence := slice }}
+  {{ range $k, $item := $evidenceData }}
+    {{ if not (hasPrefix $k "_") }}
+      {{ $allEvidence = $allEvidence | append (merge $item (dict "key" $k)) }}
+    {{ end }}
+  {{ end }}
+  {{ $allEvidence = sort $allEvidence "date" "desc" }}
+
+  {{ $currentIndex := -1 }}
+  {{ range $i, $item := $allEvidence }}
+    {{ if eq $item.key $key }}{{ $currentIndex = $i }}{{ end }}
+  {{ end }}
+
+  {{ if gt (len $allEvidence) 1 }}
+  <nav class="bg-gray-50 border-t py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between">
+        {{ if and (ge $currentIndex 0) (lt (add $currentIndex 1) (len $allEvidence)) }}
+        {{ $next := index $allEvidence (add $currentIndex 1) }}
+        <a href="/evidence/{{ $next.key }}/" class="text-accent hover:underline">
+          &larr; {{ $next.title | truncate 40 }}
+        </a>
+        {{ else }}
+        <span></span>
+        {{ end }}
+
+        {{ if and (gt $currentIndex 0) }}
+        {{ $prev := index $allEvidence (sub $currentIndex 1) }}
+        <a href="/evidence/{{ $prev.key }}/" class="text-accent hover:underline">
+          {{ $prev.title | truncate 40 }} &rarr;
+        </a>
+        {{ end }}
+      </div>
+    </div>
+  </nav>
+  {{ end }}
+</article>
+
+{{ else }}
+{{/* Fallback for content files not in data */}}
+<article>
+  {{ partial "page-header.html" (dict "page" . "icon" "folder" "section" "Evidence") }}
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-lg shadow-card p-8">
+      <div class="prose prose-lg max-w-none">
+        {{ .Content }}
+      </div>
+    </div>
+  </div>
+</article>
+{{ end }}
+{{ end }}

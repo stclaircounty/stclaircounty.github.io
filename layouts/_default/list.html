@@ -1,0 +1,58 @@
+{{ define "main" }}
+{{/* Determine icon based on section */}}
+{{ $icon := "grid" }}
+{{ if eq .Section "take-action" }}{{ $icon = "warning" }}{{ end }}
+{{ if eq .Section "resources" }}{{ $icon = "folder" }}{{ end }}
+{{ if eq .Section "about" }}{{ $icon = "shield" }}{{ end }}
+
+{{ partial "list-header.html" (dict
+  "page" .
+  "icon" $icon
+  "count" (len .Pages)
+  "count_label" "Items"
+) }}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  {{ with .Content }}
+  <div class="prose prose-lg max-w-none mb-10">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  {{ if .Pages }}
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {{ range .Pages.ByDate.Reverse }}
+    <article class="card">
+      {{ if or .Params.severity (and (ne $.Section "resources") (ne $.Section "take-action")) }}
+      <div class="flex items-start justify-between gap-4 mb-3">
+        {{ if and (ne $.Section "resources") (ne $.Section "take-action") }}
+        <time class="text-sm text-slate-light">{{ .Date.Format "Jan 2, 2006" }}</time>
+        {{ end }}
+        {{ with .Params.severity }}
+        <span class="badge badge-severity-{{ . }}">{{ . | title }}</span>
+        {{ end }}
+      </div>
+      {{ end }}
+      <h2 class="text-lg font-bold text-navy mb-2 leading-snug" style="margin-top: 0;">
+        <a href="{{ .Permalink }}" class="hover:text-accent transition-colors">{{ .Title }}</a>
+      </h2>
+      <p class="text-sm text-slate-light line-clamp-3 mb-4">{{ .Summary | plainify | truncate 140 }}</p>
+      <a href="{{ .Permalink }}" class="inline-flex items-center text-sm font-medium text-accent hover:text-accent-dark transition-colors">
+        Read more
+        <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </article>
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="text-center py-16">
+    <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    <p class="text-slate-light">No content available yet.</p>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

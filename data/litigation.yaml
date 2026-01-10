@@ -1,0 +1,202 @@
+# St. Clair County Public Accountability Project - Litigation Database
+# Last Updated: 2026-01-09
+#
+# Tracks federal and state court cases related to accountability matters.
+# Access: site.Data.litigation["jones-v-scc"]
+
+# =============================================================================
+# FEDERAL LITIGATION
+# =============================================================================
+
+jones-v-scc:
+  title: "Jones v. St. Clair County, et al."
+  short_title: "Jones v. St. Clair County"
+  court: U.S. District Court, Eastern District of Michigan
+  case_number: "2:24-cv-11965"
+  filed_date: 2024-01-01
+  status: active
+
+  judge: nancy-edmunds
+
+  parties:
+    plaintiffs:
+      - person: scott-jones
+        role: Plaintiff
+        represented_by:
+          - deborah-gordon
+          - elizabeth-marzotto-taylor
+    defendants:
+      - person: mat-king
+        role: Individual Defendant
+        capacity: individual
+        claims_against:
+          - First Amendment retaliation
+        immunity_status: qualified-immunity-denied
+      - entity: St. Clair County
+        role: Municipal Defendant
+        represented_by:
+          - todd-shoudy
+        claims_against:
+          - Monell liability
+        basis: "Sheriff as final policymaker for law enforcement"
+      - person: jim-spadafore
+        role: Individual Defendant
+        capacity: individual
+        position: Undersheriff
+        claims_against:
+          - First Amendment retaliation
+        immunity_status: pending
+      - person: matthew-pohl
+        role: Individual Defendant
+        capacity: individual
+        position: Captain
+        claims_against:
+          - First Amendment retaliation
+        immunity_status: pending
+        evidence_issues:
+          - Admitted to deleting text messages
+          - Cell phone data not preserved
+
+  claims:
+    - statute: "42 U.S.C. § 1983"
+      description: First Amendment retaliation
+      status: survived-summary-judgment
+      legal_standard: |
+        Pickering balancing test: Employee's interest in commenting on matters
+        of public concern must be weighed against employer's interest in
+        efficient operations. Protected activity includes reporting concerns
+        about official misconduct to appropriate authorities.
+      elements:
+        - Protected speech on matter of public concern
+        - Adverse employment action
+        - Causal connection between speech and adverse action
+    - statute: "Fourteenth Amendment"
+      description: Procedural due process
+      status: pending
+      legal_standard: |
+        Due process requires notice and opportunity to be heard before
+        deprivation of protected property or liberty interest. Constructive
+        discharge claims may implicate due process protections.
+    - type: Monell
+      description: Municipal liability under Monell v. Dep't of Social Services
+      status: survived-summary-judgment
+      legal_standard: |
+        Municipality may be liable under Section 1983 when official policy
+        or custom causes constitutional violation. Sheriff as final policymaker
+        for law enforcement matters subjects county to potential Monell liability.
+      elements:
+        - Constitutional violation by municipal employee
+        - Official policy, custom, or practice
+        - Policy was moving force behind violation
+        - Final policymaker ratification
+
+  trial_status:
+    stage: post-summary-judgment
+    trial_scheduled: false
+    trial_date: null
+    next_deadline: "Settlement conference or trial scheduling"
+    notes: |
+      Summary judgment denied in part, allowing First Amendment retaliation
+      and Monell claims to proceed to trial. Qualified immunity denied for
+      surviving claims against individual defendants.
+
+  key_rulings:
+    - date: 2025-01-01
+      type: summary-judgment
+      summary: |
+        Summary judgment denied in part. First Amendment retaliation claim
+        survived. Qualified immunity denied for surviving claims. Monell
+        liability allowed to proceed.
+      holdings:
+        - First Amendment retaliation claim survived in part
+        - Qualified immunity denied for surviving claims
+        - Monell liability allowed to proceed
+        - Waiver defenses rejected at summary judgment stage
+
+  related_incidents:
+    - 2022-11-06-owi-arrest
+
+  core_allegations:
+    - Plaintiff reported concerns about handling of the November 2022 OWI arrest
+    - Plaintiff was pressured to retire after raising concerns
+    - First Amendment retaliation for protected speech
+    - Failure to follow proper procedures for conflicts of interest
+
+  timeline:
+    - date: 2022-11-06
+      event: OWI arrest of Deputy Marc King
+    - date: 2022-11-15
+      event: Internal investigation begins
+    - date: 2022-12-01
+      event: Lt. Jones reports concerns to HR
+    - date: 2023-01-01
+      event: Lt. Jones retires under pressure
+    - date: 2024-01-01
+      event: Federal lawsuit filed
+    - date: 2025-01-01
+      event: Summary judgment opinion issued
+
+  public_interest:
+    - Whistleblower protection in law enforcement
+    - Conflicts of interest in internal investigations
+    - Municipal accountability under Section 1983
+    - First Amendment rights of public employees
+
+  evidence_issues:
+    spoliation:
+      - witness: matthew-pohl
+        type: text-messages
+        admission: "Deleted text messages related to incident"
+        source: "Pohl Deposition, Page 200"
+        impact: "Potential adverse inference instruction at trial"
+      - witness: damon-duva
+        type: text-messages
+        admission: "Messages 'no longer available'"
+        source: "Duva Deposition"
+        impact: "Pattern of evidence destruction"
+    litigation_hold:
+      issued: false
+      notes: "No litigation hold established despite foreseeable litigation"
+    adverse_inference:
+      requested: true
+      status: pending
+      basis: "Multiple witnesses destroyed relevant communications"
+
+  sources:
+    - type: court-filing
+      title: Complaint
+      date: 2024-01-01
+    - type: court-opinion
+      title: Summary Judgment Opinion
+      date: 2025-01-01
+    - type: deposition
+      title: "Deposition of Sheriff Mat King"
+      date: 2024-06-01
+    - type: deposition
+      title: "Deposition of Captain Matthew Pohl"
+      date: 2024-06-15
+      key_admissions:
+        - "Deleted text messages (Page 200)"
+        - "Texted Josh Goodrich at 5:44 PM about arrest"
+    - type: deposition
+      title: "Deposition of Deputy Damon Duva"
+      date: 2024-07-01
+      key_admissions:
+        - "Text messages 'no longer available'"
+
+  tags:
+    - federal
+    - section-1983
+    - first-amendment
+    - whistleblower
+    - monell
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+_meta:
+  total_cases: 1
+  courts:
+    - U.S. District Court, Eastern District of Michigan
+  last_updated: 2026-01-09

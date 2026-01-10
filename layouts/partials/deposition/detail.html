@@ -1,0 +1,222 @@
+{{/*
+  Deposition detail view for single pages
+
+  Params:
+    - key: string - The deposition key
+    - data: map - The deposition data object
+    - content: The markdown content from the page (optional)
+*/}}
+{{ $key := .key }}
+{{ $data := .data }}
+{{ $content := .content }}
+
+<div class="space-y-8">
+  {{/* ================================================================ */}}
+  {{/* INCIDENT CONTEXT BANNER - Links back to parent incident */}}
+  {{/* ================================================================ */}}
+  {{ with $data.related_incidents }}
+  {{ $incidentKey := index . 0 }}
+  {{ $incident := index site.Data.incidents $incidentKey }}
+  {{ if $incident }}
+  <section class="relative overflow-hidden rounded-xl shadow-lg bg-gradient-to-r from-navy via-slate-800 to-navy">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M54.627%200l.83.828-1.415%201.415L51.8%200h2.827zM5.373%200l-.83.828L5.96%202.243%208.2%200H5.374zM48.97%200l3.657%203.657-1.414%201.414L46.143%200h2.828zM11.03%200L7.372%203.657%208.787%205.07%2013.857%200H11.03zm32.284%200L49.8%206.485%2048.384%207.9l-7.9-7.9h2.83zM16.686%200L10.2%206.485%2011.616%207.9l7.9-7.9h-2.83zM22.344%200L13.858%208.485%2015.272%209.9l9.9-9.9h-2.828zM32%200l-3.486%203.485%201.415%201.414L34.828%200H32zm-6.657%200L16.858%208.485%2018.272%209.9l9.9-9.9h-2.828zM38.344%200L29.858%208.485%2031.272%209.9l9.9-9.9h-2.828zM44%200l-9.485%209.485%201.414%201.415L46.828%200H44z%22%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E')] opacity-50"></div>
+    <div class="relative p-4 sm:p-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Part of Documented Incident</p>
+            <p class="text-white font-bold text-lg">{{ $incident.title }}</p>
+            <p class="text-slate-300 text-sm mt-0.5">{{ time.Format "January 2, 2006" $incident.date }}</p>
+          </div>
+        </div>
+        <a href="/incidents/{{ $incidentKey }}/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-red-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+          <span>View Full Incident</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+  {{ end }}
+
+  {{/* PDF Download / View */}}
+  {{ with $data.pdf_file }}
+  <section class="relative overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl shadow-lg border border-amber-200/50">
+    <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-24 h-24 bg-orange-500/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+    <div class="relative p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="p-4 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl shadow-lg">
+            <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-wider text-amber-700 font-semibold mb-1">Official Document</p>
+            <p class="font-bold text-navy text-lg">{{ . }}</p>
+            {{ with $data.pdf_size }}<p class="text-sm text-slate-500 mt-0.5">{{ . }}</p>{{ end }}
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="/pdfs/{{ . }}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-navy hover:bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span>View PDF</span>
+          </a>
+          <a href="/pdfs/{{ . }}" download class="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-gray-50 text-navy font-semibold rounded-lg shadow-md hover:shadow-lg border-2 border-navy/20 hover:border-navy/40 transition-all duration-200">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Download</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Significance */}}
+  {{ with $data.significance }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-3 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Significance
+    </h2>
+    <div class="prose prose-lg max-w-none">
+      {{ . | markdownify }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Page Content (Markdown) */}}
+  {{ with $content }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-3 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      Transcript Analysis
+    </h2>
+    <div class="prose prose-lg max-w-none">
+      {{ . }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Key Quotes */}}
+  {{ with $data.key_quotes }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>
+      Key Quotes
+    </h2>
+    <div class="space-y-4">
+      {{ range . }}
+      <blockquote class="bg-gray-50 rounded-lg p-5 border-l-4 border-accent">
+        <p class="text-slate italic text-lg">"{{ .text }}"</p>
+        <footer class="mt-3 flex items-center justify-between">
+          <span class="text-sm text-slate-light">Page {{ .page }}</span>
+          {{ with .topic }}
+          <span class="text-xs px-2 py-0.5 bg-accent/10 text-accent rounded">{{ . | humanize }}</span>
+          {{ end }}
+        </footer>
+      </blockquote>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Topics Covered */}}
+  {{ with $data.topics }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+      </svg>
+      Topics Covered
+    </h2>
+    <div class="flex flex-wrap gap-2">
+      {{ range . }}
+      <span class="px-3 py-1.5 bg-gold/10 text-gold rounded-full text-sm font-medium">
+        {{ . | humanize }}
+      </span>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Related People */}}
+  {{ with $data.related_people }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      People Mentioned
+    </h2>
+    <div class="flex flex-wrap gap-2">
+      {{ $peopleData := site.Data.people }}
+      {{ range . }}
+      {{ $person := index $peopleData . }}
+      {{ $hasPage := site.GetPage (printf "/people/%s" .) }}
+      {{ if $hasPage }}
+      <a href="/people/{{ . }}/" class="px-3 py-1.5 bg-navy/5 text-navy rounded-lg text-sm font-medium hover:bg-navy/10 transition-colors inline-flex items-center gap-2">
+        <svg class="h-4 w-4 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        {{ with $person }}{{ .name }}{{ else }}{{ . | humanize }}{{ end }}
+      </a>
+      {{ else }}
+      <span class="px-3 py-1.5 bg-gray-100 text-slate rounded-lg text-sm inline-flex items-center gap-2">
+        <svg class="h-4 w-4 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        {{ with $person }}{{ .name }}{{ else }}{{ . | humanize }}{{ end }}
+      </span>
+      {{ end }}
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* Related Items */}}
+  {{ $hasRelated := or $data.related_incidents $data.related_depositions $data.related_evidence $data.related_timeline }}
+  {{ if $hasRelated }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      </svg>
+      Related Items
+    </h2>
+    {{ partial "case-file/related-links.html" (dict "data" $data "title" "") }}
+  </section>
+  {{ end }}
+
+  {{/* Tags */}}
+  {{ with $data.tags }}
+  <section class="bg-white rounded-lg shadow-card p-6">
+    <h2 class="text-lg font-bold text-navy mb-3 flex items-center gap-2" style="margin-top: 0;">
+      <svg class="w-5 h-5 text-slate-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+      </svg>
+      Tags
+    </h2>
+    {{ partial "case-file/tags.html" (dict "tags" .) }}
+  </section>
+  {{ end }}
+</div>

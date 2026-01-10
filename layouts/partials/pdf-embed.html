@@ -1,0 +1,38 @@
+{{/* PDF Embed Partial
+     Usage: {{ partial "pdf-embed.html" (dict "file" "/pdfs/document.pdf" "title" "Document Title") }}
+*/}}
+{{ $file := .file }}
+{{ $title := .title | default "PDF Document" }}
+
+<div class="pdf-embed-container bg-white rounded-lg shadow-card overflow-hidden">
+  <div class="bg-gray-100 px-4 py-3 border-b flex items-center justify-between">
+    <span class="font-medium text-navy">{{ $title }}</span>
+    <a href="{{ $file }}"
+       download
+       class="btn btn-secondary text-sm px-3 py-1.5">
+      <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+      </svg>
+      Download PDF
+    </a>
+  </div>
+  <div class="relative" style="padding-bottom: 130%;">
+    <iframe
+      src="{{ $file }}#toolbar=1&navpanes=0"
+      class="absolute inset-0 w-full h-full"
+      title="{{ $title }}"
+      loading="lazy">
+      <p>Your browser does not support PDFs.
+        <a href="{{ $file }}">Download the PDF</a> to view it.
+      </p>
+    </iframe>
+  </div>
+</div>
+
+<!-- Fallback for browsers without PDF support -->
+<noscript>
+  <div class="bg-gray-100 p-6 rounded-lg text-center">
+    <p class="mb-4">PDF preview requires JavaScript.</p>
+    <a href="{{ $file }}" class="btn btn-primary">Download PDF</a>
+  </div>
+</noscript>

@@ -1,0 +1,71 @@
+{{/*
+  List Header Partial (for list/index pages)
+
+  Usage: {{ partial "list-header.html" (dict "page" . "icon" "documents" "count" (len .Pages)) }}
+
+  Parameters:
+    - page: The current page context (required)
+    - icon: Icon type - "people", "documents", "calendar", "folder", "grid", etc. (optional)
+    - title: Override title (optional, defaults to page title)
+    - description: Description text (optional, defaults to page description)
+    - count: Number of items in the list (optional)
+    - count_label: Label for count (optional, defaults to "Items")
+    - stats: Additional stats as slice of {value, label} (optional)
+*/}}
+
+{{ $page := .page }}
+{{ $icon := .icon | default "grid" }}
+{{ $title := .title | default $page.Title }}
+{{ $description := .description | default $page.Description }}
+{{ $count := .count }}
+{{ $countLabel := .count_label | default "Items" }}
+{{ $stats := .stats }}
+
+<header class="relative overflow-hidden">
+  {{ partial "header-bg.html" . }}
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb (always shown) -->
+    <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
+      <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
+      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      <span class="text-white font-medium" aria-current="page">{{ $title }}</span>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <!-- Title and description -->
+      <div class="flex items-start gap-6">
+        <!-- Icon -->
+        <div class="hidden sm:flex flex-shrink-0 w-20 h-20 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 ring-4 ring-amber-500/50 shadow-2xl items-center justify-center">
+          {{ partial "header-icon.html" (dict "icon" $icon "class" "h-12 w-12 text-slate-400") }}
+        </div>
+
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">{{ $title }}</h1>
+          {{ with $description }}
+          <p class="text-lg text-slate-300 max-w-2xl">{{ . }}</p>
+          {{ end }}
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="flex items-center gap-8">
+        {{ if $count }}
+        <div class="text-center px-6 py-3 bg-slate-800/50 rounded-xl border border-slate-700">
+          <div class="text-4xl font-bold text-amber-400">{{ $count }}</div>
+          <div class="text-sm text-slate-400 uppercase tracking-wide">{{ $countLabel }}</div>
+        </div>
+        {{ end }}
+
+        {{ range $stats }}
+        <div class="text-center px-6 py-3 bg-slate-800/50 rounded-xl border border-slate-700">
+          <div class="text-4xl font-bold text-white">{{ .value }}</div>
+          <div class="text-sm text-slate-400 uppercase tracking-wide">{{ .label }}</div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</header>

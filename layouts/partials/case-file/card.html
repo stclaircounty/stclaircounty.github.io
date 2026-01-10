@@ -1,0 +1,25 @@
+{{/*
+  Base case-file card wrapper
+
+  Params:
+    - key: string - The data key for this item
+    - type: string - "incident" | "deposition" | "evidence"
+    - data: map - The data object from YAML
+    - href: string - Link to detail page
+    - class: string (optional) - Additional CSS classes
+*/}}
+{{ $key := .key }}
+{{ $type := .type }}
+{{ $data := .data }}
+{{ $href := .href }}
+{{ $extraClass := .class | default "" }}
+
+<article class="card hover:shadow-md transition-shadow group {{ $extraClass }}" data-key="{{ $key }}" data-type="{{ $type }}">
+  {{ partial "case-file/card-header.html" (dict "data" $data "type" $type) }}
+
+  <div class="case-file-content">
+    {{ .inner }}
+  </div>
+
+  {{ partial "case-file/card-footer.html" (dict "href" $href "type" $type "data" $data) }}
+</article>

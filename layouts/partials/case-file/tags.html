@@ -1,0 +1,19 @@
+{{/*
+  Tags display
+
+  Params:
+    - tags: slice of strings
+    - class: string (optional) - Additional CSS classes
+*/}}
+{{ $tags := .tags }}
+{{ $class := .class | default "" }}
+
+{{ with $tags }}
+<div class="flex flex-wrap gap-1.5 {{ $class }}">
+  {{ range . }}
+  <span class="text-xs px-2 py-0.5 bg-gray-100 text-slate-light rounded hover:bg-gray-200 transition-colors">
+    {{ . | humanize }}
+  </span>
+  {{ end }}
+</div>
+{{ end }}

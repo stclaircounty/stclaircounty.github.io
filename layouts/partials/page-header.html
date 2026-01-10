@@ -1,0 +1,114 @@
+{{/*
+  Page Header Partial (for single pages)
+
+  Usage: {{ partial "page-header.html" (dict "page" . "icon" "person" "section" "People") }}
+
+  Parameters:
+    - page: The current page context (required)
+    - icon: Icon type - "person", "document", "calendar", "folder", "shield", "scale", etc. (optional)
+    - section: Override section name in breadcrumb (optional)
+    - title: Override page title (optional, defaults to page.Title)
+    - subtitle: Subtitle text below the title (optional)
+    - badges: Slice of badge maps with "label" and optional "type" (primary/success/warning/danger/neutral)
+    - stats: Slice of stat maps with "value" and "label"
+    - date: Override date (optional, defaults to page.Date)
+*/}}
+
+{{ $page := .page }}
+{{ $icon := .icon | default "document" }}
+{{ $section := .section | default ($page.Section | title) }}
+{{ $title := .title | default $page.Title }}
+{{ $subtitle := .subtitle }}
+{{ $badges := .badges }}
+{{ $stats := .stats }}
+{{ $date := .date | default $page.Date }}
+
+<header class="relative overflow-hidden">
+  {{ partial "header-bg.html" . }}
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb (always shown for accessibility) -->
+    <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
+      <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
+      {{ if $page.Section }}
+      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      <a href="/{{ $page.Section }}/" class="text-slate-400 hover:text-white transition-colors">{{ $section }}</a>
+      {{ end }}
+      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      <span class="text-white font-medium" aria-current="page">{{ $title }}</span>
+    </nav>
+
+    <div class="flex flex-col md:flex-row md:items-start gap-8">
+      <!-- Icon/Image -->
+      <div class="flex-shrink-0">
+        {{ with $page.Params.photo }}
+        <img src="/images/{{ $.page.Section }}/{{ . }}" alt="{{ $page.Title }}"
+             class="w-36 h-36 rounded-xl object-cover ring-4 ring-amber-500/50 shadow-2xl">
+        {{ else }}
+        <div class="w-36 h-36 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 ring-4 ring-amber-500/50 shadow-2xl flex items-center justify-center">
+          {{ partial "header-icon.html" (dict "icon" $icon "class" "h-20 w-20 text-slate-500") }}
+        </div>
+        {{ end }}
+      </div>
+
+      <div class="flex-1">
+        <!-- Title -->
+        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">{{ $title }}</h1>
+
+        <!-- Subtitle -->
+        {{ with $subtitle }}
+        <p class="text-lg text-slate-300 mb-4">{{ . }}</p>
+        {{ end }}
+
+        <!-- Date (if available and not zero) -->
+        {{ with $date }}
+        {{ if not .IsZero }}
+        <p class="text-slate-400 mb-4">
+          <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "January 2, 2006" }}</time>
+        </p>
+        {{ end }}
+        {{ end }}
+
+        <!-- Badges -->
+        {{ if $badges }}
+        <div class="flex flex-wrap items-center gap-3">
+          {{ range $badges }}
+          {{ $type := .type | default "neutral" }}
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border
+            {{ if eq $type "primary" }}bg-amber-500 text-slate-900 border-amber-500 shadow-lg
+            {{ else if eq $type "success" }}bg-emerald-500/20 text-emerald-300 border-emerald-500/30
+            {{ else if eq $type "warning" }}bg-amber-500/20 text-amber-300 border-amber-500/30
+            {{ else if eq $type "danger" }}bg-red-500/20 text-red-300 border-red-500/30
+            {{ else }}bg-slate-700/80 text-slate-300 border-slate-600{{ end }}">
+            {{ if .icon }}
+            <span class="w-2 h-2 rounded-full mr-2
+              {{ if eq $type "success" }}bg-emerald-400
+              {{ else if eq $type "warning" }}bg-amber-400
+              {{ else if eq $type "danger" }}bg-red-400
+              {{ else }}bg-slate-400{{ end }}"></span>
+            {{ end }}
+            {{ .label }}
+          </span>
+          {{ end }}
+        </div>
+        {{ end }}
+
+        <!-- Stats row -->
+        {{ if $stats }}
+        <div class="flex flex-wrap gap-6 mt-6">
+          {{ range $stats }}
+          <div class="text-center">
+            <div class="text-3xl font-bold text-white">{{ .value }}</div>
+            <div class="text-sm text-slate-400">{{ .label }}</div>
+          </div>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</header>

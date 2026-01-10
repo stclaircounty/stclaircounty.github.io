@@ -1,0 +1,101 @@
+baseURL = 'http://localhost:1313'
+languageCode = 'en-us'
+title = 'St. Clair Under Oath'
+theme = ''
+
+# Build settings
+[build]
+  writeStats = true
+
+[params]
+  description = "Documenting St. Clair County Sheriff's Office through sworn testimony, court records, and public documents. Because accountability requires evidence."
+  author = "St. Clair Under Oath"
+
+  # Social sharing
+  ogImage = "/images/og-image.png"
+
+  # Contact
+  contactEmail = ""
+
+  # Colors (for reference in templates)
+  [params.colors]
+    primary = "#0f172a"
+    accent = "#dc2626"
+    secondary = "#ca8a04"
+    background = "#fafaf9"
+    darkBg = "#1e293b"
+    text = "#334155"
+
+# Taxonomies for cross-referencing content
+[taxonomies]
+  tag = "tags"
+  incident_type = "incident_types"
+
+# Menu configuration
+[menus]
+  [[menus.main]]
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+  [[menus.main]]
+    name = "Timeline"
+    pageRef = "/timeline"
+    weight = 20
+  [[menus.main]]
+    name = "Depositions"
+    pageRef = "/depositions"
+    weight = 30
+  [[menus.main]]
+    name = "People"
+    pageRef = "/people"
+    weight = 40
+  [[menus.main]]
+    name = "Evidence"
+    pageRef = "/evidence"
+    weight = 50
+  [[menus.main]]
+    name = "Incidents"
+    pageRef = "/incidents"
+    weight = 60
+  [[menus.main]]
+    name = "Take Action"
+    pageRef = "/take-action"
+    weight = 70
+  [[menus.main]]
+    name = "Resources"
+    pageRef = "/resources"
+    weight = 80
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 90
+
+# Markdown rendering
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "monokai"
+
+# Output formats
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
+# Permalink structure
+[permalinks]
+  depositions = "/depositions/:contentbasename/"
+  people = "/people/:contentbasename/"
+  timeline = "/timeline/:contentbasename/"
+  incidents = "/incidents/:contentbasename/"
+  evidence = "/evidence/:contentbasename/"
+  take-action = "/take-action/:contentbasename/"
+  resources = "/resources/:contentbasename/"
+
+# Security settings for Hugo
+[security]
+  [security.funcs]
+    getenv = ["^HUGO_", "^CI$"]

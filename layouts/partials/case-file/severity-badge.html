@@ -1,0 +1,12 @@
+{{/*
+  Severity badge
+  Param: severity string
+*/}}
+{{ $severity := . }}
+<span class="badge
+  {{ if eq $severity "critical" }}bg-red-100 text-red-700 border border-red-200
+  {{ else if eq $severity "high" }}bg-orange-100 text-orange-700 border border-orange-200
+  {{ else if eq $severity "medium" }}bg-yellow-100 text-yellow-700 border border-yellow-200
+  {{ else }}bg-gray-100 text-gray-600{{ end }}">
+  {{ $severity | title }}
+</span>

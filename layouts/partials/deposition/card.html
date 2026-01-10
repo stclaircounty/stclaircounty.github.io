@@ -1,0 +1,72 @@
+{{/*
+  Deposition card for list pages
+
+  Params:
+    - key: string - The deposition key from data
+    - data: map - The deposition data object
+*/}}
+{{ $key := .key }}
+{{ $data := .data }}
+{{ $href := printf "/depositions/%s/" $key }}
+
+<article class="card hover:shadow-md transition-shadow group">
+  {{/* Header */}}
+  {{ partial "case-file/card-header.html" (dict "data" $data "type" "deposition") }}
+
+  {{/* Title */}}
+  <h2 class="text-xl font-bold text-navy mb-2 group-hover:text-accent transition-colors">
+    <a href="{{ $href }}">{{ $data.title }}</a>
+  </h2>
+
+  {{/* Deponent */}}
+  {{ with $data.deponent }}
+  <p class="text-slate mb-3">
+    <span class="text-slate-light">Deponent:</span>
+    {{ $hasPage := site.GetPage (printf "/people/%s" .id) }}
+    {{ if $hasPage }}
+    <a href="/people/{{ .id }}/" class="font-medium text-navy hover:text-accent">{{ .name }}</a>
+    {{ else }}
+    <span class="font-medium">{{ .name }}</span>
+    {{ end }}
+    {{ with .role }}<span class="text-slate-light">({{ . }})</span>{{ end }}
+  </p>
+  {{ end }}
+
+  {{/* Key Quote Preview */}}
+  {{ with $data.key_quotes }}
+  {{ $quote := index . 0 }}
+  <div class="bg-offwhite rounded-lg p-4 mb-4 border-l-4 border-accent">
+    <p class="text-sm text-slate italic">"{{ $quote.text | truncate 150 }}"</p>
+    <span class="text-xs text-slate-light mt-2 block">Page {{ $quote.page }}</span>
+  </div>
+  {{ end }}
+
+  {{/* Topics */}}
+  {{ with $data.topics }}
+  <div class="flex flex-wrap gap-1.5 mb-3">
+    {{ range first 4 . }}
+    <span class="text-xs px-2 py-0.5 bg-gold/10 text-gold rounded">{{ . | humanize }}</span>
+    {{ end }}
+    {{ if gt (len .) 4 }}
+    <span class="text-xs px-2 py-0.5 text-slate-light">+{{ sub (len .) 4 }} more</span>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{/* Related Incident Link */}}
+  {{ with $data.related_incidents }}
+  {{ $incidentKey := index . 0 }}
+  {{ $incident := index site.Data.incidents $incidentKey }}
+  {{ if $incident }}
+  <a href="/incidents/{{ $incidentKey }}/" class="flex items-center gap-2 mb-3 px-2.5 py-1.5 bg-navy/5 hover:bg-navy/10 rounded-lg transition-colors group/incident">
+    <svg class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    <span class="text-xs text-navy group-hover/incident:text-accent transition-colors truncate">{{ $incident.title }}</span>
+  </a>
+  {{ end }}
+  {{ end }}
+
+  {{/* Footer */}}
+  {{ partial "case-file/card-footer.html" (dict "href" $href "type" "deposition" "data" $data) }}
+</article>

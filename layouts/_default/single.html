@@ -1,0 +1,113 @@
+{{ define "main" }}
+{{/* Build badges based on available params */}}
+{{ $badges := slice }}
+{{ with .Params.case_number }}
+  {{ $badges = $badges | append (dict "label" (printf "Case #%s" .) "type" "neutral") }}
+{{ end }}
+{{ with .Params.severity }}
+  {{ $type := "neutral" }}
+  {{ if eq . "critical" }}{{ $type = "danger" }}{{ end }}
+  {{ if eq . "high" }}{{ $type = "danger" }}{{ end }}
+  {{ if eq . "medium" }}{{ $type = "warning" }}{{ end }}
+  {{ $badges = $badges | append (dict "label" (. | title) "type" $type "icon" true) }}
+{{ end }}
+
+{{/* Determine icon based on section or type */}}
+{{ $icon := "document" }}
+{{ if eq .Section "" }}{{ $icon = "shield" }}{{ end }}
+{{ if eq .Section "take-action" }}{{ $icon = "warning" }}{{ end }}
+{{ if eq .Section "resources" }}{{ $icon = "folder" }}{{ end }}
+
+{{/* Use list-header for top-level standalone pages (no section), page-header for section content */}}
+{{ $isStandalonePage := eq .Section "" }}
+
+<article>
+  {{ if $isStandalonePage }}
+  {{ partial "list-header.html" (dict
+    "page" .
+    "icon" $icon
+    "description" .Description
+  ) }}
+  {{ else }}
+  {{ partial "page-header.html" (dict
+    "page" .
+    "icon" $icon
+    "badges" $badges
+    "subtitle" .Description
+  ) }}
+  {{ end }}
+
+  <!-- Content -->
+  <div class="content-container py-10">
+    {{ with .Params.key_quotes }}
+    <section class="mb-10">
+      <h2 class="text-lg font-semibold text-navy mb-4">Key Quotes</h2>
+      {{ range . }}
+      <div class="quote-callout">
+        <blockquote>"{{ .text }}"</blockquote>
+        <cite>Page {{ .page }}</cite>
+      </div>
+      {{ end }}
+    </section>
+    {{ end }}
+
+    <div class="prose prose-lg max-w-none">
+      {{ .Content }}
+    </div>
+
+    <!-- Tags -->
+    {{ with .Params.tags }}
+    <div class="mt-10 pt-6 border-t border-gray-200">
+      <h3 class="text-sm font-semibold text-slate-light uppercase tracking-wide mb-3">Tags</h3>
+      <div class="flex flex-wrap gap-2">
+        {{ range . }}
+        <a href="/tags/{{ . | urlize }}/" class="badge bg-gray-100 text-slate hover:bg-gray-200 transition-colors">
+          {{ . }}
+        </a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    <!-- Related Officers -->
+    {{ with .Params.related_officers }}
+    <div class="mt-8 pt-6 border-t border-gray-200">
+      <h3 class="text-sm font-semibold text-slate-light uppercase tracking-wide mb-3">Officers Involved</h3>
+      <div class="flex flex-wrap gap-2">
+        {{ range . }}
+        <a href="/people/{{ . }}/" class="badge badge-gold hover:bg-gold/25 transition-colors">
+          {{ . | humanize | title }}
+        </a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-gray-50 border-t border-gray-200">
+    <div class="content-container py-6">
+      <div class="flex justify-between items-center">
+        {{ with .PrevInSection }}
+        <a href="{{ .Permalink }}" class="group flex items-center gap-2 text-slate hover:text-accent transition-colors">
+          <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          <span class="text-sm">{{ .Title | truncate 40 }}</span>
+        </a>
+        {{ else }}
+        <span></span>
+        {{ end }}
+        {{ with .NextInSection }}
+        <a href="{{ .Permalink }}" class="group flex items-center gap-2 text-slate hover:text-accent transition-colors">
+          <span class="text-sm">{{ .Title | truncate 40 }}</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+        {{ end }}
+      </div>
+    </div>
+  </nav>
+</article>
+{{ end }}

@@ -1,0 +1,94 @@
+{{ define "main" }}
+{{/* Get deposition key from URL */}}
+{{ $key := .File.ContentBaseName }}
+{{ $data := index site.Data.depositions $key }}
+
+{{ if $data }}
+{{/* Build badges for page header */}}
+{{ $badges := slice }}
+{{ with $data.case }}
+  {{ with .number }}
+    {{ $badges = $badges | append (dict "label" . "type" "primary") }}
+  {{ end }}
+{{ end }}
+{{ with $data.deponent }}
+  {{ $badges = $badges | append (dict "label" .name "type" "neutral") }}
+{{ end }}
+
+{{/* Parse date for header */}}
+{{ $date := time "0001-01-01" }}
+{{ with $data.date }}
+  {{ $date = time . }}
+{{ end }}
+
+<article>
+  {{/* Header */}}
+  {{ partial "page-header.html" (dict
+    "page" .
+    "icon" "documents"
+    "section" "Depositions"
+    "title" $data.title
+    "badges" $badges
+    "date" $date
+  ) }}
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {{/* Deposition detail content */}}
+    {{ partial "deposition/detail.html" (dict "key" $key "data" $data "content" .Content) }}
+  </div>
+
+  {{/* Navigation */}}
+  {{ $depositionsData := site.Data.depositions }}
+  {{ $allDepositions := slice }}
+  {{ range $k, $depo := $depositionsData }}
+    {{ if not (hasPrefix $k "_") }}
+      {{ $allDepositions = $allDepositions | append (merge $depo (dict "key" $k)) }}
+    {{ end }}
+  {{ end }}
+  {{ $allDepositions = sort $allDepositions "date" "desc" }}
+
+  {{ $currentIndex := -1 }}
+  {{ range $i, $depo := $allDepositions }}
+    {{ if eq $depo.key $key }}{{ $currentIndex = $i }}{{ end }}
+  {{ end }}
+
+  {{ if gt (len $allDepositions) 1 }}
+  <nav class="bg-gray-50 border-t py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between">
+        {{ if and (ge $currentIndex 0) (lt (add $currentIndex 1) (len $allDepositions)) }}
+        {{ $next := index $allDepositions (add $currentIndex 1) }}
+        <a href="/depositions/{{ $next.key }}/" class="text-accent hover:underline">
+          &larr; {{ $next.title | truncate 40 }}
+        </a>
+        {{ else }}
+        <span></span>
+        {{ end }}
+
+        {{ if and (gt $currentIndex 0) }}
+        {{ $prev := index $allDepositions (sub $currentIndex 1) }}
+        <a href="/depositions/{{ $prev.key }}/" class="text-accent hover:underline">
+          {{ $prev.title | truncate 40 }} &rarr;
+        </a>
+        {{ end }}
+      </div>
+    </div>
+  </nav>
+  {{ end }}
+</article>
+
+{{ else }}
+{{/* Fallback for content files not in data */}}
+<article>
+  {{ partial "page-header.html" (dict "page" . "icon" "documents" "section" "Depositions") }}
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-lg shadow-card p-8">
+      <div class="prose prose-lg max-w-none">
+        {{ .Content }}
+      </div>
+    </div>
+  </div>
+</article>
+{{ end }}
+{{ end }}

@@ -1,0 +1,61 @@
+{{ define "main" }}
+{{/* Pull depositions from data file */}}
+{{ $depositionsData := site.Data.depositions }}
+{{ $depositions := slice }}
+{{ range $key, $depo := $depositionsData }}
+  {{ if not (hasPrefix $key "_") }}
+    {{ $depositions = $depositions | append (merge $depo (dict "key" $key)) }}
+  {{ end }}
+{{ end }}
+{{ $depositions = sort $depositions "date" "desc" }}
+
+{{/* Count stats */}}
+{{ $withPdf := 0 }}
+{{ $totalQuotes := 0 }}
+{{ range $depositions }}
+  {{ if .pdf_file }}{{ $withPdf = add $withPdf 1 }}{{ end }}
+  {{ with .key_quotes }}{{ $totalQuotes = add $totalQuotes (len .) }}{{ end }}
+{{ end }}
+
+{{ partial "list-header.html" (dict
+  "page" .
+  "icon" "documents"
+  "title" "Depositions"
+  "description" "Sworn testimony from civil lawsuits, internal investigations, and legal proceedings involving St. Clair County Sheriff's Department personnel."
+  "count" (len $depositions)
+  "count_label" "Depositions"
+) }}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  {{ with .Content }}
+  <div class="prose prose-lg max-w-none mb-8">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  {{ if $depositions }}
+
+  {{/* Stats bar */}}
+  {{ partial "case-file/stats-bar.html" (dict "stats" (slice
+    (dict "value" (len $depositions) "label" "Total" "color" "blue")
+    (dict "value" $withPdf "label" "PDFs Available" "color" "green")
+    (dict "value" $totalQuotes "label" "Key Quotes" "color" "purple")
+  )) }}
+
+  {{/* Depositions Grid */}}
+  <div class="grid gap-6 md:grid-cols-2">
+    {{ range $depositions }}
+    {{ partial "deposition/card.html" (dict "key" .key "data" .) }}
+    {{ end }}
+  </div>
+
+  {{ else }}
+  <div class="text-center py-16">
+    <svg class="h-16 w-16 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    <p class="text-slate-light text-lg">No depositions available yet.</p>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

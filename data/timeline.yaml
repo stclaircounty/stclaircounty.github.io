@@ -1,0 +1,399 @@
+# St. Clair County Public Accountability Project - Timeline Database
+# Last Updated: 2026-01-09
+#
+# Access: site.Data.timeline["2022-11-06-owi-arrest"]
+
+2022-11-06-owi-arrest:
+  title: "Deputy Marc King Arrested for OWI"
+  date: 2022-11-06
+  time: "22:00:00"
+  location: "St. Clair County, Michigan"
+  event_type: arrest
+  incident_type: owi-arrest
+  severity: critical
+  summary: |
+    Deputy Marc King arrested for Operating While Intoxicated (OWI) while off-duty.
+    Transported to Lapeer County Jail. Arrest handled by outside agency.
+  details:
+    - "Deputy Marc King arrested for drunk driving while off-duty"
+    - "Transported to Lapeer County Jail (not St. Clair County)"
+    - "Arrest made by outside agency"
+  significance: |
+    The arrest itself was handled properly by an outside agency. What happened
+    afterward is the focus of accountability concerns.
+  related_incident: 2022-11-06-owi-arrest
+  people_involved:
+    marc-king:
+      role: arrestee
+  sources:
+    - type: deposition
+      ref: mat-king-deposition
+    - type: deposition
+      ref: pohl-deposition
+  tags:
+    - owi
+    - arrest
+    - initiating-event
+
+2022-11-06-lapeer-jail-transport:
+  title: "Deputy Marc King Transported to Lapeer County Jail"
+  date: 2022-11-06
+  time: "22:30:00"
+  location: "Lapeer County Jail, Michigan"
+  event_type: transport
+  incident_type: custody
+  severity: high
+  summary: |
+    After OWI arrest, Deputy Marc King was transported to Lapeer County Jail rather
+    than St. Clair County facilities. A hold was placed due to BAC level, requiring
+    him to remain in custody until sober.
+  details:
+    - "Transported to Lapeer County Jail (outside St. Clair County jurisdiction)"
+    - "BAC level resulted in mandatory hold at the jail"
+    - "Proper procedure followed by arresting agency"
+    - "Held until BAC dropped to safe release level"
+  significance: |
+    The use of Lapeer County facilities shows the arrest was initially handled
+    properly by an outside agency—making the subsequent internal handling by
+    St. Clair County command staff more troubling.
+  related_incident: 2022-11-06-owi-arrest
+  people_involved:
+    marc-king:
+      role: arrestee
+  sources:
+    - type: deposition
+      ref: mat-king-deposition
+  tags:
+    - jail
+    - bac-hold
+    - proper-procedure
+
+2022-11-06-pohl-texts-goodrich:
+  title: "Captain Pohl Texts Deputy Goodrich About Arrest"
+  date: 2022-11-06
+  time: "17:44:00"
+  location: "St. Clair County"
+  event_type: communication
+  incident_type: information-dissemination
+  severity: medium
+  summary: |
+    At 5:44 PM, Captain Matthew Pohl texted Deputy Josh Goodrich—a friend he
+    communicated with daily—informing him of Marc King's OWI arrest. This shows
+    how quickly the incident spread through informal department channels.
+  details:
+    - "Pohl texted Goodrich at exactly 5:44 PM on November 6, 2022"
+    - "Goodrich described as someone Pohl 'talks daily with'"
+    - "Message content: 'Marc got an OWI'"
+    - "Demonstrates rapid informal dissemination of sensitive information"
+  significance: |
+    This text message, admitted in Pohl's deposition, demonstrates how news of the
+    arrest spread through informal channels. It also establishes that Pohl was
+    communicating about the matter via text—messages he later admitted to deleting.
+  related_incident: 2022-11-06-owi-arrest
+  people_involved:
+    matthew-pohl:
+      role: sender
+    josh-goodrich:
+      role: recipient
+  sources:
+    - type: deposition
+      ref: pohl-deposition
+      page: 200
+  tags:
+    - text-message
+    - informal-communication
+    - evidence
+
+2022-11-06-sheriff-notified:
+  title: "Sheriff Mat King Notified of Brother's Arrest"
+  date: 2022-11-06
+  time: "23:00:00"
+  location: "St. Clair County Sheriff's Office"
+  event_type: notification
+  incident_type: command-notification
+  severity: high
+  summary: |
+    Sheriff Mat King notified of his brother's arrest the same day. Rather than
+    recusing himself, he became directly involved in the matter.
+  details:
+    - "Sheriff Mat King learned of his brother's arrest on November 6, 2022"
+    - "He contacted Captain Matthew Pohl regarding the incident"
+    - "He contacted the Undersheriff"
+    - "Command-level discussions occurred about how to handle the matter"
+  failure_point:
+    should_have:
+      - "Sheriff King should have immediately recused himself"
+      - "An external agency should have been contacted"
+      - "All communications should have been documented"
+      - "A clear chain of custody should have been established"
+    actually_happened:
+      - "No recusal occurred"
+      - "No external agency was engaged"
+      - "The Sheriff maintained involvement in the matter"
+      - "Communications were handled informally"
+      - "Text messages were later deleted"
+  significance: |
+    This was the critical moment where proper governance should have intervened.
+    When the Sheriff chose not to recuse himself, every subsequent action was
+    tainted by the conflict of interest.
+  related_incident: 2022-11-06-owi-arrest
+  people_involved:
+    mat-king:
+      role: notified
+    matthew-pohl:
+      role: contacted
+    jim-spadafore:
+      role: contacted
+  sources:
+    - type: deposition
+      ref: mat-king-deposition
+  tags:
+    - conflict-of-interest
+    - command-interference
+    - governance-failure
+
+2022-2024-evidence-deleted:
+  title: "Text Messages Deleted by Multiple Officers"
+  date: 2023-06-01
+  time: "12:00:00"
+  date_range:
+    start: 2022-11-06
+    end: 2024-02-01
+    description: "Exact deletion dates unknown; discovered through depositions"
+  location: "St. Clair County Sheriff's Office"
+  event_type: evidence-destruction
+  incident_type: evidence-spoliation
+  severity: critical
+  summary: |
+    Multiple officers involved in the Marc King matter admitted in sworn testimony
+    that text messages relevant to the incident were deleted or lost.
+  details:
+    - "Captain Pohl admitted in deposition to deleting text messages"
+    - "Deputy Duva admitted text messages are 'no longer available'"
+    - "No litigation hold was established"
+    - "No retention policies were enforced"
+  pattern:
+    description: "Both officers who deleted evidence were close friends of arrestee"
+    officers:
+      matthew-pohl:
+        relationship: "Close Friend"
+        action: "Deleted Texts"
+      damon-duva:
+        relationship: "Close Friend"
+        action: "Deleted Texts"
+  legal_implications:
+    - "Adverse Inference: Courts may assume deleted evidence was unfavorable"
+    - "Discovery Sanctions: Penalties for destroying relevant evidence"
+    - "Evidence Tampering: MCL 750.491 criminal offense"
+    - "Spoliation Doctrine: Severe legal consequences"
+  significance: |
+    The fact that multiple officers—all close to the arrestee—deleted communications
+    suggests coordination rather than coincidental data loss.
+  related_incident: 2022-11-06-owi-arrest
+  people_involved:
+    matthew-pohl:
+      role: deleted-evidence
+    damon-duva:
+      role: deleted-evidence
+  related_evidence:
+    - evidence-spoliation-analysis
+  sources:
+    - type: deposition
+      ref: pohl-deposition
+    - type: deposition
+      ref: duva-transcripts
+  tags:
+    - evidence-spoliation
+    - deleted-texts
+    - obstruction
+    - pattern-evidence
+
+2022-11-internal-investigation:
+  title: "Internal Investigation Initiated - No External Agency"
+  date: 2022-11-15
+  location: "St. Clair County Sheriff's Office"
+  event_type: investigation
+  incident_type: internal-investigation
+  severity: high
+  summary: |
+    St. Clair County Sheriff's Office initiated an internal investigation into
+    Deputy Marc King's OWI arrest. Despite the obvious conflict of interest—the
+    arrestee being the Sheriff's brother—no external agency was engaged.
+  details:
+    - "Investigation conducted internally by the department"
+    - "No external agency brought in despite conflict of interest"
+    - "Sheriff Mat King remained involved despite being arrestee's brother"
+    - "Captain Pohl—a close friend of the arrestee—was involved in handling"
+    - "No findings or discipline publicly documented"
+  failure_point:
+    should_have:
+      - "External agency should have conducted the investigation"
+      - "Sheriff should have recused himself entirely"
+      - "Officers with personal relationships should have been excluded"
+      - "All communications should have been preserved"
+    actually_happened:
+      - "Investigation remained internal"
+      - "Sheriff remained involved"
+      - "Friends of arrestee involved in handling"
+      - "Communications were later deleted"
+  significance: |
+    The decision to handle the investigation internally, with the Sheriff's continued
+    involvement and his brother's friends participating, represents a fundamental
+    governance failure that undermined any possibility of objective review.
+  related_incident: 2022-11-06-owi-arrest
+  people_involved:
+    mat-king:
+      role: involved-despite-conflict
+    matthew-pohl:
+      role: investigator
+  sources:
+    - type: deposition
+      ref: mat-king-deposition
+  tags:
+    - internal-investigation
+    - conflict-of-interest
+    - governance-failure
+
+# =============================================================================
+# 2022 - WHISTLEBLOWER EVENTS
+# =============================================================================
+
+2022-12-jones-reports-concerns:
+  title: "Lt. Jones Reports Concerns to HR"
+  date: 2022-12-01
+  location: "St. Clair County Sheriff's Office"
+  event_type: whistleblower
+  incident_type: internal-complaint
+  severity: high
+  summary: |
+    Lieutenant Scott Jones reported concerns about the handling of the Marc King
+    OWI arrest to Human Resources.
+  details:
+    - "Lt. Jones raised concerns about conflicts of interest"
+    - "Concerns reported through official HR channels"
+    - "This constituted protected speech under the First Amendment"
+  significance: |
+    Lt. Jones's decision to report concerns through proper channels was later
+    cited as protected First Amendment speech in federal litigation.
+  related_incident: 2022-11-06-owi-arrest
+  related_litigation: jones-v-scc
+  people_involved:
+    scott-jones:
+      role: whistleblower
+  tags:
+    - whistleblower
+    - first-amendment
+    - hr-complaint
+
+2023-01-jones-retirement:
+  title: "Lt. Jones Retires Under Pressure"
+  date: 2023-01-15
+  location: "St. Clair County Sheriff's Office"
+  event_type: personnel
+  incident_type: forced-retirement
+  severity: critical
+  summary: |
+    Lieutenant Scott Jones retired from the Sheriff's Office. He later alleged
+    in federal court that this retirement was coerced in retaliation for
+    reporting concerns about the Marc King matter.
+  details:
+    - "Lt. Jones retired after raising concerns about the OWI arrest handling"
+    - "Federal lawsuit alleges retirement was coerced"
+    - "Alleged First Amendment retaliation"
+  significance: |
+    The circumstances of Lt. Jones's departure became the central claim in
+    federal litigation alleging whistleblower retaliation.
+  related_incident: 2022-11-06-owi-arrest
+  related_litigation: jones-v-scc
+  people_involved:
+    scott-jones:
+      role: retaliation-victim
+    mat-king:
+      role: defendant
+  tags:
+    - retaliation
+    - whistleblower
+    - forced-retirement
+
+# =============================================================================
+# 2024-2025 - FEDERAL LITIGATION
+# =============================================================================
+
+2024-jones-lawsuit-filed:
+  title: "Jones v. St. Clair County Federal Lawsuit Filed"
+  date: 2024-01-15
+  location: "U.S. District Court, Eastern District of Michigan"
+  event_type: litigation
+  incident_type: lawsuit-filed
+  severity: high
+  summary: |
+    Former Lieutenant Scott Jones filed a federal civil rights lawsuit against
+    St. Clair County and Sheriff Mat King under 42 U.S.C. § 1983.
+  details:
+    - "Case No. 2:24-cv-11965"
+    - "Claims include First Amendment retaliation"
+    - "Claims include Fourteenth Amendment due process"
+    - "Monell claim against St. Clair County"
+  claims:
+    - First Amendment retaliation (42 U.S.C. § 1983)
+    - Procedural due process (Fourteenth Amendment)
+    - Municipal liability (Monell)
+  significance: |
+    This lawsuit brought the internal handling of the Marc King arrest into
+    federal court, where depositions and discovery produced public records
+    documenting the events.
+  related_incident: 2022-11-06-owi-arrest
+  related_litigation: jones-v-scc
+  people_involved:
+    scott-jones:
+      role: plaintiff
+    mat-king:
+      role: defendant
+    deborah-gordon:
+      role: plaintiffs-counsel
+    todd-shoudy:
+      role: defense-counsel
+    nancy-edmunds:
+      role: presiding-judge
+  tags:
+    - federal-litigation
+    - section-1983
+    - civil-rights
+
+2025-summary-judgment-ruling:
+  title: "Summary Judgment Denied - Case Proceeds to Trial"
+  date: 2025-01-15
+  location: "U.S. District Court, Eastern District of Michigan"
+  event_type: litigation
+  incident_type: court-ruling
+  severity: critical
+  summary: |
+    Judge Nancy Edmunds denied summary judgment in part, allowing key claims
+    to proceed. Qualified immunity was denied for surviving claims.
+  details:
+    - "Summary judgment denied in part"
+    - "First Amendment retaliation claim survived"
+    - "Qualified immunity denied for surviving claims"
+    - "Monell liability allowed to proceed"
+    - "Waiver defenses rejected"
+  holdings:
+    - "First Amendment retaliation claim survived summary judgment"
+    - "Defendants' qualified immunity defense rejected"
+    - "Municipal liability claims proceed"
+  significance: |
+    The denial of summary judgment and qualified immunity means the case will
+    proceed to trial on the merits. This is a significant procedural victory
+    for the plaintiff.
+  related_incident: 2022-11-06-owi-arrest
+  related_litigation: jones-v-scc
+  people_involved:
+    nancy-edmunds:
+      role: presiding-judge
+    scott-jones:
+      role: plaintiff
+    mat-king:
+      role: defendant
+  tags:
+    - court-ruling
+    - summary-judgment
+    - qualified-immunity-denied

@@ -1,0 +1,44 @@
+# Hugo
+/public/
+/resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Tailwind (compiled output)
+/assets/css/main.css
+
+# Pagefind (dev index)
+/static/pagefind/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Source materials (private - not for public repo)
+/jones_v_scc/
+/stclairsheriffevidence/
+/people/
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+.temp/

@@ -1,0 +1,152 @@
+# St. Clair County Public Accountability Project - Evidence Database
+# Last Updated: 2026-01-09
+#
+# Access: site.Data.evidence["evidence-spoliation-analysis"]
+
+evidence-spoliation-analysis:
+  title: "Deleted Text Messages: Pohl & Duva Sworn Admissions"
+  date: 2024-01-01
+  evidence_type: analysis
+  category: legal-analysis
+  source: "Sworn Depositions"
+  status: published
+  summary: |
+    Captain Pohl and Deputy Duva both admitted under oath to deleting text messages
+    from the period surrounding Deputy Marc King's OWI arrest. Both are close friends
+    of the arrestee.
+  establishes:
+    - "Multiple officers deleted text messages"
+    - "Pattern of evidence destruction by friends of arrestee"
+    - "No litigation hold was established"
+    - "Legal exposure for spoliation"
+  files:
+    - name: pohl-deposition.pdf
+      type: document
+      description: "Contains admission of deleted texts"
+    - name: duva-transcripts.pdf
+      type: document
+      description: "Contains admission of missing texts"
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  related_depositions:
+    - pohl-deposition
+    - duva-transcripts
+  related_people:
+    - matthew-pohl
+    - damon-duva
+    - marc-king
+  related_timeline:
+    - 2022-2024-evidence-deleted
+  tags:
+    - evidence-spoliation
+    - deleted-texts
+    - legal-analysis
+
+governance-failures-documentation:
+  title: "Sheriff King's Conflict of Interest: Why No Recusal?"
+  date: 2024-01-01
+  evidence_type: analysis
+  category: governance-analysis
+  source: "Analysis of Sworn Testimony"
+  status: published
+  summary: |
+    Sheriff Mat King remained involved in his brother's OWI case despite the obvious
+    conflict of interest. No recusal policy existed, no external agency was engaged,
+    and no evidence retention protocols were followed.
+  establishes:
+    - "No mandatory recusal policy existed"
+    - "No external investigation requirement"
+    - "No evidence retention protocols"
+    - "No structural accountability mechanisms"
+  files:
+    - name: mat-king-deposition.pdf
+      type: document
+      description: "Contains testimony on governance gaps"
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  related_depositions:
+    - mat-king-deposition
+  related_people:
+    - mat-king
+    - marc-king
+  tags:
+    - governance-failure
+    - conflict-of-interest
+    - policy-gaps
+
+public-trust-impact:
+  title: "Special Treatment for Sheriff's Brother: Impact on Public Trust"
+  date: 2024-01-01
+  evidence_type: analysis
+  category: impact-analysis
+  source: "Analysis"
+  status: published
+  summary: |
+    When a sheriff's brother receives different treatment than ordinary citizens,
+    and evidence is destroyed by the arrestee's friends, public trust in law
+    enforcement is fundamentally compromised.
+  establishes:
+    - "Perception of special treatment damages trust"
+    - "Evidence destruction undermines transparency"
+    - "Lack of independence compromises credibility"
+    - "Absence of accountability signals tolerance"
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  tags:
+    - analysis
+    - public-trust
+    - governance
+
+cross-examination-issues:
+  title: "Jones v. St. Clair County: Key Deposition Questions"
+  date: 2024-01-01
+  evidence_type: analysis
+  category: legal-preparation
+  source: "Legal Analysis"
+  status: published
+  summary: |
+    Critical questions arising from sworn testimony in the federal civil rights
+    lawsuit. Why did the Sheriff not recuse? Why were texts deleted? What was
+    discussed in command-level calls?
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  related_depositions:
+    - mat-king-deposition
+    - pohl-deposition
+    - duva-transcripts
+  tags:
+    - legal
+    - deposition
+    - cross-examination
+
+exhibit-index:
+  title: "Marc King OWI Case: Complete Document Index"
+  date: 2024-01-01
+  evidence_type: index
+  category: reference
+  source: "Documentation Project"
+  status: published
+  summary: |
+    Complete index of all depositions, court filings, and public records related
+    to the November 2022 OWI arrest and subsequent federal litigation.
+  related_incidents:
+    - 2022-11-06-owi-arrest
+  tags:
+    - exhibits
+    - evidence
+    - index
+
+# Destroyed evidence tracking
+_destroyed:
+  pohl-deleted-texts:
+    description: "Text messages between Captain Pohl and others"
+    date_destroyed: "2022-2024"
+    destroyed_by: matthew-pohl
+    source: pohl-deposition
+    significance: "Content unknown; subject to adverse inference"
+  duva-deleted-texts:
+    description: "Text messages involving Deputy Duva"
+    date_destroyed: "2022-2024"
+    destroyed_by: damon-duva
+    source: duva-transcripts
+    significance: "Content unknown; subject to adverse inference"

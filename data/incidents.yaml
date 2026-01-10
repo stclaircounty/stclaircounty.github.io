@@ -1,0 +1,171 @@
+# St. Clair County Public Accountability Project - Incidents Database
+# Last Updated: 2026-01-09
+#
+# Access: site.Data.incidents["2022-11-06-owi-arrest"]
+
+2022-11-06-owi-arrest:
+  title: "Deputy Marc King OWI Arrest and Cover-Up"
+  date: 2022-11-06
+  time: "22:00:00"
+  location: "St. Clair County, Michigan"
+  arrest_location: "Lapeer County jurisdiction"
+  jail_location: "Lapeer County Jail"
+  incident_type: owi-arrest
+  category: officer-misconduct
+  severity: critical
+  status: documented
+  outcome: internal-investigation
+
+  arrest_details:
+    arresting_agency: "Outside agency (not St. Clair County)"
+    transport_location: "Lapeer County Jail"
+    bac_hold: true
+    bac_hold_reason: "BAC level required mandatory hold until sober"
+    initial_handling: "Properly handled by outside agency"
+
+  summary: |
+    Deputy Marc King arrested for Operating While Intoxicated (OWI). The deputy
+    is the brother of Sheriff Mat King. While the arrest itself was properly handled
+    by an outside agency (Lapeer County), the subsequent internal handling by
+    St. Clair County was compromised. Sheriff King did not recuse himself, the
+    investigation remained internal, and evidence was subsequently destroyed by
+    multiple officers who were friends of the arrestee.
+  issues:
+    - conflict-of-interest
+    - no-recusal
+    - no-independent-investigation
+    - evidence-spoliation
+    - governance-failure
+  people_involved:
+    marc-king:
+      role: arrestee
+      description: Deputy arrested for OWI; brother of Sheriff
+    mat-king:
+      role: command-involved
+      description: Sheriff notified; did not recuse despite being arrestee's brother
+    matthew-pohl:
+      role: command-involved
+      description: Captain contacted by Sheriff; close friend of arrestee; deleted text messages
+    damon-duva:
+      role: involved
+      description: Deputy involved; close friend of arrestee; deleted text messages
+    jim-spadafore:
+      role: notified
+      description: Undersheriff contacted by Sheriff
+    josh-goodrich:
+      role: informed
+      description: Deputy received text from Pohl at 5:44 PM about the arrest
+    scott-jones:
+      role: whistleblower
+      description: Lieutenant who reported concerns to HR; later alleged retaliation
+  related_depositions:
+    - mat-king-deposition
+    - pohl-deposition
+    - duva-transcripts
+  internal_investigation:
+    conducted_by: "St. Clair County Sheriff's Office (internal)"
+    external_agency: false
+    start_date: 2022-11-15
+    findings: "No public findings documented"
+    discipline_imposed: "Unknown/Not publicly documented"
+    issues:
+      - "Sheriff did not recuse despite brother being subject"
+      - "No external agency engaged"
+      - "Friends of arrestee involved in handling"
+      - "Evidence subsequently destroyed"
+
+  retaliation_alleged:
+    victim: scott-jones
+    protected_activity: "Reported concerns about handling to HR"
+    protected_activity_date: 2022-12-01
+    adverse_action: "Pressured to retire"
+    adverse_action_date: 2023-01-15
+    causal_connection: "Retirement followed shortly after protected complaint"
+    legal_claim: "First Amendment retaliation (42 U.S.C. § 1983)"
+    claim_status: "Survived summary judgment"
+
+  related_timeline:
+    - 2022-11-06-owi-arrest
+    - 2022-11-06-lapeer-jail-transport
+    - 2022-11-06-pohl-texts-goodrich
+    - 2022-11-06-sheriff-notified
+    - 2022-11-internal-investigation
+    - 2022-12-jones-reports-concerns
+    - 2023-01-jones-retirement
+    - 2022-2024-evidence-deleted
+  related_evidence:
+    - evidence-spoliation-analysis
+    - governance-failures-documentation
+    - public-trust-impact
+    - cross-examination-issues
+  policy_failures:
+    recusal_policy:
+      expected: "Sheriff should recuse from matters involving immediate family members"
+      actual: "Sheriff remained involved in oversight of brother's case"
+      standard: "Law Enforcement Code of Ethics; Michigan Commission on Law Enforcement Standards"
+    independent_investigation:
+      expected: "External agency should investigate when conflict exists"
+      actual: "Investigation remained internal to St. Clair County"
+      standard: "Best practices require external review for officer-involved incidents"
+    evidence_preservation:
+      expected: "Litigation hold should be issued when litigation is foreseeable"
+      actual: "No litigation hold; text messages deleted by multiple officers"
+      standard: "Federal Rules of Civil Procedure; spoliation doctrine"
+    supervisor_notification:
+      expected: "Immediate notification through proper chain of command"
+      actual: "Sheriff contacted friend (Captain Pohl) instead of formal channels"
+      standard: "Department policies on incident reporting"
+
+  legal_exposure:
+    michigan:
+      - statute: "MCL 750.491"
+        description: "Evidence tampering - willful destruction of evidence"
+        potential_charges: "Misdemeanor; up to 2 years and/or $1,000 fine"
+        investigation_status: "Unknown - no public record of criminal investigation"
+        elements:
+          - "Willfully"
+          - "Destroys, alters, or conceals"
+          - "Any record, document, or thing"
+          - "With intent to prevent it being used as evidence"
+      - statute: "MCL 750.483a"
+        description: "Obstruction of justice"
+        potential_charges: "Felony; up to 5 years"
+      - statute: "FOIA violations"
+        description: "Destruction of public records"
+        notes: "Text messages on work phones are public records"
+    federal:
+      - statute: "42 U.S.C. § 1983"
+        description: "Civil rights implications"
+        status: "Active litigation (Jones v. St. Clair County)"
+      - statute: "Spoliation doctrine"
+        description: "Adverse inference in litigation"
+        notes: "Court may instruct jury to presume destroyed evidence was unfavorable"
+    criminal_referral:
+      referred_to_prosecutor: "Unknown/Not publicly documented"
+      external_investigation: false
+      notes: "No public record of criminal investigation into evidence destruction"
+
+  media_coverage:
+    - outlet: "Local news coverage"
+      date: null
+      type: "To be documented"
+      notes: "Media coverage to be added as sources are verified"
+  undisputed_facts:
+    - "Sheriff Mat King and Deputy Marc King are brothers"
+    - "Sheriff King was notified of his brother's arrest on November 6, 2022"
+    - "Sheriff King did not recuse himself from the matter"
+    - "No external agency was engaged to investigate"
+    - "Captain Pohl admitted to deleting text messages"
+    - "Deputy Duva admitted text messages are 'no longer available'"
+    - "No litigation hold was established to preserve evidence"
+  questions:
+    - "Why was no external agency engaged to investigate?"
+    - "Why did the Sheriff not recuse himself?"
+    - "What communications occurred that were later deleted?"
+    - "What was the outcome of any internal investigation?"
+  tags:
+    - owi
+    - conflict-of-interest
+    - evidence-spoliation
+    - governance-failure
+    - primary-incident

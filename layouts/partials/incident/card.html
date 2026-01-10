@@ -1,0 +1,55 @@
+{{/*
+  Incident card for list pages
+
+  Params:
+    - key: string - The incident key from data
+    - data: map - The incident data object
+*/}}
+{{ $key := .key }}
+{{ $data := .data }}
+{{ $href := printf "/incidents/%s/" $key }}
+
+<article class="card hover:shadow-md transition-shadow group">
+  {{/* Header */}}
+  {{ partial "case-file/card-header.html" (dict "data" $data "type" "incident") }}
+
+  {{/* Title */}}
+  <h2 class="text-xl font-bold text-navy mb-2 group-hover:text-accent transition-colors">
+    <a href="{{ $href }}">{{ $data.title }}</a>
+  </h2>
+
+  {{/* Location */}}
+  {{ with $data.location }}
+  <p class="text-sm text-slate-light mb-2 flex items-center gap-1">
+    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+    </svg>
+    {{ . }}
+  </p>
+  {{ end }}
+
+  {{/* Summary */}}
+  {{ with $data.summary }}
+  <p class="text-slate mb-3">{{ . | plainify | truncate 180 }}</p>
+  {{ end }}
+
+  {{/* Issues */}}
+  {{ with $data.issues }}
+  <div class="flex flex-wrap gap-1.5 mb-3">
+    {{ range first 4 . }}
+    <span class="text-xs px-2 py-0.5 bg-red-50 text-red-700 rounded">{{ . | humanize }}</span>
+    {{ end }}
+    {{ if gt (len .) 4 }}
+    <span class="text-xs px-2 py-0.5 text-slate-light">+{{ sub (len .) 4 }} more</span>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{/* People involved compact */}}
+  {{ with $data.people_involved }}
+  {{ partial "case-file/people-involved.html" (dict "people" . "compact" true) }}
+  {{ end }}
+
+  {{/* Footer */}}
+  {{ partial "case-file/card-footer.html" (dict "href" $href "type" "incident" "data" $data) }}
+</article>

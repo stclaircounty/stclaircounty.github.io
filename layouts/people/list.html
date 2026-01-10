@@ -1,0 +1,217 @@
+{{ define "main" }}
+{{ $people := .Site.Data.people }}
+{{ $directory := .Site.Data.people_directory }}
+
+{{/* Page Header */}}
+{{ partial "list-header.html" (dict
+  "page" .
+  "icon" $directory.header.icon
+  "title" $directory.header.title
+  "description" $directory.header.description
+  "count" $people._meta.total_people
+  "count_label" "People"
+) }}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  {{ with .Content }}
+  <div class="prose max-w-none mb-10">
+    {{ . }}
+  </div>
+  {{ end }}
+
+  {{/* Credibility Alert */}}
+  {{ with $directory.credibility }}
+  {{ if and .show .alert.show }}
+  {{ $compromisedCount := len .levels.compromised.people }}
+  {{ if gt $compromisedCount 0 }}
+  <div class="alert alert-danger mb-10">
+    <div class="flex items-start gap-3">
+      {{ partial "header-icon.html" (dict "icon" "warning" "class" "w-5 h-5 text-red-600 mt-0.5 flex-shrink-0") }}
+      <div>
+        <h3 style="margin: 0 0 4px 0;" class="font-semibold text-red-800">{{ .alert.title }}</h3>
+        <p style="margin: 0;" class="text-sm text-red-700">
+          {{ $compromisedCount }} {{ .alert.message }}
+        </p>
+      </div>
+    </div>
+  </div>
+  {{ end }}
+  {{ end }}
+  {{ end }}
+
+  {{/* Dynamic People Sections - sorted by order */}}
+  {{ $sections := slice }}
+  {{ range $key, $section := $directory.sections }}
+    {{ $sections = $sections | append (merge $section (dict "key" $key)) }}
+  {{ end }}
+  {{ range sort $sections "order" }}
+  {{ $section := . }}
+  {{ if .people }}
+  <section class="mb-14">
+    {{/* Section Header - Full Width */}}
+    <div class="border-b-2 border-gray-200 pb-3 mb-6">
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-lg {{ .bg_color }}">
+          {{ partial "header-icon.html" (dict "icon" .icon "class" (printf "w-5 h-5 %s" .icon_color)) }}
+        </div>
+        <h2 class="text-xl font-bold text-navy" style="margin: 0;">{{ .title }}</h2>
+        <span class="text-sm text-slate-light">({{ len .people }})</span>
+      </div>
+      {{ with .description }}
+      <p class="text-sm text-slate-light mt-2 ml-12">{{ . }}</p>
+      {{ end }}
+      {{ with .note }}
+      <p class="text-xs text-slate-light italic mt-1 ml-12">{{ . }}</p>
+      {{ end }}
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {{ range .people }}
+      {{ $personKey := . }}
+      {{ $person := index $people $personKey }}
+      {{ if $person }}
+      {{ $hasPage := site.GetPage (printf "/people/%s" $personKey) }}
+      <article class="card {{ if $hasPage }}hover:shadow-md transition-shadow{{ end }}">
+        {{ if $hasPage }}<a href="/people/{{ $personKey }}/" class="block">{{ end }}
+          <div class="flex items-start gap-4 mb-3">
+            <div class="rounded-lg {{ $section.bg_color }} flex-shrink-0 flex items-center justify-center" style="width: 48px; height: 48px; min-width: 48px;">
+              {{ partial "header-icon.html" (dict "icon" "person" "class" (printf "w-6 h-6 %s" $section.icon_color)) }}
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 style="margin: 0 0 4px 0;" class="text-base font-semibold text-navy leading-tight">{{ $person.name }}</h3>
+              <div class="flex flex-wrap gap-1">
+                <span class="badge {{ $section.badge_bg }} {{ $section.badge_text }}">{{ $person.role }}</span>
+                {{ if eq $person.credibility "compromised" }}
+                <span class="badge bg-red-100 text-red-800">Compromised</span>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+          {{ with $person.description }}
+          <p class="text-sm text-slate-light leading-relaxed line-clamp-2">{{ . | plainify | truncate 100 }}</p>
+          {{ end }}
+          {{ with $person.firm }}
+          <p class="text-sm text-slate-light leading-relaxed">{{ . }}</p>
+          {{ end }}
+          {{ with $person.court }}
+          <p class="text-sm text-slate leading-relaxed">{{ . }}</p>
+          {{ end }}
+          <p class="text-xs mt-3 {{ if $hasPage }}text-accent{{ else }}text-slate-light italic{{ end }}">
+            {{ if $hasPage }}Click to see profile →{{ else }}No profile available yet{{ end }}
+          </p>
+        {{ if $hasPage }}</a>{{ end }}
+      </article>
+      {{ end }}
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+  {{ end }}
+
+  {{/* Relationships Section */}}
+  {{ with $directory.relationships }}
+  {{ if .show }}
+  <section class="mb-14">
+    <div class="border-b-2 border-gray-200 pb-3 mb-6">
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-lg bg-red-50">
+          {{ partial "header-icon.html" (dict "icon" .icon "class" (printf "w-5 h-5 %s" .icon_color)) }}
+        </div>
+        <h2 class="text-xl font-bold text-navy" style="margin: 0;">{{ .title }}</h2>
+      </div>
+      {{ with .description }}
+      <p class="text-sm text-slate-light mt-2 ml-12">{{ . }}</p>
+      {{ end }}
+    </div>
+
+    <div class="space-y-6">
+      {{ $groups := slice }}
+      {{ range $key, $group := .groups }}
+        {{ $groups = $groups | append (merge $group (dict "key" $key)) }}
+      {{ end }}
+      {{ range sort $groups "order" }}
+      {{ $group := . }}
+      <div>
+        <h3 class="text-sm font-semibold text-slate uppercase tracking-wide mb-3">{{ .title }}</h3>
+        <div class="space-y-3">
+          {{ range .items }}
+          {{ $fromPerson := index $people .from }}
+          {{ $toPerson := index $people .to }}
+          {{ $fromHasPage := site.GetPage (printf "/people/%s" .from) }}
+          {{ $toHasPage := site.GetPage (printf "/people/%s" .to) }}
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-lg {{ $group.bg_color }} border {{ $group.border_color }}">
+            <div class="flex items-center gap-2 flex-wrap">
+              {{ if $fromHasPage }}<a href="/people/{{ .from }}/" class="font-semibold text-navy hover:text-accent">{{ else }}<span class="font-semibold text-navy">{{ end }}{{ if $fromPerson }}{{ $fromPerson.name }}{{ else }}{{ .from }}{{ end }}{{ if $fromHasPage }}</a>{{ else }}</span>{{ end }}
+              <span class="text-slate-light">&harr;</span>
+              {{ if $toHasPage }}<a href="/people/{{ .to }}/" class="font-semibold text-navy hover:text-accent">{{ else }}<span class="font-semibold text-navy">{{ end }}{{ if $toPerson }}{{ $toPerson.name }}{{ else }}{{ .to }}{{ end }}{{ if $toHasPage }}</a>{{ else }}</span>{{ end }}
+              <span class="badge {{ $group.badge_bg }} {{ $group.badge_text }}">{{ .type }}</span>
+            </div>
+            <p class="text-sm text-slate-light sm:ml-auto">{{ .significance }}</p>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+  {{ end }}
+
+  {{/* Credibility Assessment Section */}}
+  {{ with $directory.credibility }}
+  {{ if .show }}
+  <section>
+    <div class="border-b-2 border-gray-200 pb-3 mb-6">
+      <div class="flex items-center gap-3">
+        <div class="p-2 rounded-lg bg-gray-100">
+          {{ partial "header-icon.html" (dict "icon" .icon "class" (printf "w-5 h-5 %s" .icon_color)) }}
+        </div>
+        <h2 class="text-xl font-bold text-navy" style="margin: 0;">{{ .title }}</h2>
+      </div>
+      {{ with .description }}
+      <p class="text-sm text-slate-light mt-2 ml-12">{{ . }}</p>
+      {{ end }}
+    </div>
+
+    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-gray-50 border-b border-gray-200">
+            <th class="text-left px-4 py-3 text-sm font-semibold text-navy">Name</th>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-navy">Status</th>
+            <th class="text-left px-4 py-3 text-sm font-semibold text-navy">Reason</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          {{ $levels := slice }}
+          {{ range $key, $level := .levels }}
+            {{ $levels = $levels | append (merge $level (dict "key" $key)) }}
+          {{ end }}
+          {{ range sort $levels "order" }}
+          {{ $level := . }}
+          {{ range $personKey, $reason := .people }}
+          {{ $person := index $people $personKey }}
+          {{ $hasPage := site.GetPage (printf "/people/%s" $personKey) }}
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 font-medium text-navy">
+              {{ if $person }}
+                {{ if $hasPage }}<a href="/people/{{ $personKey }}/" class="hover:text-accent">{{ $person.name }}</a>{{ else }}{{ $person.name }}{{ end }}
+              {{ else }}
+              {{ $personKey }}
+              {{ end }}
+            </td>
+            <td class="px-4 py-3">
+              <span class="badge {{ $level.badge_bg }} {{ $level.badge_text }}">{{ $level.label }}</span>
+            </td>
+            <td class="px-4 py-3 text-sm text-slate-light">{{ $reason }}</td>
+          </tr>
+          {{ end }}
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {{ end }}
+  {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,43 @@
+{{/*
+  Stats bar for case file list pages
+
+  Params:
+    - stats: slice of { value: int, label: string, color: string (optional) }
+*/}}
+{{ $stats := .stats }}
+
+{{ with $stats }}
+<div class="flex flex-wrap gap-4 mb-8">
+  {{ range . }}
+  <div class="flex-1 min-w-[140px] rounded-lg p-4 text-center
+    {{ if eq .color "red" }}bg-red-50
+    {{ else if eq .color "orange" }}bg-orange-50
+    {{ else if eq .color "yellow" }}bg-yellow-50
+    {{ else if eq .color "green" }}bg-green-50
+    {{ else if eq .color "blue" }}bg-blue-50
+    {{ else if eq .color "purple" }}bg-purple-50
+    {{ else }}bg-gray-50{{ end }}">
+    <div class="text-2xl font-bold
+      {{ if eq .color "red" }}text-red-600
+      {{ else if eq .color "orange" }}text-orange-600
+      {{ else if eq .color "yellow" }}text-yellow-600
+      {{ else if eq .color "green" }}text-green-600
+      {{ else if eq .color "blue" }}text-blue-600
+      {{ else if eq .color "purple" }}text-purple-600
+      {{ else }}text-gray-600{{ end }}">
+      {{ .value }}
+    </div>
+    <div class="text-xs uppercase tracking-wide
+      {{ if eq .color "red" }}text-red-600
+      {{ else if eq .color "orange" }}text-orange-600
+      {{ else if eq .color "yellow" }}text-yellow-600
+      {{ else if eq .color "green" }}text-green-600
+      {{ else if eq .color "blue" }}text-blue-600
+      {{ else if eq .color "purple" }}text-purple-600
+      {{ else }}text-gray-600{{ end }}">
+      {{ .label }}
+    </div>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

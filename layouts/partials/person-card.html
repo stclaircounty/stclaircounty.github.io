@@ -1,0 +1,74 @@
+{{/* Person card partial - displays a person from YAML data */}}
+{{ $person := .person }}
+{{ $context := .context }}
+
+<article class="card {{ if eq $person.credibility "compromised" }}border-red-200 bg-red-50/30{{ end }}">
+  <!-- Header -->
+  <div class="flex items-start gap-4 mb-4">
+    <!-- Square avatar with person icon -->
+    <div class="rounded-lg flex-shrink-0 flex items-center justify-center {{ if eq $person.credibility "compromised" }}bg-red-100{{ else }}bg-gray-100{{ end }}" style="width: 56px; height: 56px; min-width: 56px;">
+      <svg class="w-8 h-8 {{ if eq $person.credibility "compromised" }}text-red-400{{ else }}text-gray-400{{ end }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    </div>
+
+    <!-- Name and badges -->
+    <div class="flex-1 min-w-0">
+      <h3 style="margin: 0 0 4px 0;" class="text-base font-semibold text-navy leading-tight">
+        {{ with $context.Site.GetPage (printf "/people/%s" $person.id) }}
+        <a href="{{ .Permalink }}" class="hover:text-accent transition-colors">{{ $person.name }}</a>
+        {{ else }}
+        {{ $person.name }}
+        {{ end }}
+      </h3>
+      <div class="flex flex-wrap items-center gap-1.5">
+        {{ with $person.rank }}
+        <span class="badge badge-gold">{{ . }}</span>
+        {{ else }}{{ with $person.role }}
+        <span class="badge badge-gold">{{ . }}</span>
+        {{ end }}{{ end }}
+
+        {{ with $person.status }}
+        <span class="text-xs px-1.5 py-0.5 rounded
+          {{ if eq . "active" }}bg-green-100 text-green-700
+          {{ else if eq . "retired" }}bg-gray-100 text-gray-600
+          {{ else if eq . "terminated" }}bg-red-100 text-red-700
+          {{ else }}bg-gray-100 text-gray-600{{ end }}">
+          {{ . | title }}
+        </span>
+        {{ end }}
+
+        {{ if eq $person.credibility "compromised" }}
+        <span class="text-xs px-1.5 py-0.5 rounded bg-red-100 text-red-700 font-medium">
+          Compromised
+        </span>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  {{ with $person.description }}
+  <p class="text-sm text-slate-light leading-relaxed mb-3">
+    {{ . | plainify | truncate 100 }}
+  </p>
+  {{ end }}
+
+  <!-- Relationships -->
+  {{ with $person.relationships }}
+  <p class="text-xs text-slate-light mb-3">
+    <span class="font-medium">Relationships:</span>
+    {{ range $i, $rel := . }}{{ if $i }}, {{ end }}{{ $rel.detail }}{{ end }}
+  </p>
+  {{ end }}
+
+  <!-- Link -->
+  {{ with $context.Site.GetPage (printf "/people/%s" $person.id) }}
+  <a href="{{ .Permalink }}" class="inline-flex items-center text-sm font-medium text-accent hover:text-accent-dark transition-colors">
+    View profile
+    <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </a>
+  {{ end }}
+</article>

@@ -1,0 +1,134 @@
+{{/*
+  Detail page header for case files
+
+  Params:
+    - title: string
+    - data: map - The data object
+    - type: string - "incident" | "deposition" | "evidence"
+    - icon: string (optional) - Icon name
+*/}}
+{{ $title := .title }}
+{{ $data := .data }}
+{{ $type := .type }}
+
+<div class="bg-navy text-white py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {{/* Breadcrumb */}}
+    <nav class="text-sm mb-4">
+      <ol class="flex items-center space-x-2 text-gray-300">
+        <li><a href="/" class="hover:text-white">Home</a></li>
+        <li><span class="mx-2">/</span></li>
+        <li>
+          <a href="/{{ $type }}s/" class="hover:text-white">
+            {{ if eq $type "incident" }}Incidents
+            {{ else if eq $type "deposition" }}Depositions
+            {{ else }}Evidence{{ end }}
+          </a>
+        </li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-white">{{ $title | truncate 40 }}</li>
+      </ol>
+    </nav>
+
+    {{/* Title + badges */}}
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div class="flex-1">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          {{ with $data.date }}
+          <span class="text-gray-300">
+            {{ if (time .).IsZero }}{{ . }}{{ else }}{{ (time .).Format "January 2, 2006" }}{{ end }}
+          </span>
+          {{ end }}
+
+          {{ if eq $type "incident" }}
+            {{ with $data.severity }}
+            <span class="px-3 py-1 rounded-full text-sm font-medium
+              {{ if eq . "critical" }}bg-red-500 text-white
+              {{ else if eq . "high" }}bg-orange-500 text-white
+              {{ else if eq . "medium" }}bg-yellow-500 text-black
+              {{ else }}bg-gray-400 text-white{{ end }}">
+              {{ . | title }} Severity
+            </span>
+            {{ end }}
+          {{ else if eq $type "evidence" }}
+            {{ with $data.evidence_type }}
+            <span class="px-3 py-1 rounded-full text-sm font-medium bg-white/20">
+              {{ . | title }}
+            </span>
+            {{ end }}
+          {{ end }}
+
+          {{ with $data.status }}
+          <span class="px-3 py-1 rounded-full text-sm font-medium bg-white/10">
+            {{ . | humanize }}
+          </span>
+          {{ end }}
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold">{{ $title }}</h1>
+
+        {{ if eq $type "incident" }}
+          {{ with $data.location }}
+          <p class="mt-3 text-gray-300 flex items-center gap-2">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {{ . }}
+          </p>
+          {{ end }}
+        {{ else if eq $type "deposition" }}
+          {{ with $data.deponent }}
+          <p class="mt-3 text-gray-300">
+            <span class="text-gray-400">Deponent:</span>
+            <span class="font-medium text-white">{{ .name }}</span>
+            {{ with .role }}<span class="text-gray-400">({{ . }})</span>{{ end }}
+          </p>
+          {{ end }}
+        {{ else if eq $type "evidence" }}
+          {{ with $data.source }}
+          <p class="mt-3 text-gray-300">
+            <span class="text-gray-400">Source:</span> {{ . }}
+          </p>
+          {{ end }}
+        {{ end }}
+      </div>
+
+      {{/* Quick stats */}}
+      {{ if or $data.people_involved $data.related_people $data.related_depositions $data.key_quotes $data.files }}
+      <div class="flex flex-wrap gap-4">
+        {{ with $data.people_involved }}
+        <div class="text-center px-4">
+          <div class="text-2xl font-bold">{{ len . }}</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wide">People</div>
+        </div>
+        {{ end }}
+        {{ with $data.related_people }}
+        <div class="text-center px-4">
+          <div class="text-2xl font-bold">{{ len . }}</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wide">People</div>
+        </div>
+        {{ end }}
+        {{ with $data.related_depositions }}
+        <div class="text-center px-4">
+          <div class="text-2xl font-bold">{{ len . }}</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wide">Depositions</div>
+        </div>
+        {{ end }}
+        {{ with $data.key_quotes }}
+        <div class="text-center px-4">
+          <div class="text-2xl font-bold">{{ len . }}</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wide">Key Quotes</div>
+        </div>
+        {{ end }}
+        {{ with $data.files }}
+        <div class="text-center px-4">
+          <div class="text-2xl font-bold">{{ len . }}</div>
+          <div class="text-xs text-gray-400 uppercase tracking-wide">Files</div>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>

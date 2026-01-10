@@ -1,0 +1,361 @@
+# St. Clair County Public Accountability Project - People Database
+# Last Updated: 2026-01-09
+#
+# Access: site.Data.people["mat-king"]
+
+# =============================================================================
+# LAW ENFORCEMENT - Command Staff
+# =============================================================================
+
+mat-king:
+  name: Mat King
+  role: Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Sheriff
+  status: active
+  start_date: 2020-01-01
+  category: law-enforcement
+  subcategory: command-staff
+  credibility: compromised
+  description: |
+    Elected Sheriff of St. Clair County, Michigan. Highest-ranking law enforcement
+    official in the county responsible for department leadership, policy enforcement,
+    and oversight.
+  relationships:
+    marc-king:
+      type: family
+      detail: Brother
+  involvement:
+    2022-11-06-owi-arrest:
+      role: command-involved
+      description: Notified of brother's arrest; did not recuse
+      concerns:
+        - No recusal despite direct family relationship
+        - Direct involvement in matter where he should have been recused
+        - No independent investigation mechanism utilized
+  depositions:
+    - mat-king-deposition
+  litigation:
+    jones-v-scc:
+      role: defendant
+      case_number: "2:24-cv-11965"
+      capacity: individual
+      status: qualified-immunity-denied
+  credibility_factors:
+    relationship_to_arrestee: Brother
+    neutrality: Severely Compromised
+    evidence_handling: Unclear
+  tags:
+    - sheriff
+    - command-staff
+    - conflict-of-interest
+    - defendant
+
+jim-spadafore:
+  name: Jim Spadafore
+  role: Undersheriff
+  department: St. Clair County Sheriff's Office
+  rank: Undersheriff
+  status: active
+  category: law-enforcement
+  subcategory: command-staff
+  description: |
+    Second-in-command within the St. Clair County Sheriff's Office. Long career
+    in county law enforcement with progression through supervisory roles. Plays
+    key role in operational oversight and sensitive internal matters.
+  relationships: {}
+  involvement:
+    2022-11-06-owi-arrest:
+      role: notified
+      description: Contacted by Sheriff regarding incident
+  depositions: []
+  tags:
+    - undersheriff
+    - command-staff
+
+matthew-pohl:
+  name: Matthew Pohl
+  role: Captain
+  department: St. Clair County Sheriff's Office
+  rank: Captain
+  division: Road Patrol Division
+  status: active
+  category: law-enforcement
+  subcategory: command-staff
+  credibility: compromised
+  description: |
+    Captain overseeing road patrol operations. Member of the sheriff's command staff.
+    Known through public records and testimony to have professional and social
+    familiarity with other command-level officials.
+  relationships:
+    marc-king:
+      type: social
+      detail: Close friend (per deposition testimony)
+  involvement:
+    2022-11-06-owi-arrest:
+      role: command-involved
+      description: Contacted by Sheriff; involved in internal handling
+      concerns:
+        - Deleted text messages related to the incident
+        - Personal relationship with subject of investigation
+  depositions:
+    - pohl-deposition
+  credibility_factors:
+    relationship_to_arrestee: Friend
+    neutrality: Compromised
+    evidence_handling: Text messages deleted
+  tags:
+    - captain
+    - command-staff
+    - evidence-spoliation
+
+# =============================================================================
+# LAW ENFORCEMENT - Deputies
+# =============================================================================
+
+josh-goodrich:
+  name: Josh Goodrich
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  subcategory: deputy
+  description: |
+    Deputy sheriff with St. Clair County Sheriff's Office. Received text message
+    from Captain Matthew Pohl at 5:44 PM on November 6, 2022 informing him of
+    Marc King's OWI arrest. This communication was referenced in Pohl's deposition
+    as evidence of how quickly information about the arrest spread through
+    informal channels within the department.
+  relationships:
+    matthew-pohl:
+      type: social
+      detail: Regular contact (per deposition testimony)
+  involvement:
+    2022-11-06-owi-arrest:
+      role: informed
+      description: Received text from Pohl about Marc King's arrest at 5:44 PM
+  depositions: []
+  tags:
+    - deputy
+    - witness
+
+marc-king:
+  name: Marc King
+  aliases:
+    - Marcus King
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  start_date: 2015-01-01
+  category: law-enforcement
+  subcategory: deputy
+  credibility: not-applicable
+  credibility_note: Subject of investigation
+  description: |
+    Deputy sheriff with the St. Clair County Sheriff's Office. Brother of
+    Sheriff Mat King. Subject of November 2022 OWI arrest that is central
+    to accountability concerns documented in this project.
+  relationships:
+    mat-king:
+      type: family
+      detail: Brother (Sheriff)
+  involvement:
+    2022-11-06-owi-arrest:
+      role: arrestee
+      description: Arrested for Operating While Intoxicated (OWI)
+      details:
+        - Arrested for Operating While Intoxicated (OWI)
+        - Transported to Lapeer County Jail (not St. Clair County)
+        - Brother (Sheriff) notified same day
+        - Internal investigation by own department
+  depositions: []
+  tags:
+    - deputy
+    - arrestee
+    - subject
+
+damon-duva:
+  name: Damon Duva
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  subcategory: deputy
+  credibility: compromised
+  description: |
+    Deputy sheriff with the St. Clair County Sheriff's Office. Name appears
+    in public court records and community-policing materials.
+  relationships:
+    marc-king:
+      type: social
+      detail: Close friend (per testimony)
+  involvement:
+    2022-11-06-owi-arrest:
+      role: involved
+      description: Involved in handling/response
+      concerns:
+        - Deleted text messages related to the incident
+        - Personal relationship with subject
+  depositions:
+    - duva-transcripts
+  credibility_factors:
+    relationship_to_arrestee: Friend
+    neutrality: Compromised
+    evidence_handling: Text messages deleted
+  tags:
+    - deputy
+    - evidence-spoliation
+
+chad-cronkright:
+  name: Chad Cronkright
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  subcategory: deputy
+  description: |
+    Deputy sheriff with St. Clair County. Appears in public commendations
+    and court records as part of official duties.
+  relationships: {}
+  involvement: {}
+  depositions: []
+  tags:
+    - deputy
+
+# =============================================================================
+# LAW ENFORCEMENT - Former/Retired
+# =============================================================================
+
+scott-jones:
+  name: Scott E. Jones
+  role: Lieutenant (Former)
+  department: St. Clair County Sheriff's Office
+  rank: Lieutenant
+  status: retired
+  end_date: 2023-01-15
+  category: law-enforcement
+  subcategory: former
+  credibility: not-applicable
+  credibility_note: Plaintiff/whistleblower
+  description: |
+    Former lieutenant with the St. Clair County Sheriff's Office. Retired in
+    January 2023 after reporting concerns about the handling of Deputy Marc
+    King's OWI arrest. Plaintiff in federal civil rights lawsuit alleging
+    First Amendment retaliation.
+  relationships: {}
+  involvement:
+    2022-11-06-owi-arrest:
+      role: whistleblower
+      description: Reported concerns about handling of arrest to HR
+      details:
+        - Raised concerns about conflicts of interest
+        - Reported through official HR channels
+        - Actions constitute protected First Amendment speech
+    2022-12-jones-reports-concerns:
+      role: whistleblower
+      description: Filed internal complaint about misconduct
+    2023-01-jones-retirement:
+      role: retaliation-victim
+      description: Retired under alleged coercion
+  litigation:
+    jones-v-scc:
+      role: plaintiff
+      case_number: "2:24-cv-11965"
+      claims:
+        - First Amendment retaliation
+        - Fourteenth Amendment due process
+        - Monell municipal liability
+  depositions: []
+  tags:
+    - former
+    - plaintiff
+    - whistleblower
+    - first-amendment
+
+# =============================================================================
+# LEGAL - Plaintiff's Counsel
+# =============================================================================
+
+deborah-gordon:
+  name: Deborah L. Gordon
+  role: Attorney
+  firm: Deborah L. Gordon, PLC
+  bar_state: Michigan
+  category: legal
+  subcategory: plaintiffs-counsel
+  side: plaintiff
+  description: |
+    Michigan attorney whose practice includes civil rights and employment
+    litigation. Appears in public court dockets representing plaintiffs
+    in federal civil cases.
+  tags:
+    - attorney
+    - plaintiff-counsel
+
+elizabeth-marzotto-taylor:
+  name: Elizabeth Marzotto Taylor
+  role: Attorney
+  category: legal
+  subcategory: plaintiffs-counsel
+  side: plaintiff
+  description: |
+    Attorney who has appeared in federal litigation as counsel for plaintiffs.
+  tags:
+    - attorney
+    - plaintiff-counsel
+
+# =============================================================================
+# LEGAL - Defense Counsel
+# =============================================================================
+
+todd-shoudy:
+  name: Todd J. Shoudy
+  role: Attorney
+  firm: Fletcher Fealko Shoudy & Francis, P.C.
+  bar_state: Michigan
+  category: legal
+  subcategory: defense-counsel
+  side: defense
+  description: |
+    Licensed Michigan attorney who has appeared as defense counsel in
+    publicly filed litigation involving St. Clair County.
+  tags:
+    - attorney
+    - defense-counsel
+
+# =============================================================================
+# JUDICIARY
+# =============================================================================
+
+nancy-edmunds:
+  name: Nancy G. Edmunds
+  role: United States District Judge
+  court: U.S. District Court, Eastern District of Michigan
+  category: judiciary
+  description: |
+    Federal judge presiding over matters before the U.S. District Court
+    for the Eastern District of Michigan. Judicial biography and case
+    assignments are publicly available through federal court sources.
+  note: |
+    Judges preside impartially over matters before the court. Included
+    for contextual completeness only. No evaluation of judicial decisions
+    is made in this project.
+  tags:
+    - judge
+    - federal
+
+# =============================================================================
+# METADATA
+# =============================================================================
+
+_meta:
+  total_people: 12
+  by_category:
+    law-enforcement: 8
+    legal: 3
+    judiciary: 1
+  last_updated: 2026-01-09

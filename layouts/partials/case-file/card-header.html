@@ -1,0 +1,60 @@
+{{/*
+  Case file card header - date + badges
+
+  Params:
+    - data: map - The data object
+    - type: string - "incident" | "deposition" | "evidence"
+*/}}
+{{ $data := .data }}
+{{ $type := .type }}
+
+<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+  <div class="flex flex-wrap items-center gap-2">
+    {{/* Date */}}
+    {{ with $data.date }}
+    <span class="text-sm text-slate-light">
+      {{ if (time .).IsZero }}{{ . }}{{ else }}{{ (time .).Format "January 2, 2006" }}{{ end }}
+    </span>
+    {{ end }}
+
+    {{/* Severity badge for incidents */}}
+    {{ if eq $type "incident" }}
+      {{ with $data.severity }}
+      {{ partial "case-file/severity-badge.html" . }}
+      {{ end }}
+    {{ end }}
+
+    {{/* Type badge */}}
+    {{ if eq $type "incident" }}
+      {{ with $data.incident_type }}
+      <span class="badge bg-gray-100 text-slate">{{ . | humanize }}</span>
+      {{ end }}
+    {{ else if eq $type "evidence" }}
+      {{ partial "case-file/evidence-type-badge.html" ($data.evidence_type | default "document") }}
+    {{ end }}
+  </div>
+
+  {{/* Right side badges */}}
+  <div class="flex items-center gap-2">
+    {{/* PDF available for depositions */}}
+    {{ if and (eq $type "deposition") $data.pdf_file }}
+    <span class="badge badge-gold">
+      <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+      </svg>
+      PDF
+    </span>
+    {{ end }}
+
+    {{/* Status badge */}}
+    {{ with $data.status }}
+    <span class="text-xs px-2 py-0.5 rounded-full
+      {{ if eq . "documented" }}bg-blue-100 text-blue-700
+      {{ else if eq . "available" }}bg-green-100 text-green-700
+      {{ else if eq . "published" }}bg-green-100 text-green-700
+      {{ else }}bg-gray-100 text-slate{{ end }}">
+      {{ . | humanize }}
+    </span>
+    {{ end }}
+  </div>
+</div>

@@ -1,0 +1,63 @@
+{{ define "main" }}
+{{ $personKey := .File.ContentBaseName }}
+{{ $person := index .Site.Data.people $personKey }}
+
+{{/* Build badges for page header */}}
+{{ $badges := slice }}
+{{ with $person.rank }}
+  {{ $badges = $badges | append (dict "label" . "type" "primary") }}
+{{ end }}
+{{ with $person.status }}
+  {{ $type := "neutral" }}
+  {{ if eq . "active" }}{{ $type = "success" }}{{ end }}
+  {{ if eq . "resigned" }}{{ $type = "warning" }}{{ end }}
+  {{ if eq . "terminated" }}{{ $type = "danger" }}{{ end }}
+  {{ if eq . "retired" }}{{ $type = "warning" }}{{ end }}
+  {{ $badges = $badges | append (dict "label" (. | title) "type" $type "icon" true) }}
+{{ end }}
+{{ if eq $person.credibility "compromised" }}
+  {{ $badges = $badges | append (dict "label" "Credibility Compromised" "type" "danger") }}
+{{ end }}
+
+<article>
+  {{ partial "page-header.html" (dict
+    "page" .
+    "icon" "person"
+    "section" "People"
+    "badges" $badges
+    "title" (default .Title $person.name)
+  ) }}
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {{ if $person }}
+      {{ partial "person-profile.html" (dict
+        "person" $person
+        "personKey" $personKey
+        "content" .Content
+        "page" .
+      ) }}
+    {{ else }}
+      {{/* Fallback if no data in people.yaml - just show page content */}}
+      <div class="bg-white rounded-lg shadow-card p-8">
+        {{ with .Content }}
+        <div class="prose prose-lg max-w-none">
+          {{ . }}
+        </div>
+        {{ else }}
+        <p class="text-slate-light italic">No profile data available for this person.</p>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{/* Back link */}}
+    <div class="mt-8 pt-6 border-t border-gray-200">
+      <a href="/people/" class="text-accent hover:text-accent/80 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to People Directory
+      </a>
+    </div>
+  </div>
+</article>
+{{ end }}

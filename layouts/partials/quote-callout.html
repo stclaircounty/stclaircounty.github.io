@@ -1,0 +1,20 @@
+{{/* Quote Callout Partial
+     Usage: {{ partial "quote-callout.html" (dict "text" "Quote text" "source" "Source name" "page" 45 "link" "/path") }}
+*/}}
+{{ $text := .text }}
+{{ $source := .source | default "" }}
+{{ $page := .page | default "" }}
+{{ $link := .link | default "" }}
+
+<div class="quote-callout">
+  <blockquote>"{{ $text }}"</blockquote>
+  {{ if or $source $page }}
+  <cite>
+    {{ with $source }}&mdash; {{ . }}{{ end }}
+    {{ with $page }}, Page {{ . }}{{ end }}
+    {{ with $link }}
+    <a href="{{ . }}" class="ml-2 text-accent hover:underline">View source &rarr;</a>
+    {{ end }}
+  </cite>
+  {{ end }}
+</div>

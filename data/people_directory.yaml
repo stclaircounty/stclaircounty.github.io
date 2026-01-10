@@ -1,0 +1,181 @@
+# St. Clair County Public Accountability Project - People Directory Configuration
+# Last Updated: 2026-01-09
+#
+# This file defines how the People Directory page is organized and displayed.
+# People data is in people.yaml - this file controls presentation.
+#
+# Access: site.Data.people_directory
+
+# =============================================================================
+# PAGE HEADER
+# =============================================================================
+
+header:
+  title: "People Directory"
+  description: "Public officials and individuals documented in St. Clair County accountability matters."
+  icon: people
+
+# =============================================================================
+# SECTIONS
+# Displayed in order. Each section references people by key from people.yaml.
+# =============================================================================
+
+sections:
+  command-staff:
+    title: "Command Staff"
+    description: "Sheriff's Office leadership responsible for department oversight and policy."
+    icon: shield
+    icon_color: text-red-600
+    bg_color: bg-red-50
+    border_color: border-red-200
+    badge_bg: bg-red-100
+    badge_text: text-red-800
+    order: 1
+    people:
+      - mat-king
+      - jim-spadafore
+      - matthew-pohl
+
+  deputies:
+    title: "Deputies"
+    description: "Deputy sheriffs involved in documented incidents."
+    icon: users
+    icon_color: text-slate-600
+    bg_color: bg-slate-50
+    border_color: border-slate-200
+    badge_bg: bg-slate-100
+    badge_text: text-slate-700
+    order: 2
+    people:
+      - marc-king
+      - damon-duva
+      - josh-goodrich
+      - chad-cronkright
+
+  former-law-enforcement:
+    title: "Former Law Enforcement"
+    description: "Former officers relevant to documented matters."
+    icon: clock
+    icon_color: text-slate-500
+    bg_color: bg-slate-50
+    border_color: border-slate-200
+    badge_bg: bg-slate-100
+    badge_text: text-slate-600
+    order: 3
+    people:
+      - scott-jones
+
+  plaintiffs-counsel:
+    title: "Plaintiff's Counsel"
+    description: "Attorneys representing plaintiffs in related litigation."
+    icon: scale
+    icon_color: text-blue-600
+    bg_color: bg-blue-50
+    border_color: border-blue-200
+    badge_bg: bg-blue-100
+    badge_text: text-blue-700
+    order: 4
+    people:
+      - deborah-gordon
+      - elizabeth-marzotto-taylor
+
+  defense-counsel:
+    title: "Defense Counsel"
+    description: "Attorneys representing defendants in related litigation."
+    icon: scale
+    icon_color: text-gray-600
+    bg_color: bg-gray-50
+    border_color: border-gray-200
+    badge_bg: bg-gray-100
+    badge_text: text-gray-600
+    order: 5
+    people:
+      - todd-shoudy
+
+  judiciary:
+    title: "Judiciary"
+    description: "Judges presiding over related matters. Included for context only."
+    icon: building
+    icon_color: text-purple-600
+    bg_color: bg-purple-50
+    border_color: border-purple-200
+    badge_bg: bg-purple-100
+    badge_text: text-purple-700
+    note: "Judges preside impartially. No evaluation of judicial decisions is made."
+    order: 6
+    people:
+      - nancy-edmunds
+
+# =============================================================================
+# RELATIONSHIPS
+# =============================================================================
+
+relationships:
+  show: true
+  title: "Key Relationships"
+  description: "Documented connections relevant to the incidents under review."
+  icon: link
+  icon_color: text-red-600
+
+  groups:
+    family:
+      title: "Family Connections"
+      bg_color: bg-red-50
+      border_color: border-red-200
+      badge_bg: bg-red-100
+      badge_text: text-red-800
+      order: 1
+      items:
+        - from: mat-king
+          to: marc-king
+          type: Brothers
+          significance: "Sheriff supervising department that investigated his brother's arrest."
+
+    social:
+      title: "Professional/Social Connections"
+      bg_color: bg-yellow-50
+      border_color: border-yellow-200
+      badge_bg: bg-yellow-100
+      badge_text: text-yellow-800
+      order: 2
+      items:
+        - from: matthew-pohl
+          to: marc-king
+          type: Close Friends
+          significance: "Compromises independence of internal investigation."
+        - from: damon-duva
+          to: marc-king
+          type: Close Friends
+          significance: "Compromises independence of internal investigation."
+        - from: matthew-pohl
+          to: josh-goodrich
+          type: Regular Contact
+          significance: "Pohl texted Goodrich about arrest at 5:44 PM (per deposition)."
+
+# =============================================================================
+# CREDIBILITY ASSESSMENT
+# Derived from documented evidence only - no speculative assessments
+# =============================================================================
+
+credibility:
+  show: true
+  title: "Documented Credibility Concerns"
+  description: "Individuals with credibility concerns documented through sworn testimony or official records."
+  icon: warning
+  icon_color: text-red-600
+
+  alert:
+    show: true
+    title: "Documented Credibility Issues"
+    message: "individuals with credibility concerns based on sworn testimony or evidence handling."
+
+  levels:
+    compromised:
+      label: "Documented Concerns"
+      badge_bg: bg-red-100
+      badge_text: text-red-800
+      order: 1
+      people:
+        mat-king: "Brother of arrestee; no recusal from investigation"
+        matthew-pohl: "Admitted deleting text messages (sworn testimony)"
+        damon-duva: "Admitted deleting text messages (sworn testimony)"
