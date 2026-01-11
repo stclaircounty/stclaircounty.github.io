@@ -1,0 +1,101 @@
+{{/*
+  Plaintiff Shortcode - Reference plaintiffs with case context
+
+  Usage:
+    {{< plaintiff "scott-jones" case="jones-v-scc" >}}
+    {{< plaintiff slug="scott-jones" role="true" >}}
+
+  Parameters:
+    - First arg or slug: Person slug (required)
+    - case: Case slug for context (optional)
+    - role: Show plaintiff role (optional)
+    - card: Show as card (optional)
+*/}}
+
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $caseSlug := .Get "case" }}
+{{ $showRole := .Get "role" }}
+{{ $showCard := .Get "card" }}
+
+{{ $person := index site.Data.people $slug }}
+{{ $hasPage := site.GetPage (printf "/people/%s" $slug) }}
+
+{{/* Get plaintiff info from case if provided */}}
+{{ $plaintiffInfo := dict }}
+{{ if $caseSlug }}
+  {{ $case := index site.Data.litigation $caseSlug }}
+  {{ if $case }}
+    {{ range $case.parties.plaintiffs }}
+      {{ if eq .person $slug }}
+        {{ $plaintiffInfo = . }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $role := $plaintiffInfo.role }}
+{{ $representedBy := $plaintiffInfo.represented_by }}
+
+{{ if $person }}
+  {{ if $showCard }}
+  {{/* Card style */}}
+  <div class="my-3 p-4 bg-white border border-slate-200 rounded-lg not-prose">
+    <div class="flex items-start gap-3">
+      <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="flex items-center gap-2 flex-wrap">
+          {{ if $hasPage }}
+          <a href="/people/{{ $slug }}/" class="font-semibold text-navy hover:text-amber-600">{{ $person.name }}</a>
+          {{ else }}
+          <span class="font-semibold text-navy">{{ $person.name }}</span>
+          {{ end }}
+          <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded text-xs font-medium">Plaintiff</span>
+        </div>
+        {{ with $role }}
+        <p class="text-sm text-slate-600 mt-1">{{ . }}</p>
+        {{ end }}
+        {{ with $representedBy }}
+        <div class="mt-2 text-xs text-slate-500">
+          <span class="font-medium">Represented by:</span>
+          {{ range $i, $atty := . }}
+            {{ if $i }}, {{ end }}
+            {{ $attyPerson := index site.Data.people . }}
+            {{ $attyHasPage := site.GetPage (printf "/people/%s" .) }}
+            {{ if $attyHasPage }}
+            <a href="/people/{{ . }}/" class="text-amber-600 hover:text-amber-700">{{ if $attyPerson }}{{ $attyPerson.name }}{{ else }}{{ . | humanize | title }}{{ end }}</a>
+            {{ else }}
+            {{ if $attyPerson }}{{ $attyPerson.name }}{{ else }}{{ . | humanize | title }}{{ end }}
+            {{ end }}
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+      {{ if $caseSlug }}
+      <a href="/litigation/{{ $caseSlug }}/" class="text-slate-400 hover:text-amber-600">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ else }}
+  {{/* Inline style */}}
+  <span class="inline-flex items-center gap-1.5 not-prose">
+    {{ if $hasPage }}
+    <a href="/people/{{ $slug }}/" class="font-medium text-emerald-600 hover:text-emerald-700">{{ $person.name }}</a>
+    {{ else }}
+    <span class="font-medium text-emerald-600">{{ $person.name }}</span>
+    {{ end }}
+    {{ if $showRole }}{{ with $role }}<span class="text-slate-500 text-sm">({{ . }})</span>{{ end }}{{ end }}
+    <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 border border-emerald-200 rounded text-xs font-medium">Plaintiff</span>
+  </span>
+  {{ end }}
+{{ else }}
+  <span class="text-slate-500">{{ partial "format-text.html" $slug }}</span>
+{{ end }}

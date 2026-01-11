@@ -166,6 +166,7 @@ jones-v-scc:
     - type: court-filing
       title: Complaint
       date: 2024-01-01
+      pdf_file: jones-v-scc-complaint.pdf
     - type: court-opinion
       title: Summary Judgment Opinion
       date: 2025-01-01

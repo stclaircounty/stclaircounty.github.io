@@ -1,0 +1,57 @@
+{{/*
+  Court Shortcode - Reference courts with styling
+
+  Usage:
+    {{< court "edmi" >}}                           - Eastern District of Michigan
+    {{< court name="U.S. District Court" >}}       - Custom court name
+    {{< court case="jones-v-scc" >}}               - Get court from case
+
+  Parameters:
+    - First arg or name: Court name or abbreviation (optional)
+    - case: Case slug to get court from (optional)
+*/}}
+
+{{ $name := .Get 0 }}
+{{ if not $name }}{{ $name = .Get "name" }}{{ end }}
+{{ $caseSlug := .Get "case" }}
+
+{{/* Court abbreviations */}}
+{{ $courts := dict
+  "edmi" "U.S. District Court, Eastern District of Michigan"
+  "wdmi" "U.S. District Court, Western District of Michigan"
+  "6cir" "U.S. Court of Appeals, Sixth Circuit"
+  "scotus" "Supreme Court of the United States"
+  "mi-supreme" "Michigan Supreme Court"
+  "mi-appeals" "Michigan Court of Appeals"
+  "scc-circuit" "St. Clair County Circuit Court"
+  "scc-district" "St. Clair County District Court"
+}}
+
+{{/* Get court from case if provided */}}
+{{ if $caseSlug }}
+  {{ $case := index site.Data.litigation $caseSlug }}
+  {{ if $case }}
+    {{ $name = $case.court }}
+  {{ end }}
+{{ end }}
+
+{{/* Resolve abbreviation */}}
+{{ $courtName := index $courts $name | default $name }}
+
+{{/* Determine court level for styling */}}
+{{ $isFederal := or (in $courtName "U.S.") (in $courtName "Federal") }}
+{{ $isAppellate := or (in $courtName "Appeals") (in $courtName "Supreme") }}
+
+{{ $colorClass := "bg-slate-100 text-slate-700 border-slate-200" }}
+{{ if $isAppellate }}
+  {{ $colorClass = "bg-purple-100 text-purple-700 border-purple-200" }}
+{{ else if $isFederal }}
+  {{ $colorClass = "bg-blue-100 text-blue-700 border-blue-200" }}
+{{ end }}
+
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border text-sm font-medium {{ $colorClass }} not-prose">
+  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+  </svg>
+  {{ $courtName }}
+</span>

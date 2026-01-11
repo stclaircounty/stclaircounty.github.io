@@ -1,0 +1,109 @@
+{{/*
+  Legal Claim Shortcode - Reference legal claims with explanation tooltips
+
+  Usage:
+    {{< claim "1983" >}}                              - Section 1983 reference
+    {{< claim "monell" >}}                            - Monell liability
+    {{< claim "first-amendment" >}}                   - First Amendment
+    {{< claim statute="42 U.S.C. § 1983" >}}          - Custom statute
+    {{< claim type="1983" case="jones-v-scc" >}}      - Link to specific case claim
+
+  Parameters:
+    - First arg or type: Claim type (1983, monell, first-amendment, due-process, qualified-immunity)
+    - statute: Custom statute text (optional)
+    - case: Case slug to link to (optional)
+    - explain: Show explanation tooltip (default true)
+*/}}
+
+{{ $type := .Get 0 }}
+{{ if not $type }}{{ $type = .Get "type" }}{{ end }}
+{{ $statute := .Get "statute" }}
+{{ $caseSlug := .Get "case" }}
+{{ $explain := .Get "explain" | default "true" }}
+
+{{/* Claim definitions */}}
+{{ $claims := dict
+  "1983" (dict
+    "label" "42 U.S.C. § 1983"
+    "short" "Section 1983"
+    "description" "Civil action for deprivation of rights under color of law"
+    "color" "purple"
+  )
+  "monell" (dict
+    "label" "Monell Liability"
+    "short" "Monell"
+    "description" "Municipal liability for constitutional violations caused by official policy or custom"
+    "color" "orange"
+  )
+  "first-amendment" (dict
+    "label" "First Amendment"
+    "short" "1st Amend."
+    "description" "Freedom of speech, including public employee speech on matters of public concern"
+    "color" "blue"
+  )
+  "due-process" (dict
+    "label" "Due Process"
+    "short" "Due Process"
+    "description" "Fourteenth Amendment procedural due process protections"
+    "color" "green"
+  )
+  "qualified-immunity" (dict
+    "label" "Qualified Immunity"
+    "short" "QI"
+    "description" "Defense protecting officials from liability unless they violate clearly established law"
+    "color" "red"
+  )
+  "qi-denied" (dict
+    "label" "Qualified Immunity Denied"
+    "short" "QI Denied"
+    "description" "Court found the law was clearly established; official not protected from suit"
+    "color" "green"
+  )
+  "retaliation" (dict
+    "label" "First Amendment Retaliation"
+    "short" "Retaliation"
+    "description" "Adverse action taken against employee for exercising protected speech rights"
+    "color" "red"
+  )
+  "spoliation" (dict
+    "label" "Spoliation of Evidence"
+    "short" "Spoliation"
+    "description" "Destruction or alteration of evidence relevant to litigation"
+    "color" "red"
+  )
+}}
+
+{{ $claim := index $claims $type }}
+
+{{ if $claim }}
+  {{ $colorClasses := dict
+    "purple" "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-200"
+    "orange" "bg-orange-100 text-orange-700 border-orange-200 hover:bg-orange-200"
+    "blue" "bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-200"
+    "green" "bg-green-100 text-green-700 border-green-200 hover:bg-green-200"
+    "red" "bg-red-100 text-red-700 border-red-200 hover:bg-red-200"
+  }}
+  {{ $colorClass := index $colorClasses $claim.color }}
+
+  {{ if $caseSlug }}
+  {{/* Link to specific case */}}
+  <a href="/litigation/{{ $caseSlug }}/#claims" class="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-sm font-medium {{ $colorClass }} transition-colors not-prose" title="{{ $claim.description }}">
+    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+    </svg>
+    {{ $claim.short }}
+  </a>
+  {{ else }}
+  {{/* Standalone claim badge with tooltip */}}
+  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-sm font-medium {{ $colorClass }} not-prose cursor-help" title="{{ $claim.description }}">
+    {{ $claim.label }}
+  </span>
+  {{ end }}
+{{ else if $statute }}
+  {{/* Custom statute */}}
+  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded border text-sm font-medium bg-slate-100 text-slate-700 border-slate-200 not-prose">
+    {{ $statute }}
+  </span>
+{{ else }}
+  <span class="text-slate-500">{{ partial "format-text.html" $type }}</span>
+{{ end }}

@@ -1,0 +1,51 @@
+{{/*
+  Judge Shortcode - Reference judges with court context
+
+  Usage:
+    {{< judge "nancy-edmunds" >}}                    - Simple link
+    {{< judge slug="nancy-edmunds" court="true" >}}  - With court info
+    {{< judge "nancy-edmunds" case="jones-v-scc" >}} - From case context
+
+  Parameters:
+    - First arg or slug: Person slug (required)
+    - court: Show court info (optional)
+    - case: Case slug for context (optional)
+*/}}
+
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $showCourt := .Get "court" }}
+{{ $caseSlug := .Get "case" }}
+
+{{ $person := index site.Data.people $slug }}
+{{ $hasPage := site.GetPage (printf "/people/%s" $slug) }}
+
+{{/* Get case info if provided */}}
+{{ $caseData := dict }}
+{{ if $caseSlug }}
+  {{ $caseData = index site.Data.litigation $caseSlug }}
+{{ end }}
+
+{{ if $person }}
+<span class="inline-flex items-center gap-1.5 not-prose">
+  <svg class="w-4 h-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+  </svg>
+  {{ if $hasPage }}
+  <a href="/people/{{ $slug }}/" class="font-medium text-purple-600 hover:text-purple-700">{{ $person.title | default "" }} {{ $person.name }}</a>
+  {{ else }}
+  <span class="font-medium text-purple-600">{{ $person.title | default "" }} {{ $person.name }}</span>
+  {{ end }}
+  {{ if $showCourt }}
+    {{ with $person.court }}
+    <span class="text-slate-500 text-sm">({{ . }})</span>
+    {{ else }}
+    {{ with $caseData.court }}
+    <span class="text-slate-500 text-sm">({{ . }})</span>
+    {{ end }}
+    {{ end }}
+  {{ end }}
+</span>
+{{ else }}
+  <span class="text-slate-500">{{ partial "format-text.html" $slug }}</span>
+{{ end }}

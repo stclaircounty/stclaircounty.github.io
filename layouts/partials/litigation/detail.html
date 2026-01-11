@@ -9,8 +9,31 @@
 {{ $key := .key }}
 {{ $data := .data }}
 {{ $content := .content }}
+{{ $people := site.Data.people }}
 
 <div class="space-y-8">
+  {{/* ================================================================ */}}
+  {{/* JUDGE INFO (if available) */}}
+  {{/* ================================================================ */}}
+  {{ with $data.judge }}
+  {{ $judge := index $people . }}
+  {{ $judgeHasPage := site.GetPage (printf "/people/%s" .) }}
+  <div class="flex items-center gap-3 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+    <div class="p-2 bg-purple-100 rounded-lg">
+      <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+      </svg>
+    </div>
+    <div>
+      <p class="text-xs text-purple-600 font-semibold uppercase tracking-wide">Presiding Judge</p>
+      {{ if $judgeHasPage }}
+      <a href="/people/{{ . }}/" class="font-bold text-purple-800 hover:text-purple-600">{{ if $judge }}{{ $judge.title }} {{ $judge.name }}{{ else }}{{ partial "format-text.html" . }}{{ end }}</a>
+      {{ else }}
+      <span class="font-bold text-purple-800">{{ if $judge }}{{ $judge.title }} {{ $judge.name }}{{ else }}{{ partial "format-text.html" . }}{{ end }}</span>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
   {{/* ================================================================ */}}
   {{/* CASE STATUS BANNER */}}
   {{/* ================================================================ */}}
@@ -55,39 +78,45 @@
       {{ with .plaintiffs }}
       <div class="bg-emerald-50 rounded-lg p-5 border border-emerald-200">
         <h3 class="text-sm font-bold text-emerald-800 uppercase tracking-wider mb-3" style="margin-top: 0;">Plaintiff{{ if gt (len .) 1 }}s{{ end }}</h3>
-        <div class="space-y-3">
+        <div class="space-y-4">
           {{ range . }}
-          <div class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div class="flex items-start gap-3 p-3 bg-white/50 rounded-lg border border-emerald-100">
+            <div class="w-10 h-10 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
-            <div>
-              {{ $peopleData := site.Data.people }}
-              {{ $person := index $peopleData .person }}
-              {{ if $person }}
-              <a href="/people/{{ .person }}/" class="font-semibold text-emerald-900 hover:text-emerald-700">{{ $person.name }}</a>
+            <div class="flex-1">
+              {{ $person := index $people .person }}
+              {{ $personHasPage := site.GetPage (printf "/people/%s" .person) }}
+              {{ if $personHasPage }}
+              <a href="/people/{{ .person }}/" class="font-semibold text-emerald-900 hover:text-emerald-700">{{ if $person }}{{ $person.name }}{{ else }}{{ partial "format-text.html" .person }}{{ end }}</a>
               {{ else }}
-              <span class="font-semibold text-emerald-900">{{ .person | humanize }}</span>
+              <span class="font-semibold text-emerald-900">{{ if $person }}{{ $person.name }}{{ else }}{{ partial "format-text.html" .person }}{{ end }}</span>
               {{ end }}
               <p class="text-sm text-emerald-700">{{ .role }}</p>
               {{ with .represented_by }}
               <div class="mt-2 pt-2 border-t border-emerald-200">
                 <p class="text-xs text-emerald-600 font-medium mb-1">Represented by:</p>
-                <div class="space-y-1">
+                <div class="flex flex-wrap gap-2">
                   {{ range . }}
-                  {{ $counsel := index $peopleData . }}
-                  <div class="flex items-center gap-2">
-                    <svg class="w-3 h-3 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {{ $counsel := index $people . }}
+                  {{ $counselHasPage := site.GetPage (printf "/people/%s" .) }}
+                  {{ if $counselHasPage }}
+                  <a href="/people/{{ . }}/" class="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 hover:bg-emerald-200 rounded text-xs text-emerald-800 transition-colors">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    {{ if $counsel }}
-                    <a href="/people/{{ . }}/" class="text-xs text-emerald-700 hover:text-emerald-900">{{ $counsel.name }}</a>
-                    {{ else }}
-                    <span class="text-xs text-emerald-700">{{ partial "format-text.html" . }}</span>
-                    {{ end }}
-                  </div>
+                    {{ if $counsel }}{{ $counsel.name }}{{ else }}{{ partial "format-text.html" . }}{{ end }}
+                  </a>
+                  {{ else }}
+                  <span class="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 rounded text-xs text-emerald-800">
+                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    {{ if $counsel }}{{ $counsel.name }}{{ else }}{{ partial "format-text.html" . }}{{ end }}
+                  </span>
+                  {{ end }}
                   {{ end }}
                 </div>
               </div>
@@ -103,47 +132,87 @@
       {{ with .defendants }}
       <div class="bg-red-50 rounded-lg p-5 border border-red-200">
         <h3 class="text-sm font-bold text-red-800 uppercase tracking-wider mb-3" style="margin-top: 0;">Defendant{{ if gt (len .) 1 }}s{{ end }}</h3>
-        <div class="space-y-3">
+        <div class="space-y-4">
           {{ range . }}
-          <div class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-full bg-red-200 flex items-center justify-center flex-shrink-0">
+          <div class="flex items-start gap-3 p-3 bg-white/50 rounded-lg border border-red-100">
+            <div class="w-10 h-10 rounded-full bg-red-200 flex items-center justify-center flex-shrink-0">
               {{ if .entity }}
-              <svg class="w-4 h-4 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg class="w-5 h-5 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
               {{ else }}
-              <svg class="w-4 h-4 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg class="w-5 h-5 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
               {{ end }}
             </div>
-            <div>
-              {{ $peopleData := site.Data.people }}
-              {{ if .entity }}
-              <span class="font-semibold text-red-900">{{ .entity }}</span>
-              {{ else }}
-              {{ $person := index $peopleData .person }}
-              {{ if $person }}
-              <a href="/people/{{ .person }}/" class="font-semibold text-red-900 hover:text-red-700">{{ $person.name }}</a>
-              {{ else }}
-              <span class="font-semibold text-red-900">{{ .person | humanize }}</span>
+            <div class="flex-1">
+              <div class="flex items-start justify-between gap-2 flex-wrap">
+                <div>
+                  {{ if .entity }}
+                  <span class="font-semibold text-red-900">{{ .entity }}</span>
+                  {{ else }}
+                  {{ $person := index $people .person }}
+                  {{ $personHasPage := site.GetPage (printf "/people/%s" .person) }}
+                  {{ if $personHasPage }}
+                  <a href="/people/{{ .person }}/" class="font-semibold text-red-900 hover:text-red-700">{{ if $person }}{{ $person.name }}{{ else }}{{ partial "format-text.html" .person }}{{ end }}</a>
+                  {{ else }}
+                  <span class="font-semibold text-red-900">{{ if $person }}{{ $person.name }}{{ else }}{{ partial "format-text.html" .person }}{{ end }}</span>
+                  {{ end }}
+                  {{ end }}
+                  <p class="text-sm text-red-700">{{ .role }}{{ with .capacity }} ({{ . }}){{ end }}{{ with .position }} &bull; {{ . }}{{ end }}</p>
+                </div>
+                {{/* Immunity status badge */}}
+                {{ with .immunity_status }}
+                {{ if eq . "qualified-immunity-denied" }}
+                <span class="px-2 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200 flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                  QI Denied
+                </span>
+                {{ else if eq . "pending" }}
+                <span class="px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">QI Pending</span>
+                {{ else if eq . "qualified-immunity-granted" }}
+                <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">QI Granted</span>
+                {{ end }}
+                {{ end }}
+              </div>
+              {{/* Claims against this defendant */}}
+              {{ with .claims_against }}
+              <div class="flex flex-wrap gap-1 mt-2">
+                {{ range . }}
+                <span class="px-1.5 py-0.5 bg-red-100 text-red-700 rounded text-xs">{{ . }}</span>
+                {{ end }}
+              </div>
               {{ end }}
+              {{/* Evidence issues */}}
+              {{ with .evidence_issues }}
+              <div class="mt-2 p-2 bg-red-100 rounded border border-red-200">
+                <p class="text-xs font-semibold text-red-800 flex items-center gap-1 mb-1">
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                  Evidence Issues
+                </p>
+                <ul class="text-xs text-red-700 space-y-0.5">
+                  {{ range . }}
+                  <li>&bull; {{ . }}</li>
+                  {{ end }}
+                </ul>
+              </div>
               {{ end }}
-              <p class="text-sm text-red-700">{{ .role }}{{ with .capacity }} ({{ . }}){{ end }}</p>
               {{ with .represented_by }}
               <div class="mt-2 pt-2 border-t border-red-200">
                 <p class="text-xs text-red-600 font-medium mb-1">Represented by:</p>
                 <div class="space-y-1">
                   {{ range . }}
-                  {{ $counsel := index $peopleData . }}
+                  {{ $counsel := index $people . }}
+                  {{ $counselHasPage := site.GetPage (printf "/people/%s" .) }}
                   <div class="flex items-center gap-2">
                     <svg class="w-3 h-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    {{ if $counsel }}
-                    <a href="/people/{{ . }}/" class="text-xs text-red-700 hover:text-red-900">{{ $counsel.name }}</a>
+                    {{ if $counselHasPage }}
+                    <a href="/people/{{ . }}/" class="text-xs text-red-700 hover:text-red-900">{{ if $counsel }}{{ $counsel.name }}{{ else }}{{ partial "format-text.html" . }}{{ end }}</a>
                     {{ else }}
-                    <span class="text-xs text-red-700">{{ partial "format-text.html" . }}
+                    <span class="text-xs text-red-700">{{ if $counsel }}{{ $counsel.name }}{{ else }}{{ partial "format-text.html" . }}{{ end }}</span>
                     {{ end }}
                   </div>
                   {{ end }}
@@ -161,10 +230,68 @@
   {{ end }}
 
   {{/* ================================================================ */}}
+  {{/* EVIDENCE SPOLIATION */}}
+  {{/* ================================================================ */}}
+  {{ with $data.evidence_issues }}
+  {{ if .spoliation }}
+  <section class="bg-red-50 border-2 border-red-300 rounded-xl p-6" id="spoliation">
+    <h2 class="text-lg font-bold text-red-800 mb-4 flex items-center gap-2" style="margin-top: 0;">
+      <div class="p-2 bg-red-100 rounded-lg">
+        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      Evidence Spoliation
+    </h2>
+    <p class="text-sm text-red-700 mb-4">Evidence destruction or loss documented in this case:</p>
+    <div class="space-y-3">
+      {{ range .spoliation }}
+      {{ $witness := index $people .witness }}
+      {{ $witnessHasPage := site.GetPage (printf "/people/%s" .witness) }}
+      <div class="flex items-start gap-3 p-4 bg-white rounded-lg border border-red-200">
+        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
+            {{ if $witnessHasPage }}
+            <a href="/people/{{ .witness }}/" class="font-semibold text-red-800 hover:text-red-600">{{ if $witness }}{{ $witness.name }}{{ else }}{{ partial "format-text.html" .witness }}{{ end }}</a>
+            {{ else }}
+            <span class="font-semibold text-red-800">{{ if $witness }}{{ $witness.name }}{{ else }}{{ partial "format-text.html" .witness }}{{ end }}</span>
+            {{ end }}
+            <span class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs font-medium">{{ .type | humanize }}</span>
+          </div>
+          <p class="text-sm text-red-700 mb-2">"{{ .admission }}"</p>
+          {{ with .source }}
+          <p class="text-xs text-red-500">Source: {{ . }}</p>
+          {{ end }}
+          {{ with .impact }}
+          <p class="text-xs text-red-600 font-medium mt-1 flex items-center gap-1">
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            {{ . }}
+          </p>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    {{ with .adverse_inference }}
+    <div class="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+      <p class="text-sm font-semibold text-amber-800 mb-1">Adverse Inference Motion</p>
+      <p class="text-xs text-amber-700">Status: {{ .status | humanize }} &bull; {{ .basis }}</p>
+    </div>
+    {{ end }}
+  </section>
+  {{ end }}
+  {{ end }}
+
+  {{/* ================================================================ */}}
   {{/* LEGAL CLAIMS */}}
   {{/* ================================================================ */}}
   {{ with $data.claims }}
-  <section class="bg-white rounded-lg shadow-card p-6">
+  <section class="bg-white rounded-lg shadow-card p-6" id="claims">
     <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
       {{ partial "header-icon.html" (dict "icon" "clipboard" "class" "w-5 h-5 text-slate-light") }}
       Legal Claims
@@ -194,13 +321,26 @@
           {{ end }}
         </div>
         <div class="flex-1">
-          <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
             <div>
               <p class="font-bold text-navy">{{ with .statute }}{{ . }}{{ else }}{{ .type }}{{ end }}</p>
               <p class="text-sm text-slate-600 mt-1">{{ .description }}</p>
+              {{ with .elements }}
+              <div class="mt-2">
+                <p class="text-xs font-semibold text-slate-500 uppercase mb-1">Elements</p>
+                <ul class="text-xs text-slate-600 space-y-0.5">
+                  {{ range . }}
+                  <li class="flex items-start gap-1">
+                    <span class="text-slate-400">&bull;</span>
+                    {{ . }}
+                  </li>
+                  {{ end }}
+                </ul>
+              </div>
+              {{ end }}
             </div>
             <span class="flex-shrink-0 text-xs font-medium px-2.5 py-1 rounded-full {{ if eq .status "survived-summary-judgment" }}bg-emerald-200 text-emerald-800{{ else if eq .status "dismissed" }}bg-gray-200 text-gray-700{{ else }}bg-amber-200 text-amber-800{{ end }}">
-              {{ .status | humanize }}
+              {{ partial "format-text.html" .status }}
             </span>
           </div>
         </div>
@@ -214,7 +354,7 @@
   {{/* KEY RULINGS */}}
   {{/* ================================================================ */}}
   {{ with $data.key_rulings }}
-  <section class="bg-white rounded-lg shadow-card p-6">
+  <section class="bg-white rounded-lg shadow-card p-6" id="rulings">
     <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
       {{ partial "header-icon.html" (dict "icon" "scale" "class" "w-5 h-5 text-slate-light") }}
       Key Rulings
@@ -273,7 +413,7 @@
   {{/* CASE TIMELINE */}}
   {{/* ================================================================ */}}
   {{ with $data.timeline }}
-  <section class="bg-white rounded-lg shadow-card p-6">
+  <section class="bg-white rounded-lg shadow-card p-6" id="timeline">
     <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
       {{ partial "header-icon.html" (dict "icon" "clock" "class" "w-5 h-5 text-slate-light") }}
       Case Timeline
@@ -282,11 +422,30 @@
       <div class="absolute left-4 top-2 bottom-2 w-0.5 bg-gradient-to-b from-navy via-accent to-gold"></div>
       <div class="space-y-4">
         {{ range . }}
-        <div class="relative pl-10">
-          <div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-white border-2 border-navy"></div>
-          <div class="flex items-baseline gap-3">
-            <span class="text-sm font-semibold text-navy">{{ time.Format "Jan 2, 2006" .date }}</span>
+        {{/* Check if this event links to a timeline page */}}
+        {{ $eventSlug := "" }}
+        {{ $eventDate := .date | time.Format "2006-01-02" }}
+        {{ range $tlKey, $tlEvent := site.Data.timeline }}
+          {{ if not (hasPrefix $tlKey "_") }}
+            {{ if eq ($tlEvent.date | time.Format "2006-01-02") $eventDate }}
+              {{ $eventSlug = $tlKey }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        {{ $eventHasPage := false }}
+        {{ if $eventSlug }}
+          {{ $eventHasPage = site.GetPage (printf "/timeline/%s" $eventSlug) }}
+        {{ end }}
+
+        <div class="relative pl-10 group">
+          <div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-white border-2 border-navy group-hover:border-amber-500 transition-colors"></div>
+          <div class="flex items-start gap-3 flex-wrap">
+            <span class="text-sm font-semibold text-navy whitespace-nowrap">{{ time.Format "Jan 2, 2006" .date }}</span>
+            {{ if $eventHasPage }}
+            <a href="/timeline/{{ $eventSlug }}/" class="text-slate-600 hover:text-amber-600 transition-colors">{{ .event }}</a>
+            {{ else }}
             <span class="text-slate-600">{{ .event }}</span>
+            {{ end }}
           </div>
         </div>
         {{ end }}
@@ -372,32 +531,87 @@
   {{/* SOURCES */}}
   {{/* ================================================================ */}}
   {{ with $data.sources }}
-  <section class="bg-white rounded-lg shadow-card p-6">
+  <section class="bg-white rounded-lg shadow-card p-6" id="sources">
     <h2 class="text-lg font-bold text-navy mb-4 flex items-center gap-2" style="margin-top: 0;">
       {{ partial "header-icon.html" (dict "icon" "book" "class" "w-5 h-5 text-slate-light") }}
-      Sources
+      Sources & Documents
     </h2>
     <div class="grid gap-3">
       {{ range . }}
-      <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-        <div class="w-8 h-8 rounded-full bg-navy/10 flex items-center justify-center flex-shrink-0">
+      {{/* Determine if this is a deposition that can be linked */}}
+      {{ $isDeposition := eq .type "deposition" }}
+      {{ $depoSlug := "" }}
+      {{ if $isDeposition }}
+        {{/* Try to find matching deposition by title pattern */}}
+        {{ range $depoKey, $depo := site.Data.depositions }}
+          {{ if not (hasPrefix $depoKey "_") }}
+            {{ if in .title $depo.deponent.name }}
+              {{ $depoSlug = $depoKey }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      {{ $depoHasPage := false }}
+      {{ if $depoSlug }}
+        {{ $depoHasPage = site.GetPage (printf "/depositions/%s" $depoSlug) }}
+      {{ end }}
+
+      <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors {{ if $isDeposition }}border-l-4 border-amber-400{{ end }}">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 {{ if eq .type "court-filing" }}bg-blue-100{{ else if eq .type "court-opinion" }}bg-purple-100{{ else if eq .type "deposition" }}bg-amber-100{{ else }}bg-slate-100{{ end }}">
           {{ if eq .type "court-filing" }}
-          <svg class="w-4 h-4 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           {{ else if eq .type "court-opinion" }}
-          <svg class="w-4 h-4 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
           </svg>
+          {{ else if eq .type "deposition" }}
+          <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
           {{ else }}
-          <svg class="w-4 h-4 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
           {{ end }}
         </div>
         <div class="flex-1">
+          {{ if $depoHasPage }}
+          <a href="/depositions/{{ $depoSlug }}/" class="font-medium text-navy hover:text-amber-600">{{ .title }}</a>
+          {{ else }}
           <p class="font-medium text-navy">{{ .title }}</p>
-          <p class="text-xs text-slate-500">{{ .type | humanize }} | {{ time.Format "Jan 2, 2006" .date }}</p>
+          {{ end }}
+          <p class="text-xs text-slate-500 mt-0.5">{{ partial "format-text.html" .type }} | {{ time.Format "Jan 2, 2006" .date }}</p>
+          {{/* Key admissions from depositions */}}
+          {{ with .key_admissions }}
+          <div class="mt-2 space-y-1">
+            {{ range . }}
+            <p class="text-xs text-red-600 flex items-start gap-1">
+              <svg class="w-3 h-3 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              {{ . }}
+            </p>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
+        {{/* Action buttons */}}
+        <div class="flex items-center gap-2 flex-shrink-0">
+          {{ with .pdf_file }}
+          <a href="/pdfs/{{ . }}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg text-sm font-medium transition-colors" title="View PDF">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            PDF
+          </a>
+          {{ end }}
+          {{ if $depoHasPage }}
+          <a href="/depositions/{{ $depoSlug }}/" class="text-amber-500 hover:text-amber-600">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+          {{ end }}
         </div>
       </div>
       {{ end }}

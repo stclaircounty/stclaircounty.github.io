@@ -1,0 +1,118 @@
+{{/*
+  Defendant Shortcode - Reference defendants with immunity status and case role
+
+  Usage:
+    {{< defendant "mat-king" case="jones-v-scc" >}}           - With case context
+    {{< defendant slug="mat-king" status="qi-denied" >}}       - Override status
+    {{< defendant "mat-king" role="true" >}}                   - Show role/position
+
+  Parameters:
+    - First arg or slug: Person slug (required)
+    - case: Case slug for context (optional)
+    - status: Override immunity status (optional)
+    - role: Show defendant role (optional)
+    - card: Show as card (optional)
+*/}}
+
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $caseSlug := .Get "case" }}
+{{ $statusOverride := .Get "status" }}
+{{ $showRole := .Get "role" }}
+{{ $showCard := .Get "card" }}
+
+{{ $person := index site.Data.people $slug }}
+{{ $hasPage := site.GetPage (printf "/people/%s" $slug) }}
+
+{{/* Get defendant info from case if provided */}}
+{{ $defendantInfo := dict }}
+{{ if $caseSlug }}
+  {{ $case := index site.Data.litigation $caseSlug }}
+  {{ if $case }}
+    {{ range $case.parties.defendants }}
+      {{ if eq .person $slug }}
+        {{ $defendantInfo = . }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $status := $statusOverride | default $defendantInfo.immunity_status }}
+{{ $role := $defendantInfo.role | default $defendantInfo.position }}
+{{ $claims := $defendantInfo.claims_against }}
+
+{{/* Status styling */}}
+{{ $statusStyles := dict
+  "qualified-immunity-denied" (dict "label" "QI Denied" "color" "green" "icon" "x-circle")
+  "qualified-immunity-granted" (dict "label" "QI Granted" "color" "red" "icon" "shield-check")
+  "pending" (dict "label" "QI Pending" "color" "amber" "icon" "clock")
+  "dismissed" (dict "label" "Dismissed" "color" "slate" "icon" "minus-circle")
+}}
+{{ $statusStyle := index $statusStyles $status | default (dict "label" "" "color" "slate" "icon" "") }}
+
+{{ $colorClasses := dict
+  "green" "bg-green-100 text-green-700 border-green-200"
+  "red" "bg-red-100 text-red-700 border-red-200"
+  "amber" "bg-amber-100 text-amber-700 border-amber-200"
+  "slate" "bg-slate-100 text-slate-600 border-slate-200"
+}}
+
+{{ if $person }}
+  {{ if $showCard }}
+  {{/* Card style */}}
+  <div class="my-3 p-4 bg-white border border-slate-200 rounded-lg not-prose">
+    <div class="flex items-start gap-3">
+      <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="flex items-center gap-2 flex-wrap">
+          {{ if $hasPage }}
+          <a href="/people/{{ $slug }}/" class="font-semibold text-navy hover:text-amber-600">{{ $person.name }}</a>
+          {{ else }}
+          <span class="font-semibold text-navy">{{ $person.name }}</span>
+          {{ end }}
+          <span class="px-1.5 py-0.5 bg-red-100 text-red-700 rounded text-xs font-medium">Defendant</span>
+          {{ with $statusStyle.label }}
+          <span class="px-1.5 py-0.5 rounded text-xs font-medium border {{ index $colorClasses $statusStyle.color }}">{{ . }}</span>
+          {{ end }}
+        </div>
+        {{ with $role }}
+        <p class="text-sm text-slate-600 mt-1">{{ . }}</p>
+        {{ end }}
+        {{ with $claims }}
+        <div class="flex flex-wrap gap-1 mt-2">
+          {{ range . }}
+          <span class="px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">{{ . }}</span>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+      {{ if $caseSlug }}
+      <a href="/litigation/{{ $caseSlug }}/" class="text-slate-400 hover:text-amber-600">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ else }}
+  {{/* Inline style */}}
+  <span class="inline-flex items-center gap-1.5 not-prose">
+    {{ if $hasPage }}
+    <a href="/people/{{ $slug }}/" class="font-medium text-red-600 hover:text-red-700">{{ $person.name }}</a>
+    {{ else }}
+    <span class="font-medium text-red-600">{{ $person.name }}</span>
+    {{ end }}
+    {{ if $showRole }}{{ with $role }}<span class="text-slate-500 text-sm">({{ . }})</span>{{ end }}{{ end }}
+    {{ with $statusStyle.label }}
+    <span class="px-1.5 py-0.5 rounded text-xs font-medium border {{ index $colorClasses $statusStyle.color }}">{{ . }}</span>
+    {{ end }}
+  </span>
+  {{ end }}
+{{ else }}
+  <span class="text-slate-500">{{ partial "format-text.html" $slug }}</span>
+{{ end }}

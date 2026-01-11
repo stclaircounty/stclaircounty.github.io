@@ -1,0 +1,74 @@
+{{/*
+  Timeline Event Shortcode - Link to timeline events with date display
+
+  Usage:
+    {{< timeline "2022-11-06-owi-arrest" >}}           - Simple link
+    {{< timeline slug="2022-11-06-owi-arrest" card="true" >}} - Card style
+
+  Parameters:
+    - slug: Timeline event slug (required, positional or named)
+    - card: Show as card with details (optional)
+*/}}
+
+{{/* Support both positional and named slug parameter */}}
+{{ $slug := .Get 0 }}
+{{ if not $slug }}{{ $slug = .Get "slug" }}{{ end }}
+{{ $showCard := .Get "card" }}
+
+{{/* Look up timeline data */}}
+{{ $event := index site.Data.timeline $slug }}
+{{ $url := printf "/timeline/%s/" $slug }}
+{{ $hasPage := site.GetPage (printf "/timeline/%s" $slug) }}
+
+{{ if $event }}
+  {{ if $showCard }}
+  {{/* Card style with details */}}
+  <div class="my-4 p-4 bg-white border border-slate-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all not-prose">
+    {{ if $hasPage }}<a href="{{ $url }}" class="block">{{ end }}
+    <div class="flex items-start gap-3">
+      <div class="p-2 rounded-lg flex-shrink-0 bg-blue-100">
+        <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-semibold text-blue-600 uppercase tracking-wide">{{ $event.date | time.Format "January 2, 2006" }}</p>
+        <h4 class="font-semibold text-navy mt-1">{{ $event.title }}</h4>
+        {{ with $event.summary }}
+        <p class="text-sm text-slate-600 mt-1 line-clamp-2">{{ . | plainify | truncate 150 }}</p>
+        {{ end }}
+        {{ with $event.category }}
+        <span class="inline-block mt-2 px-1.5 py-0.5 bg-slate-100 rounded text-xs text-slate-600">{{ partial "format-text.html" . }}</span>
+        {{ end }}
+      </div>
+      {{ if $hasPage }}
+      <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      {{ end }}
+    </div>
+    {{ if $hasPage }}</a>{{ end }}
+  </div>
+  {{ else }}
+  {{/* Simple inline link with date */}}
+  {{ if $hasPage }}
+  <a href="{{ $url }}" class="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 font-medium">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    {{ $event.title }}
+  </a>
+  <span class="ml-1 text-xs text-slate-500">({{ $event.date | time.Format "Jan 2, 2006" }})</span>
+  {{ else }}
+  <span class="inline-flex items-center gap-1 text-slate-600">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    {{ $event.title }}
+    <span class="ml-1 text-xs text-slate-500">({{ $event.date | time.Format "Jan 2, 2006" }})</span>
+  </span>
+  {{ end }}
+  {{ end }}
+{{ else }}
+  <span class="text-slate-500" title="Timeline event not found">{{ partial "format-text.html" $slug }}</span>
+{{ end }}
