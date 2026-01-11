@@ -2,9 +2,11 @@
 title: "Text Messages Deleted by Multiple Officers"
 date: 2023-06-01T12:00:00
 location: "St. Clair County Sheriff's Office"
+incident: "marc-king-owi-2022"
 officers_involved:
   - matthew-pohl
-  - deputy-duva
+  - damon-duva
+  - chad-cronkright
 incident_type: "evidence-spoliation"
 severity: "critical"
 outcome: "evidence-destroyed"
@@ -17,6 +19,16 @@ tags:
   - evidence-spoliation
   - deleted-texts
   - obstruction
+what_should_have_happened:
+  - "Litigation hold should have been issued when legal action became foreseeable"
+  - "All relevant communications should have been preserved"
+  - "Personal devices used for official business should be subject to retention policies"
+  - "Evidence preservation should be enforced through policy"
+what_actually_happened:
+  - "Multiple officers deleted text messages relevant to the investigation"
+  - "No litigation hold was ever established"
+  - "No retention policies were enforced for electronic communications"
+  - "Pattern of deletion by officers close to the arrestee suggests coordination"
 ---
 
 ## Event Summary

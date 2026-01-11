@@ -184,7 +184,7 @@ pohl-deposition:
 
 duva-transcripts:
   title: "Deputy Duva Transcripts"
-  date: 2024-02-01
+  date: 2025-04-03
   data_file: damon_duva  # References data/depositions/damon_duva.yaml for segments
   transcript_slug: damon-duva  # Links to /deposition-transcripts/damon-duva/
   deponent:

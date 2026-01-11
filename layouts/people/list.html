@@ -20,28 +20,93 @@
   {{ end }}
 
   {{/* Filter Controls */}}
-  <div class="bg-white rounded-lg shadow-card p-4 mb-8 sticky top-20 z-10">
-    <div class="flex flex-wrap gap-4 items-center">
-      <span class="text-sm font-medium text-slate">Filter by:</span>
-      <select id="category-filter" class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400">
-        <option value="all">All Categories</option>
-        <option value="law-enforcement">Law Enforcement</option>
-        <option value="legal">Legal</option>
-        <option value="judiciary">Judiciary</option>
-      </select>
-      <select id="status-filter" class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400">
-        <option value="all">All Statuses</option>
-        <option value="active">Active</option>
-        <option value="retired">Retired</option>
-        <option value="terminated">Terminated</option>
-        <option value="resigned">Resigned</option>
-      </select>
-      <select id="credibility-filter" class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400">
-        <option value="all">All Credibility</option>
-        <option value="compromised">Compromised</option>
-        <option value="ok">Not Compromised</option>
-      </select>
-      <button id="reset-filters" class="text-sm text-amber-600 hover:text-amber-700 font-medium">Reset</button>
+  <div class="bg-gradient-to-r from-slate-50 to-white rounded-xl shadow-md border border-gray-200 p-6 mb-8 sticky top-20 z-10">
+    <div class="flex flex-wrap items-center gap-4">
+      <div class="flex items-center gap-2 text-navy">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        <span class="text-sm font-semibold">Filter by:</span>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="flex-1 min-w-[180px] relative">
+        <label for="category-filter" class="sr-only">Filter by category</label>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <select id="category-filter" class="w-full pl-10 pr-10 py-2.5 text-sm font-medium text-navy bg-white border-2 border-slate-200 rounded-lg shadow-sm appearance-none cursor-pointer hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-200">
+          <option value="all">All Categories</option>
+          <option value="law-enforcement">Law Enforcement</option>
+          <option value="legal">Legal</option>
+          <option value="judiciary">Judiciary</option>
+        </select>
+        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Status Filter -->
+      <div class="flex-1 min-w-[180px] relative">
+        <label for="status-filter" class="sr-only">Filter by status</label>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <select id="status-filter" class="w-full pl-10 pr-10 py-2.5 text-sm font-medium text-navy bg-white border-2 border-slate-200 rounded-lg shadow-sm appearance-none cursor-pointer hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-200">
+          <option value="all">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="retired">Retired</option>
+          <option value="terminated">Terminated</option>
+          <option value="resigned">Resigned</option>
+        </select>
+        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Credibility Filter -->
+      <div class="flex-1 min-w-[180px] relative">
+        <label for="credibility-filter" class="sr-only">Filter by credibility</label>
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <select id="credibility-filter" class="w-full pl-10 pr-10 py-2.5 text-sm font-medium text-navy bg-white border-2 border-slate-200 rounded-lg shadow-sm appearance-none cursor-pointer hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-200">
+          <option value="all">All Credibility</option>
+          <option value="compromised">Compromised</option>
+          <option value="ok">Not Compromised</option>
+        </select>
+        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Reset Button -->
+      <button id="reset-filters" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:text-white bg-slate-100 hover:bg-navy border-2 border-slate-200 hover:border-navy rounded-lg transition-all duration-200 shadow-sm">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Reset
+      </button>
+    </div>
+
+    <!-- Active filters count -->
+    <div id="filter-status" class="mt-4 pt-4 border-t border-slate-200 text-sm text-slate-600 hidden">
+      <span class="inline-flex items-center gap-2">
+        <span class="flex h-2 w-2 rounded-full bg-accent animate-pulse"></span>
+        Showing <span id="visible-count" class="font-bold text-navy">0</span> of <span id="total-count" class="font-bold">0</span> people
+      </span>
     </div>
   </div>
 
@@ -303,15 +368,29 @@ let categoryFilter = 'all';
 let statusFilter = 'all';
 let credibilityFilter = 'all';
 
+const filterStatus = document.getElementById('filter-status');
+const visibleCount = document.getElementById('visible-count');
+const totalCount = document.getElementById('total-count');
+const allRows = document.querySelectorAll('.person-row');
+
+// Set total count on load
+if (totalCount) {
+  totalCount.textContent = allRows.length;
+}
+
 function applyPeopleFilters() {
-  document.querySelectorAll('.person-row').forEach(row => {
+  let visible = 0;
+
+  allRows.forEach(row => {
     let showByCategory = categoryFilter === 'all' || row.dataset.category === categoryFilter;
     let showByStatus = statusFilter === 'all' || row.dataset.status === statusFilter;
     let showByCredibility = credibilityFilter === 'all' ||
       (credibilityFilter === 'compromised' && row.dataset.credibility === 'compromised') ||
       (credibilityFilter === 'ok' && row.dataset.credibility !== 'compromised');
 
-    row.style.display = (showByCategory && showByStatus && showByCredibility) ? '' : 'none';
+    const shouldShow = showByCategory && showByStatus && showByCredibility;
+    row.style.display = shouldShow ? '' : 'none';
+    if (shouldShow) visible++;
   });
 
   // Update section visibility - hide empty sections
@@ -322,6 +401,17 @@ function applyPeopleFilters() {
       section.style.display = visibleRows.length > 0 ? '' : 'none';
     }
   });
+
+  // Update filter status display
+  const hasActiveFilter = categoryFilter !== 'all' || statusFilter !== 'all' || credibilityFilter !== 'all';
+  if (filterStatus) {
+    if (hasActiveFilter) {
+      filterStatus.classList.remove('hidden');
+      visibleCount.textContent = visible;
+    } else {
+      filterStatus.classList.add('hidden');
+    }
+  }
 }
 
 document.getElementById('category-filter').addEventListener('change', function() {

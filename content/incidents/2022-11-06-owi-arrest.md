@@ -2,6 +2,7 @@
 title: "Deputy Marc King OWI Arrest and Cover-Up"
 date: 2022-11-06T22:00:00
 location: "St. Clair County, Michigan"
+incident_key: "marc-king-owi-2022"
 officers_involved:
   - marc-king
   - mat-king

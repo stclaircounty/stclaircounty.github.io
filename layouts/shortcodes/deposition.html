@@ -1,0 +1,8 @@
+{{- $slug := .Get 0 -}}
+{{- $page := site.GetPage (printf "/depositions/%s" $slug) -}}
+{{- $title := $slug | humanize | title -}}
+{{- if $page -}}
+<a href="{{ $page.Permalink }}" class="text-amber-600 hover:text-amber-700 font-medium hover:underline">{{ $page.Title }}</a>
+{{- else -}}
+<span class="font-medium">{{ $title }}</span>
+{{- end -}}

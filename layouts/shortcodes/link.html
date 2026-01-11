@@ -1,0 +1,7 @@
+{{- $slug := .Get 0 -}}
+{{- $page := site.GetPage (printf "/timeline/%s" $slug) -}}
+{{- if $page -}}
+<a href="{{ $page.Permalink }}" class="text-accent hover:text-navy hover:underline">{{ $page.Title }}</a>
+{{- else -}}
+<span>{{ $slug | humanize | title }}</span>
+{{- end -}}
