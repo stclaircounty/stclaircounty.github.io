@@ -1,0 +1,377 @@
+{{ define "main" }}
+<style>
+  .admin-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+  .auth-form {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    max-width: 400px;
+    margin: 100px auto;
+  }
+  .auth-form h2 { margin-bottom: 20px; color: var(--navy); }
+  .auth-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  .auth-form button {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .auth-form button:hover { opacity: 0.9; }
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .admin-header h1 { font-size: 1.5rem; color: var(--navy); }
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .tab {
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: #f8fafc;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card-body { padding: 16px; }
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .badge-tip { background: #fef2f2; color: #dc2626; }
+  .badge-document { background: #eff6ff; color: #2563eb; }
+  .badge-general { background: #f0fdf4; color: #16a34a; }
+  .badge-media { background: #faf5ff; color: #9333ea; }
+  .badge-correction { background: #fefce8; color: #ca8a04; }
+  .meta { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+  .message {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .file-info { display: flex; gap: 20px; flex-wrap: wrap; }
+  .file-info div { flex: 1; min-width: 150px; }
+  .file-info label { font-size: 12px; color: #64748b; text-transform: uppercase; }
+  .file-info p { font-weight: 500; margin-top: 4px; }
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .btn-primary { background: #2563eb; color: white; }
+  .btn-success { background: #16a34a; color: white; }
+  .btn-outline { background: transparent; border: 1px solid #e2e8f0; color: var(--navy); }
+  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; }
+  .empty { text-align: center; padding: 40px; color: #64748b; }
+  .loading { text-align: center; padding: 40px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .stat {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .stat-value { font-size: 24px; font-weight: 700; color: var(--navy); }
+  .stat-label { font-size: 13px; color: #64748b; }
+  .hidden { display: none !important; }
+  .processed { opacity: 0.6; }
+</style>
+
+<!-- Auth Form -->
+<div id="auth-section" class="auth-form">
+  <h2>Admin Login</h2>
+  <input type="password" id="secret-input" placeholder="Enter admin secret" onkeypress="if(event.key==='Enter')login()">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- Main Content -->
+<div id="main-section" class="hidden">
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1>Submissions</h1>
+      <button class="btn btn-outline" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value" id="contacts-count">-</div>
+        <div class="stat-label">Contact Submissions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="uploads-count">-</div>
+        <div class="stat-label">File Uploads</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('contacts')">Contacts</button>
+      <button class="tab" onclick="showTab('uploads')">Uploads</button>
+    </div>
+
+    <div id="contacts-tab"></div>
+    <div id="uploads-tab" class="hidden"></div>
+  </div>
+</div>
+
+<script>
+  let token = localStorage.getItem('admin_token') || '';
+
+  async function api(path, options = {}) {
+    const res = await fetch(path, {
+      ...options,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
+    if (res.status === 401) {
+      logout();
+      throw new Error('Unauthorized');
+    }
+    return res.json();
+  }
+
+  function login() {
+    token = document.getElementById('secret-input').value;
+    localStorage.setItem('admin_token', token);
+    init();
+  }
+
+  function logout() {
+    token = '';
+    localStorage.removeItem('admin_token');
+    document.getElementById('auth-section').classList.remove('hidden');
+    document.getElementById('main-section').classList.add('hidden');
+  }
+
+  function showTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (tab === 'contacts' && i === 0) || (tab === 'uploads' && i === 1));
+    });
+    document.getElementById('contacts-tab').classList.toggle('hidden', tab !== 'contacts');
+    document.getElementById('uploads-tab').classList.toggle('hidden', tab !== 'uploads');
+  }
+
+  function formatDate(dateStr) {
+    return new Date(dateStr).toLocaleString();
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function getBadgeClass(type) {
+    const classes = {
+      tip: 'badge-tip',
+      document: 'badge-document',
+      general: 'badge-general',
+      media: 'badge-media',
+      correction: 'badge-correction'
+    };
+    return classes[type] || 'badge-general';
+  }
+
+  async function loadContacts() {
+    const container = document.getElementById('contacts-tab');
+    container.innerHTML = '<div class="loading">Loading...</div>';
+
+    try {
+      const data = await api('/api/admin/contacts');
+      document.getElementById('contacts-count').textContent = data.total;
+
+      if (data.data.length === 0) {
+        container.innerHTML = '<div class="empty">No submissions yet</div>';
+        return;
+      }
+
+      container.innerHTML = data.data.map(c => `
+        <div class="card ${c.processed ? 'processed' : ''}">
+          <div class="card-header">
+            <span class="badge ${getBadgeClass(c.submission_type)}">${c.submission_type}</span>
+            <span class="meta">${formatDate(c.created_at)}</span>
+          </div>
+          <div class="card-body">
+            <div class="meta">
+              ${c.name ? `<strong>${escapeHtml(c.name)}</strong>` : '<em>Anonymous</em>'}
+              ${c.email ? ` &lt;${escapeHtml(c.email)}&gt;` : ''}
+            </div>
+            <div class="message">${escapeHtml(c.message)}</div>
+            ${!c.processed ? `
+              <div class="actions">
+                <button class="btn btn-success btn-sm" onclick="markProcessed(${c.id})">Mark Processed</button>
+              </div>
+            ` : '<div class="meta" style="margin-top:10px">Processed</div>'}
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      container.innerHTML = '<div class="empty">Error loading data</div>';
+    }
+  }
+
+  async function loadUploads() {
+    const container = document.getElementById('uploads-tab');
+    container.innerHTML = '<div class="loading">Loading...</div>';
+
+    try {
+      const data = await api('/api/admin/uploads');
+      document.getElementById('uploads-count').textContent = data.total;
+
+      if (data.data.length === 0) {
+        container.innerHTML = '<div class="empty">No uploads yet</div>';
+        return;
+      }
+
+      container.innerHTML = data.data.map(u => `
+        <div class="card">
+          <div class="card-header">
+            <span><strong>${escapeHtml(u.metadata.filename || 'Unknown')}</strong></span>
+            <span class="meta">${formatDate(u.created_at)}</span>
+          </div>
+          <div class="card-body">
+            <div class="file-info">
+              <div>
+                <label>Size</label>
+                <p>${formatSize(u.file_size)}</p>
+              </div>
+              <div>
+                <label>Type</label>
+                <p>${escapeHtml(u.file_type)}</p>
+              </div>
+              <div>
+                <label>Source</label>
+                <p>${escapeHtml(u.metadata.source || 'web')}</p>
+              </div>
+              <div>
+                <label>ID</label>
+                <p style="font-family:monospace;font-size:12px">${u.id.slice(0,8)}</p>
+              </div>
+            </div>
+            ${u.metadata.description ? `
+              <div style="margin-top:12px">
+                <label style="font-size:12px;color:#64748b;text-transform:uppercase">Description</label>
+                <div class="message" style="margin-top:4px">${escapeHtml(u.metadata.description)}</div>
+              </div>
+            ` : ''}
+            ${u.metadata.contactName || u.metadata.contactEmail ? `
+              <div class="meta" style="margin-top:12px">
+                Contact: ${u.metadata.contactName ? escapeHtml(u.metadata.contactName) : 'Anonymous'}
+                ${u.metadata.contactEmail ? `&lt;${escapeHtml(u.metadata.contactEmail)}&gt;` : ''}
+              </div>
+            ` : ''}
+            <div class="actions">
+              <button class="btn btn-primary btn-sm" onclick="downloadFile('${u.id}', '${escapeHtml(u.metadata.filename || 'download')}')">Download</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      container.innerHTML = '<div class="empty">Error loading data</div>';
+    }
+  }
+
+  async function markProcessed(id) {
+    await api(`/api/admin/contacts/${id}/process`, { method: 'POST' });
+    loadContacts();
+  }
+
+  async function downloadFile(id, filename) {
+    const res = await fetch(`/api/admin/download/${id}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) {
+      alert('Download failed');
+      return;
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+  }
+
+  async function init() {
+    if (!token) {
+      document.getElementById('auth-section').classList.remove('hidden');
+      document.getElementById('main-section').classList.add('hidden');
+      return;
+    }
+
+    try {
+      await api('/api/admin/contacts?limit=1');
+      document.getElementById('auth-section').classList.add('hidden');
+      document.getElementById('main-section').classList.remove('hidden');
+      loadContacts();
+      loadUploads();
+    } catch (e) {
+      logout();
+    }
+  }
+
+  init();
+</script>
+{{ end }}

@@ -19,6 +19,7 @@ import { handleContact } from './handlers/contact';
 import { handleUpload } from './handlers/upload';
 import { handleHealth } from './handlers/health';
 import { handleEmail } from './handlers/email';
+import { handleAdmin } from './handlers/admin';
 import { initLogger } from './lib/logger';
 
 export default {
@@ -45,6 +46,8 @@ export default {
         response = await handleUpload(request, env);
       } else if (path === '/api/health') {
         response = await handleHealth(request, env);
+      } else if (path.startsWith('/api/admin/')) {
+        response = await handleAdmin(request, env);
       } else {
         response = new Response(JSON.stringify({ error: 'Not found' }), {
           status: 404,

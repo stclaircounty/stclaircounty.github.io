@@ -8,6 +8,7 @@ export interface Env {
   MAX_FILE_SIZE: string;
   TURNSTILE_SECRET_KEY: string;
   ENABLE_LOGGING?: string;
+  ADMIN_SECRET: string;
 }
 
 export interface ContactSubmission {

@@ -76,6 +76,7 @@ SITE_NAME = "St. Clair Under Oath"
 MAX_FILE_SIZE = "104857600"
 HUGO_BASEURL = "https://stclaircounty.net"
 ENABLE_LOGGING = "false"
+# ADMIN_SECRET - set via `wrangler secret put ADMIN_SECRET`
 
 # Production environment (main branch)
 [env.production]
