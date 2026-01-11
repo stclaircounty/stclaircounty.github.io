@@ -65,7 +65,7 @@
       {{ partial "header-icon.html" (dict "icon" "document" "class" "w-5 h-5 text-slate-light") }}
       Background
     </h2>
-    <div class="prose prose-lg max-w-none">
+    <div class="prose prose-sm sm:prose-lg max-w-none">
       {{ . }}
     </div>
   </section>
@@ -79,9 +79,9 @@
       {{ partial "header-icon.html" (dict "icon" "building" "class" "w-5 h-5 text-slate-light") }}
       {{ if $person.firm }}Professional Details{{ else if $person.court }}Judicial Position{{ else }}Employment{{ end }}
     </h2>
-    <dl class="grid grid-cols-2 gap-4 text-sm">
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
       {{ with $person.employer }}
-      <div class="col-span-2">
+      <div class="sm:col-span-2">
         <dt class="text-slate-light">Employer</dt>
         <dd class="font-medium text-navy">{{ . }}</dd>
       </div>
@@ -105,7 +105,7 @@
       </div>
       {{ end }}
       {{ with $person.firm }}
-      <div class="col-span-2">
+      <div class="sm:col-span-2">
         <dt class="text-slate-light">Firm</dt>
         <dd class="font-medium text-navy">{{ . }}</dd>
       </div>
@@ -117,7 +117,7 @@
       </div>
       {{ end }}
       {{ with $person.court }}
-      <div class="col-span-2">
+      <div class="sm:col-span-2">
         <dt class="text-slate-light">Court</dt>
         <dd class="font-medium text-navy">{{ . }}</dd>
       </div>

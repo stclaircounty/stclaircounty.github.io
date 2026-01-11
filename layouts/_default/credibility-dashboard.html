@@ -44,7 +44,7 @@
       </div>
 
       <!-- Stats -->
-      <div class="grid grid-cols-3 gap-4 mt-8">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
         <div class="bg-red-900/30 border border-red-700/50 rounded-xl p-4 text-center">
           <div class="text-3xl font-bold text-red-400">{{ len $compromised }}</div>
           <div class="text-sm text-slate-400">Compromised</div>
@@ -63,7 +63,7 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Intro Content -->
-    <div class="prose prose-lg max-w-none mb-12">
+    <div class="prose prose-sm sm:prose-lg max-w-none mb-12">
       {{ .Content }}
     </div>
 
@@ -142,7 +142,7 @@
       </h2>
       <p class="text-slate-600 mb-6">These individuals have documented concerns that may impact the reliability of their statements or actions, but have not been assessed as fully compromised.</p>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {{ range $concerns }}
         {{ $hasPage := site.GetPage (printf "/people/%s" .key) }}
         <div class="bg-white border border-amber-200 rounded-lg p-4">
@@ -173,7 +173,7 @@
     {{ end }}
 
     <!-- Understanding Credibility Assessment -->
-    <section class="bg-slate-50 rounded-xl p-8">
+    <section class="bg-slate-50 rounded-xl p-5 sm:p-8">
       <h2 class="text-xl font-bold text-navy mb-4">Understanding Credibility Assessments</h2>
       <div class="prose prose-slate max-w-none">
         <p>Credibility assessments on this site are based on documented evidence including:</p>

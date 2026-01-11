@@ -33,7 +33,7 @@
 
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   {{ with .Content }}
-  <div class="prose prose-lg max-w-none mb-8">
+  <div class="prose prose-sm sm:prose-lg max-w-none mb-8">
     {{ . }}
   </div>
   {{ end }}
@@ -239,7 +239,7 @@
   </div>
 
   <!-- Summary -->
-  <div class="mt-12 bg-slate-100 rounded-xl p-8 text-center">
+  <div class="mt-12 bg-slate-100 rounded-xl p-5 sm:p-8 text-center">
     <p class="text-lg text-slate-600 mb-2">
       <span class="font-bold text-navy text-3xl">{{ len $events }}</span> documented events
     </p>
