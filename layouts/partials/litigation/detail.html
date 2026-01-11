@@ -85,7 +85,7 @@
                     {{ if $counsel }}
                     <a href="/people/{{ . }}/" class="text-xs text-emerald-700 hover:text-emerald-900">{{ $counsel.name }}</a>
                     {{ else }}
-                    <span class="text-xs text-emerald-700">{{ . | humanize | title }}</span>
+                    <span class="text-xs text-emerald-700">{{ partial "format-text.html" . }}</span>
                     {{ end }}
                   </div>
                   {{ end }}
@@ -143,7 +143,7 @@
                     {{ if $counsel }}
                     <a href="/people/{{ . }}/" class="text-xs text-red-700 hover:text-red-900">{{ $counsel.name }}</a>
                     {{ else }}
-                    <span class="text-xs text-red-700">{{ . | humanize | title }}</span>
+                    <span class="text-xs text-red-700">{{ partial "format-text.html" . }}
                     {{ end }}
                   </div>
                   {{ end }}

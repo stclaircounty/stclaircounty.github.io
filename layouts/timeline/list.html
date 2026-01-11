@@ -61,7 +61,7 @@
         <select id="incident-filter" class="w-full pl-10 pr-10 py-2.5 text-sm font-medium text-navy bg-white border-2 border-slate-200 rounded-lg shadow-sm appearance-none cursor-pointer hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-200">
           <option value="">All Incidents</option>
           {{ range $incidents }}
-          <option value="{{ . }}">{{ . | humanize | title }}</option>
+          <option value="{{ . }}">{{ partial "format-text.html" . }}</option>
           {{ end }}
         </select>
         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -82,7 +82,7 @@
         <select id="person-filter" class="w-full pl-10 pr-10 py-2.5 text-sm font-medium text-navy bg-white border-2 border-slate-200 rounded-lg shadow-sm appearance-none cursor-pointer hover:border-accent focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-200">
           <option value="">All People</option>
           {{ range $people }}
-          <option value="{{ . }}">{{ . | humanize | title }}</option>
+          <option value="{{ . }}">{{ partial "format-text.html" . }}</option>
           {{ end }}
         </select>
         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -217,7 +217,7 @@
           <div class="flex flex-wrap gap-2 mb-3">
             {{ range first 5 . }}
             <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
-              {{ . | humanize | title }}
+              {{ partial "format-text.html" . }}
             </span>
             {{ end }}
             {{ if gt (len .) 5 }}

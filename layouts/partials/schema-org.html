@@ -104,7 +104,7 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": {{ .Section | humanize | title | jsonify }},
+      "name": {{ partial "format-text.html" .Section | jsonify }},
       "item": {{ printf "%s%s/" .Site.BaseURL .Section | jsonify }}
     }
     {{ end }}

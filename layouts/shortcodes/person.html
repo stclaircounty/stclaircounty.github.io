@@ -45,5 +45,5 @@
   {{ end }}
 {{ else }}
   {{/* Fallback if person not found */}}
-  <span class="text-slate-500" title="Person not found in database">{{ $slug | humanize | title }}</span>
+  <span class="text-slate-500" title="Person not found in database">{{ partial "format-text.html" $slug }}</span>
 {{ end }}

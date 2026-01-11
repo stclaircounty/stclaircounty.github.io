@@ -33,7 +33,7 @@
   {{/* Merge with defaults */}}
   {{ $depo = merge (dict
     "slug" $slug
-    "title" ($slug | humanize | title)
+    "title" (partial "format-text.html" $slug)
     "date" now
     "data_file" ""
     "transcript_slug" ""

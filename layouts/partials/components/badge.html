@@ -96,5 +96,5 @@
 {{ end }}
 
 <span class="inline-flex items-center rounded-full font-medium border {{ $sizeClass }} {{ $colorClass }} {{ $class }}">
-  {{ $value | humanize | title }}
+  {{ partial "format-text.html" $value }}
 </span>

@@ -59,7 +59,7 @@
         <p class="text-xs text-slate-400">Case No. {{ . }}</p>
         {{ end }}
         <div class="flex flex-wrap items-center gap-2 mt-2 text-xs">
-          <span class="px-1.5 py-0.5 rounded {{ $statusClass }}">{{ $case.status | humanize | title }}</span>
+          <span class="px-1.5 py-0.5 rounded {{ $statusClass }}">{{ partial "format-text.html" $case.status }}</span>
           {{ if $immunityDenied }}
           <span class="px-1.5 py-0.5 rounded bg-green-100 text-green-700 font-medium">Qualified Immunity Denied</span>
           {{ end }}
@@ -83,7 +83,7 @@
     </svg>
     {{ $case.short_title | default $case.title }}
   </a>
-  <span class="ml-1 px-1.5 py-0.5 rounded text-xs {{ $statusClass }}">{{ $case.status | humanize }}</span>
+  <span class="ml-1 px-1.5 py-0.5 rounded text-xs {{ $statusClass }}">{{ partial "format-text.html" $case.status }}</span>
   {{ if $immunityDenied }}
   <span class="ml-1 px-1.5 py-0.5 rounded text-xs bg-green-100 text-green-700">QI Denied</span>
   {{ end }}
@@ -93,10 +93,10 @@
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
     </svg>
     {{ $case.short_title | default $case.title }}
-    <span class="ml-1 px-1.5 py-0.5 rounded text-xs {{ $statusClass }}">{{ $case.status | humanize }}</span>
+    <span class="ml-1 px-1.5 py-0.5 rounded text-xs {{ $statusClass }}">{{ partial "format-text.html" $case.status }}</span>
   </span>
   {{ end }}
   {{ end }}
 {{ else }}
-  <span class="text-slate-500" title="Case not found">{{ $slug | humanize | title }}</span>
+  <span class="text-slate-500" title="Case not found">{{ partial "format-text.html" $slug }}</span>
 {{ end }}

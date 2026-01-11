@@ -49,7 +49,7 @@
   {{/* Merge with defaults */}}
   {{ $incident = merge (dict
     "slug" $slug
-    "title" ($slug | humanize | title)
+    "title" (partial "format-text.html" $slug)
     "date" now
     "time" ""
     "location" ""

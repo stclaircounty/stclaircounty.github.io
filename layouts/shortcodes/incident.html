@@ -83,5 +83,5 @@
   {{ end }}
   {{ end }}
 {{ else }}
-  <span class="text-slate-500" title="Incident not found">{{ $slug | humanize | title }}</span>
+  <span class="text-slate-500" title="Incident not found">{{ partial "format-text.html" $slug }}</span>
 {{ end }}

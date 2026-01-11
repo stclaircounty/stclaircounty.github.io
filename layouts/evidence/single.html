@@ -7,7 +7,7 @@
 {{/* Build badges for page header */}}
 {{ $badges := slice }}
 {{ with $data.evidence_type }}
-  {{ $badges = $badges | append (dict "label" (. | humanize | title) "type" "primary") }}
+  {{ $badges = $badges | append (dict "label" (partial "format-text.html" .) "type" "primary") }}
 {{ end }}
 {{ with $data.source }}
   {{ $badges = $badges | append (dict "label" . "type" "neutral") }}

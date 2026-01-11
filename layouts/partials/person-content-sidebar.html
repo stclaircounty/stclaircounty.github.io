@@ -226,7 +226,7 @@
         </span>
         {{ end }}
         <span class="px-2 py-0.5 rounded text-xs font-medium {{ $statusClass }} whitespace-nowrap">
-          {{ $case.status | humanize | title }}
+          {{ partial "format-text.html" $case.status }}
         </span>
       </div>
 

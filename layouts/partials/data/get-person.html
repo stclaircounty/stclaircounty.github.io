@@ -20,7 +20,7 @@
   {{/* Ensure required fields have defaults */}}
   {{ $person = merge (dict
     "slug" $slug
-    "name" ($person.name | default ($slug | humanize | title))
+    "name" ($person.name | default (partial "format-text.html" $slug))
     "role" ($person.role | default "Unknown")
     "status" ($person.status | default "unknown")
     "department" ($person.department | default "")

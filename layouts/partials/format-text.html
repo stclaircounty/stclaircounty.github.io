@@ -1,0 +1,17 @@
+{{/*
+  Format text with proper acronym handling
+
+  Applies humanize and title, then fixes known acronyms
+
+  Usage: {{ partial "format-text.html" "owi-arrest" }}
+  Output: "OWI Arrest"
+*/}}
+{{- $text := . | humanize | title -}}
+{{- $text = replace $text "Owi" "OWI" -}}
+{{- $text = replace $text "Foia" "FOIA" -}}
+{{- $text = replace $text "Scc" "SCC" -}}
+{{- $text = replace $text "Dui" "DUI" -}}
+{{- $text = replace $text "Usa" "USA" -}}
+{{- $text = replace $text "Usc" "USC" -}}
+{{- $text = replace $text "Mcl" "MCL" -}}
+{{- $text -}}
