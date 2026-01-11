@@ -1,135 +1,104 @@
 {{/*
   Schema.org Structured Data
   Generates JSON-LD for different content types
+  Uses dict + jsonify pattern to avoid escaping issues
 */}}
 
-{{/* Person Schema - for /people/ pages */}}
-{{ if eq .Section "people" }}
-{{ $personKey := .File.ContentBaseName }}
-{{ $person := index .Site.Data.people $personKey }}
-{{ if $person }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": {{ $person.name | jsonify }},
-  {{ with $person.role }}"jobTitle": {{ . | jsonify }},{{ end }}
-  {{ with $person.department }}"worksFor": {
-    "@type": "Organization",
-    "name": {{ . | jsonify }}
-  },{{ end }}
-  "url": {{ .Permalink | jsonify }}
-  {{ with $person.description }},"description": {{ . | plainify | truncate 200 | jsonify }}{{ end }}
-}
-</script>
-{{ end }}
+{{/* Person Schema - for /people/ single pages */}}
+{{ if and (eq .Section "people") .IsPage }}
+  {{ $personKey := .File.ContentBaseName }}
+  {{ $person := index .Site.Data.people $personKey }}
+  {{ if $person }}
+    {{ $schema := dict
+      "@context" "https://schema.org"
+      "@type" "Person"
+      "name" $person.name
+      "url" .Permalink
+    }}
+    {{ with $person.role }}{{ $schema = merge $schema (dict "jobTitle" .) }}{{ end }}
+    {{ with $person.department }}{{ $schema = merge $schema (dict "worksFor" (dict "@type" "Organization" "name" .)) }}{{ end }}
+    {{ with $person.description }}{{ $schema = merge $schema (dict "description" (. | plainify | truncate 200)) }}{{ end }}
+    <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+  {{ end }}
 {{ end }}
 
-{{/* LegalCase Schema - for /litigation/ pages */}}
-{{ if eq .Section "litigation" }}
-{{ $caseKey := .File.ContentBaseName }}
-{{ $case := index .Site.Data.litigation $caseKey }}
-{{ if $case }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LegalCase",
-  "name": {{ $case.title | jsonify }},
-  {{ with $case.case_number }}"identifier": {{ . | jsonify }},{{ end }}
-  {{ with $case.court }}"court": {
-    "@type": "Organization",
-    "name": {{ . | jsonify }}
-  },{{ end }}
-  {{ with $case.filed_date }}"datePublished": {{ . | time.Format "2006-01-02" | jsonify }},{{ end }}
-  "url": {{ .Permalink | jsonify }}
-}
-</script>
-{{ end }}
+{{/* LegalCase Schema - for /litigation/ single pages */}}
+{{ if and (eq .Section "litigation") .IsPage }}
+  {{ $caseKey := .File.ContentBaseName }}
+  {{ $case := index .Site.Data.litigation $caseKey }}
+  {{ if $case }}
+    {{ $schema := dict
+      "@context" "https://schema.org"
+      "@type" "LegalCase"
+      "name" $case.title
+      "url" .Permalink
+    }}
+    {{ with $case.case_number }}{{ $schema = merge $schema (dict "identifier" .) }}{{ end }}
+    {{ with $case.court }}{{ $schema = merge $schema (dict "court" (dict "@type" "Organization" "name" .)) }}{{ end }}
+    {{ with $case.filed_date }}{{ $schema = merge $schema (dict "datePublished" (. | time.Format "2006-01-02")) }}{{ end }}
+    <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+  {{ end }}
 {{ end }}
 
-{{/* Event Schema - for /timeline/ pages */}}
-{{ if eq .Section "timeline" }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Event",
-  "name": {{ .Title | jsonify }},
-  "startDate": {{ .Date.Format "2006-01-02" | jsonify }},
-  {{ with .Params.location }}"location": {
-    "@type": "Place",
-    "name": {{ . | jsonify }}
-  },{{ end }}
-  "url": {{ .Permalink | jsonify }}
-  {{ with .Description }},"description": {{ . | plainify | truncate 200 | jsonify }}{{ end }}
-}
-</script>
+{{/* Event Schema - for /timeline/ single pages only */}}
+{{ if and (eq .Section "timeline") .IsPage }}
+  {{ $schema := dict
+    "@context" "https://schema.org"
+    "@type" "Event"
+    "name" .Title
+    "startDate" (.Date.Format "2006-01-02")
+    "url" .Permalink
+  }}
+  {{ with .Params.location }}{{ $schema = merge $schema (dict "location" (dict "@type" "Place" "name" .)) }}{{ end }}
+  {{ with .Description }}{{ $schema = merge $schema (dict "description" (. | plainify | truncate 200)) }}{{ end }}
+  <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
 {{ end }}
 
-{{/* CreativeWork Schema - for /depositions/ pages */}}
-{{ if eq .Section "depositions" }}
-{{ $depoKey := .File.ContentBaseName }}
-{{ $depo := index .Site.Data.depositions $depoKey }}
-{{ if $depo }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  "name": {{ $depo.title | default .Title | jsonify }},
-  "additionalType": "Deposition",
-  {{ with $depo.date }}"dateCreated": {{ . | time.Format "2006-01-02" | jsonify }},{{ end }}
-  {{ with $depo.deponent }}"about": {
-    "@type": "Person",
-    "name": {{ .name | jsonify }}
-  },{{ end }}
-  "url": {{ .Permalink | jsonify }}
-}
-</script>
-{{ end }}
+{{/* CreativeWork Schema - for /depositions/ single pages */}}
+{{ if and (eq .Section "depositions") .IsPage }}
+  {{ $depoKey := .File.ContentBaseName }}
+  {{ $depo := index .Site.Data.depositions $depoKey }}
+  {{ if $depo }}
+    {{ $schema := dict
+      "@context" "https://schema.org"
+      "@type" "CreativeWork"
+      "name" ($depo.title | default .Title)
+      "additionalType" "Deposition"
+      "url" .Permalink
+    }}
+    {{ with $depo.date }}{{ $schema = merge $schema (dict "dateCreated" (. | time.Format "2006-01-02")) }}{{ end }}
+    {{ with $depo.deponent }}{{ $schema = merge $schema (dict "about" (dict "@type" "Person" "name" .name)) }}{{ end }}
+    <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+  {{ end }}
 {{ end }}
 
-{{/* BreadcrumbList Schema - for all pages with breadcrumbs */}}
+{{/* BreadcrumbList Schema - for all non-home pages */}}
 {{ if not .IsHome }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": {{ .Site.BaseURL | jsonify }}
-    }
-    {{ if .Section }},
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": {{ partial "format-text.html" .Section | jsonify }},
-      "item": {{ printf "%s%s/" .Site.BaseURL .Section | jsonify }}
-    }
-    {{ end }}
-    {{ if and .Section (not .IsSection) }},
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": {{ .Title | jsonify }},
-      "item": {{ .Permalink | jsonify }}
-    }
-    {{ end }}
-  ]
-}
-</script>
+  {{ $items := slice
+    (dict "@type" "ListItem" "position" 1 "name" "Home" "item" .Site.BaseURL)
+  }}
+  {{ if .Section }}
+    {{ $items = $items | append (dict "@type" "ListItem" "position" 2 "name" (.Section | humanize | title) "item" (printf "%s%s/" .Site.BaseURL .Section)) }}
+  {{ end }}
+  {{ if and .Section (not .IsSection) }}
+    {{ $items = $items | append (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink) }}
+  {{ end }}
+  {{ $schema := dict
+    "@context" "https://schema.org"
+    "@type" "BreadcrumbList"
+    "itemListElement" $items
+  }}
+  <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
 {{ end }}
 
 {{/* Organization Schema - for homepage */}}
 {{ if .IsHome }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": {{ .Site.Title | jsonify }},
-  "url": {{ .Site.BaseURL | jsonify }},
-  "description": {{ .Site.Params.description | jsonify }}
-}
-</script>
+  {{ $schema := dict
+    "@context" "https://schema.org"
+    "@type" "Organization"
+    "name" .Site.Title
+    "url" .Site.BaseURL
+    "description" .Site.Params.description
+  }}
+  <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
 {{ end }}
