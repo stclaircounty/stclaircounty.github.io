@@ -68,43 +68,44 @@
   {{ end }}
 {{ end }}
 
-<!-- Hero Section with dramatic gradient -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-navy to-slate-800 text-white">
+<!-- Hero Section with dramatic gradient and glow effects -->
+<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
   <!-- Animated background pattern -->
   <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
 
-  <!-- Accent glow effects -->
-  <div class="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-  <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+  <!-- Large ambient glow effects -->
+  <div class="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-red-500/30 to-orange-500/20 rounded-full blur-3xl -translate-y-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-amber-500/20 to-yellow-500/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+  <div class="absolute top-1/2 right-0 w-[300px] h-[300px] bg-purple-500/15 rounded-full blur-3xl translate-x-1/2"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 border border-accent/30 rounded-full text-amber-300 text-sm font-medium mb-6">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/30 rounded-full text-red-300 text-sm font-medium mb-6 shadow-lg shadow-red-500/10">
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
           </span>
           Active Investigation Documentation
         </div>
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-          <span class="block">Exposing Misconduct in</span>
-          <span class="bg-gradient-to-r from-amber-400 to-red-500 bg-clip-text text-transparent">St. Clair County</span>
+          <span class="block drop-shadow-lg">Exposing Misconduct in</span>
+          <span class="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent drop-shadow-lg">St. Clair County</span>
         </h1>
         <p class="text-xl text-slate-300 mb-8 leading-relaxed">
           Comprehensive documentation of alleged misconduct, civil rights violations, and abuse of power.
-          All evidence sourced from <span class="text-amber-300 font-medium">sworn depositions</span>,
-          <span class="text-amber-300 font-medium">court filings</span>, and
-          <span class="text-amber-300 font-medium">public records</span>.
+          All evidence sourced from <span class="text-amber-400 font-semibold">sworn depositions</span>,
+          <span class="text-orange-400 font-semibold">court filings</span>, and
+          <span class="text-red-400 font-semibold">public records</span>.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="/timeline/" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-900 font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200">
+          <a href="/timeline/" class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-900 font-bold rounded-xl shadow-lg shadow-amber-500/30 hover:shadow-xl hover:shadow-amber-500/40 transition-all duration-300">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Explore Timeline
           </a>
-          <a href="/depositions/" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold rounded-lg backdrop-blur-sm transition-all duration-200">
+          <a href="/depositions/" class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 shadow-lg">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -113,23 +114,55 @@
         </div>
       </div>
 
-      <!-- Hero Stats Cards -->
+      <!-- Hero Stats Cards with glow effects -->
       <div class="grid grid-cols-2 gap-4">
-        <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/15 transition-colors">
-          <div class="text-4xl font-black text-amber-400 mb-1">{{ len $incidents }}</div>
-          <div class="text-slate-300 text-sm uppercase tracking-wide">Documented Incidents</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+          <div class="relative bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 group-hover:border-amber-500/50 transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-amber-500/25">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div class="text-4xl font-black text-white mb-1">{{ len $incidents }}</div>
+            <div class="text-slate-400 text-sm uppercase tracking-wide">Documented Incidents</div>
+          </div>
         </div>
-        <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/15 transition-colors">
-          <div class="text-4xl font-black text-red-400 mb-1">{{ len $depositions }}</div>
-          <div class="text-slate-300 text-sm uppercase tracking-wide">Sworn Depositions</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+          <div class="relative bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 group-hover:border-red-500/50 transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-red-500/25">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="text-4xl font-black text-white mb-1">{{ len $depositions }}</div>
+            <div class="text-slate-400 text-sm uppercase tracking-wide">Sworn Depositions</div>
+          </div>
         </div>
-        <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/15 transition-colors">
-          <div class="text-4xl font-black text-purple-400 mb-1">{{ len $evidence }}</div>
-          <div class="text-slate-300 text-sm uppercase tracking-wide">Evidence Items</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-violet-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+          <div class="relative bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 group-hover:border-purple-500/50 transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-purple-500/25">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+              </svg>
+            </div>
+            <div class="text-4xl font-black text-white mb-1">{{ len $evidence }}</div>
+            <div class="text-slate-400 text-sm uppercase tracking-wide">Evidence Items</div>
+          </div>
         </div>
-        <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/15 transition-colors">
-          <div class="text-4xl font-black text-emerald-400 mb-1">{{ len $people }}</div>
-          <div class="text-slate-300 text-sm uppercase tracking-wide">People Documented</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+          <div class="relative bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-2xl p-6 group-hover:border-emerald-500/50 transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-emerald-500/25">
+              <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <div class="text-4xl font-black text-white mb-1">{{ len $people }}</div>
+            <div class="text-slate-400 text-sm uppercase tracking-wide">People Documented</div>
+          </div>
         </div>
       </div>
     </div>
@@ -137,176 +170,189 @@
 </section>
 
 <!-- Breaking Stats Banner -->
-<section class="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white py-4">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm md:text-base">
-      <div class="flex items-center gap-2">
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-        <span><strong>{{ $criticalCount }}</strong> Critical/High Severity Incidents</span>
+<section class="relative bg-gradient-to-r from-orange-600 via-red-500 to-orange-600 py-4 overflow-hidden">
+  <!-- Animated shine effect -->
+  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 animate-pulse"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 md:gap-x-12">
+      <div class="flex items-center gap-3 group">
+        <span class="inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 bg-white rounded-lg shadow-lg text-red-600 text-xl font-black">{{ $criticalCount }}</span>
+        <span class="text-white text-sm font-medium">Critical/High Severity</span>
       </div>
-      <div class="hidden md:block w-px h-4 bg-white/30"></div>
-      <div class="flex items-center gap-2">
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-        <span><strong>{{ $totalQuotes }}</strong> Key Quotes Under Oath</span>
+      <div class="hidden md:block w-px h-8 bg-white/30"></div>
+      <div class="flex items-center gap-3 group">
+        <span class="inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 bg-white rounded-lg shadow-lg text-orange-600 text-xl font-black">{{ $totalQuotes }}</span>
+        <span class="text-white text-sm font-medium">Quotes Under Oath</span>
       </div>
-      <div class="hidden md:block w-px h-4 bg-white/30"></div>
-      <div class="flex items-center gap-2">
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span><strong>{{ len $timelineContent }}</strong> Timeline Events</span>
+      <div class="hidden md:block w-px h-8 bg-white/30"></div>
+      <div class="flex items-center gap-3 group">
+        <span class="inline-flex items-center justify-center min-w-[2.5rem] h-10 px-3 bg-white rounded-lg shadow-lg text-amber-600 text-xl font-black">{{ len $timelineContent }}</span>
+        <span class="text-white text-sm font-medium">Timeline Events</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Key Findings Section -->
-<section class="py-16 bg-gradient-to-b from-slate-50 to-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-navy mb-4">Key Findings</h2>
-      <p class="text-slate-600 text-lg max-w-2xl mx-auto">Critical issues documented through official records and sworn testimony</p>
+<section class="relative py-20 bg-gradient-to-br from-slate-900 via-navy to-slate-800 overflow-hidden">
+  <!-- Background effects -->
+  <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-500/20 border border-red-500/30 rounded-full text-red-300 text-sm font-medium mb-4">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+        </span>
+        Documented Misconduct
+      </div>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Key Findings</h2>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto">Critical issues uncovered through official records and sworn testimony</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
       <!-- Finding 1 -->
-      <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
-        <div class="p-6">
-          <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <svg class="h-7 w-7 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
+      <a href="/incidents/2022-11-06-owi-arrest/" class="group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+        <div class="relative bg-slate-800/90 backdrop-blur rounded-2xl p-6 h-full border border-slate-700 group-hover:border-red-500/50 transition-colors">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <span class="px-3 py-1 bg-red-500/20 text-red-300 text-xs font-semibold uppercase tracking-wider rounded-full">Critical</span>
           </div>
-          <h3 class="text-xl font-bold text-navy mb-2">Conflict of Interest</h3>
-          <p class="text-slate-600 mb-4">Sheriff remained involved in investigation of his own brother's arrest, failing to recuse despite clear conflict.</p>
-          <a href="/incidents/2022-11-06-owi-arrest/" class="text-red-600 font-medium hover:text-red-700 inline-flex items-center gap-1">
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-red-300 transition-colors">Conflict of Interest</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">Sheriff remained involved in investigation of his own brother's arrest, failing to recuse despite clear conflict.</p>
+          <div class="flex items-center gap-2 text-red-400 font-medium group-hover:gap-3 transition-all">
             View Details
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
-          </a>
+          </div>
         </div>
-      </div>
+      </a>
 
       <!-- Finding 2 -->
-      <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-        <div class="p-6">
-          <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <svg class="h-7 w-7 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
+      <a href="/depositions/pohl-deposition/" class="group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+        <div class="relative bg-slate-800/90 backdrop-blur rounded-2xl p-6 h-full border border-slate-700 group-hover:border-purple-500/50 transition-colors">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-110 transition-transform">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-semibold uppercase tracking-wider rounded-full">Sworn</span>
           </div>
-          <h3 class="text-xl font-bold text-navy mb-2">Evidence Spoliation</h3>
-          <p class="text-slate-600 mb-4">Multiple officers admitted under oath to deleting text messages from the relevant time period.</p>
-          <a href="/depositions/pohl-deposition/" class="text-purple-600 font-medium hover:text-purple-700 inline-flex items-center gap-1">
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">Evidence Spoliation</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">Multiple officers admitted under oath to deleting text messages from the relevant time period.</p>
+          <div class="flex items-center gap-2 text-purple-400 font-medium group-hover:gap-3 transition-all">
             Read Testimony
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Finding 3 -->
-      <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-yellow-500"></div>
-        <div class="p-6">
-          <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <svg class="h-7 w-7 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-navy mb-2">Governance Failure</h3>
-          <p class="text-slate-600 mb-4">Systemic breakdown in oversight mechanisms allowed conflicts of interest to go unchecked.</p>
-          <a href="/evidence/governance-failures-documentation/" class="text-amber-600 font-medium hover:text-amber-700 inline-flex items-center gap-1">
+        </div>
+      </a>
+
+      <!-- Finding 3 -->
+      <a href="/evidence/governance-failures-documentation/" class="group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+        <div class="relative bg-slate-800/90 backdrop-blur rounded-2xl p-6 h-full border border-slate-700 group-hover:border-amber-500/50 transition-colors">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:scale-110 transition-transform">
+              <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <span class="px-3 py-1 bg-amber-500/20 text-amber-300 text-xs font-semibold uppercase tracking-wider rounded-full">Systemic</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 group-hover:text-amber-300 transition-colors">Governance Failure</h3>
+          <p class="text-slate-400 mb-4 leading-relaxed">Systemic breakdown in oversight mechanisms allowed conflicts of interest to go unchecked.</p>
+          <div class="flex items-center gap-2 text-amber-400 font-medium group-hover:gap-3 transition-all">
             Review Evidence
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
-          </a>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- Submit Information CTA -->
-<section class="relative py-12 overflow-hidden bg-gradient-to-br from-navy via-slate-800 to-slate-900">
-  <!-- Background pattern -->
-  <div class="absolute inset-0 opacity-5">
-    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="submit-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#submit-grid)" />
-    </svg>
-  </div>
+<section class="relative py-16 overflow-hidden bg-gradient-to-r from-orange-500 via-red-500 to-orange-500">
+  <!-- Animated background -->
+  <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-30"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Social proof banner -->
-    <div class="flex items-center justify-center gap-3 mb-8">
-      <div class="flex -space-x-2">
-        <div class="w-8 h-8 rounded-full bg-emerald-500 border-2 border-slate-800 flex items-center justify-center">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
+    <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
+      <div class="flex items-center gap-3 bg-white/20 backdrop-blur-sm rounded-full pl-2 pr-4 py-2">
+        <div class="flex -space-x-2">
+          <div class="w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center">
+            <span class="text-xs font-bold text-red-500">+</span>
+          </div>
         </div>
-        <div class="w-8 h-8 rounded-full bg-blue-500 border-2 border-slate-800 flex items-center justify-center">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </div>
-        <div class="w-8 h-8 rounded-full bg-purple-500 border-2 border-slate-800 flex items-center justify-center">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </div>
-        <div class="w-8 h-8 rounded-full bg-gold border-2 border-slate-800 flex items-center justify-center">
-          <span class="text-xs font-bold text-slate-900">+</span>
-        </div>
+        <span class="text-white text-sm font-medium" id="submission-count">
+          <span class="font-bold" id="count-number">Community members</span> speaking up
+        </span>
       </div>
-      <p class="text-slate-300 text-sm" id="submission-count">
-        <span class="text-gold font-semibold" id="count-number">Community members</span> speaking up for accountability
+    </div>
+
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4">
+        Your Voice Matters
+      </h2>
+      <p class="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
+        Every tip strengthens the record. Every document adds to the truth. Join others who've chosen transparency over silence.
       </p>
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-8 items-center">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">
-          Your Voice Matters
-        </h2>
-        <p class="text-slate-300 text-lg mb-0">
-          Every tip strengthens the record. Every document adds to the truth. Join others who've chosen transparency over silence—anonymously if you prefer.
-        </p>
-      </div>
-      <div class="flex flex-wrap justify-start lg:justify-end gap-4">
-        <a href="/contact/" class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-amber-400 text-slate-900 font-bold rounded-lg transition-colors">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-          Submit a Tip
-        </a>
-        <a href="/secure-upload/" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold rounded-lg transition-colors">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-          Secure Upload
-        </a>
-        <a href="mailto:tip@stclaircounty.net" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold rounded-lg transition-colors">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-          tip@stclaircounty.net
-        </a>
-      </div>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="/contact/" class="group inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-slate-100 text-red-600 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all text-lg">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        Submit a Tip
+        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+      <a href="/secure-upload/" class="group inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 border-2 border-white/30 hover:border-white text-white font-bold rounded-xl transition-all text-lg backdrop-blur-sm">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        Secure Upload
+      </a>
+      <a href="mailto:tip@stclaircounty.net" class="group inline-flex items-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 border-2 border-white/30 hover:border-white text-white font-bold rounded-xl transition-all text-lg backdrop-blur-sm">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        tip@stclaircounty.net
+      </a>
     </div>
   </div>
 
@@ -319,7 +365,7 @@
           if (data.stats) {
             const total = (data.stats.contacts || 0) + (data.stats.uploads || 0);
             if (total > 0) {
-              document.getElementById('count-number').textContent = total + ' submissions received';
+              document.getElementById('count-number').textContent = total + ' submissions';
             }
           }
         })
@@ -329,104 +375,200 @@
 </section>
 
 <!-- Latest From Each Section - 3 Column Grid -->
-<section class="py-16 bg-white overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="relative py-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.02%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3">Latest Updates</h2>
+      <p class="text-slate-400 text-lg">Recent additions to our documentation</p>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
       <!-- Latest Incidents -->
-      <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-4 sm:p-6 border border-red-100 overflow-hidden">
-        <div class="flex items-center justify-between mb-4 sm:mb-6">
-          <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg class="h-4 w-4 sm:h-5 sm:w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-            </div>
-            <h3 class="text-base sm:text-lg font-bold text-navy truncate">Latest Incidents</h3>
-          </div>
-          <a href="/incidents/" class="text-red-600 hover:text-red-700 text-sm font-medium flex-shrink-0 ml-2">View All</a>
-        </div>
-        <div class="space-y-3 sm:space-y-4">
-          {{ range first 3 $incidents }}
-          <a href="/incidents/{{ .key }}/" class="block bg-white rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            <div class="flex items-start gap-2 sm:gap-3">
-              {{ if eq .severity "critical" }}
-              <span class="w-2 h-2 mt-2 rounded-full bg-red-500 flex-shrink-0"></span>
-              {{ else if eq .severity "high" }}
-              <span class="w-2 h-2 mt-2 rounded-full bg-orange-500 flex-shrink-0"></span>
-              {{ else }}
-              <span class="w-2 h-2 mt-2 rounded-full bg-yellow-500 flex-shrink-0"></span>
-              {{ end }}
-              <div class="flex-1 min-w-0 overflow-hidden">
-                <p class="font-semibold text-navy text-sm truncate mb-0">{{ .title }}</p>
-                <p class="text-xs text-slate-500 mt-1 mb-0">{{ with .date }}{{ (time .).Format "Jan 2, 2006" }}{{ end }}</p>
+      <div class="group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+        <div class="relative bg-slate-800/80 backdrop-blur rounded-2xl p-5 sm:p-6 border border-slate-700 h-full">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20">
+                <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
               </div>
+              <h3 class="text-lg font-bold text-white">Latest Incidents</h3>
             </div>
-          </a>
-          {{ end }}
+            <a href="/incidents/" class="text-red-400 hover:text-red-300 text-sm font-medium transition-colors">View All</a>
+          </div>
+          <div class="space-y-3">
+            {{ range first 3 $incidents }}
+            <a href="/incidents/{{ .key }}/" class="block bg-slate-700/50 hover:bg-slate-700 rounded-xl p-4 transition-all group/item border border-slate-600/50 hover:border-red-500/30">
+              <div class="flex items-start gap-3">
+                {{ if eq .severity "critical" }}
+                <span class="w-2.5 h-2.5 mt-1.5 rounded-full bg-red-500 shadow-lg shadow-red-500/50 flex-shrink-0"></span>
+                {{ else if eq .severity "high" }}
+                <span class="w-2.5 h-2.5 mt-1.5 rounded-full bg-orange-500 shadow-lg shadow-orange-500/50 flex-shrink-0"></span>
+                {{ else }}
+                <span class="w-2.5 h-2.5 mt-1.5 rounded-full bg-yellow-500 shadow-lg shadow-yellow-500/50 flex-shrink-0"></span>
+                {{ end }}
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-white text-sm truncate mb-1 group-hover/item:text-red-300 transition-colors">{{ .title }}</p>
+                  <p class="text-xs text-slate-400 mb-0">{{ with .date }}{{ (time .).Format "Jan 2, 2006" }}{{ end }}</p>
+                </div>
+              </div>
+            </a>
+            {{ end }}
+          </div>
         </div>
       </div>
 
       <!-- Latest Depositions -->
-      <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-4 sm:p-6 border border-amber-100 overflow-hidden">
-        <div class="flex items-center justify-between mb-4 sm:mb-6">
-          <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-amber-500 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg class="h-4 w-4 sm:h-5 sm:w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <h3 class="text-base sm:text-lg font-bold text-navy truncate">Latest Depositions</h3>
-          </div>
-          <a href="/depositions/" class="text-amber-600 hover:text-amber-700 text-sm font-medium flex-shrink-0 ml-2">View All</a>
-        </div>
-        <div class="space-y-3 sm:space-y-4">
-          {{ range first 3 $depositions }}
-          <a href="/depositions/{{ .key }}/" class="block bg-white rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            <div class="flex items-start gap-2 sm:gap-3">
-              <span class="w-2 h-2 mt-2 rounded-full bg-amber-500 flex-shrink-0"></span>
-              <div class="flex-1 min-w-0 overflow-hidden">
-                <p class="font-semibold text-navy text-sm truncate mb-0">{{ .title }}</p>
-                <p class="text-xs text-slate-500 mt-1 mb-0">{{ with .deponent }}{{ .name }}{{ end }}</p>
+      <div class="group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+        <div class="relative bg-slate-800/80 backdrop-blur rounded-2xl p-5 sm:p-6 border border-slate-700 h-full">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
               </div>
+              <h3 class="text-lg font-bold text-white">Latest Depositions</h3>
             </div>
-          </a>
-          {{ end }}
+            <a href="/depositions/" class="text-amber-400 hover:text-amber-300 text-sm font-medium transition-colors">View All</a>
+          </div>
+          <div class="space-y-3">
+            {{ range first 3 $depositions }}
+            <a href="/depositions/{{ .key }}/" class="block bg-slate-700/50 hover:bg-slate-700 rounded-xl p-4 transition-all group/item border border-slate-600/50 hover:border-amber-500/30">
+              <div class="flex items-start gap-3">
+                <span class="w-2.5 h-2.5 mt-1.5 rounded-full bg-amber-500 shadow-lg shadow-amber-500/50 flex-shrink-0"></span>
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-white text-sm truncate mb-1 group-hover/item:text-amber-300 transition-colors">{{ .title }}</p>
+                  <p class="text-xs text-slate-400 mb-0">{{ with .deponent }}{{ .name }}{{ end }}</p>
+                </div>
+              </div>
+            </a>
+            {{ end }}
+          </div>
         </div>
       </div>
 
       <!-- Latest Evidence -->
-      <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-4 sm:p-6 border border-purple-100 overflow-hidden">
-        <div class="flex items-center justify-between mb-4 sm:mb-6">
-          <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg class="h-4 w-4 sm:h-5 sm:w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-              </svg>
-            </div>
-            <h3 class="text-base sm:text-lg font-bold text-navy truncate">Latest Evidence</h3>
-          </div>
-          <a href="/evidence/" class="text-purple-600 hover:text-purple-700 text-sm font-medium flex-shrink-0 ml-2">View All</a>
-        </div>
-        <div class="space-y-3 sm:space-y-4">
-          {{ range first 3 $evidence }}
-          <a href="/evidence/{{ .key }}/" class="block bg-white rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-            <div class="flex items-start gap-2 sm:gap-3">
-              <span class="w-2 h-2 mt-2 rounded-full bg-purple-500 flex-shrink-0"></span>
-              <div class="flex-1 min-w-0 overflow-hidden">
-                <p class="font-semibold text-navy text-sm truncate mb-0">{{ .title }}</p>
-                <p class="text-xs text-slate-500 mt-1 mb-0">{{ .evidence_type | humanize }}</p>
+      <div class="group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+        <div class="relative bg-slate-800/80 backdrop-blur rounded-2xl p-5 sm:p-6 border border-slate-700 h-full">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                </svg>
               </div>
+              <h3 class="text-lg font-bold text-white">Latest Evidence</h3>
             </div>
-          </a>
-          {{ end }}
+            <a href="/evidence/" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition-colors">View All</a>
+          </div>
+          <div class="space-y-3">
+            {{ range first 3 $evidence }}
+            <a href="/evidence/{{ .key }}/" class="block bg-slate-700/50 hover:bg-slate-700 rounded-xl p-4 transition-all group/item border border-slate-600/50 hover:border-purple-500/30">
+              <div class="flex items-start gap-3">
+                <span class="w-2.5 h-2.5 mt-1.5 rounded-full bg-purple-500 shadow-lg shadow-purple-500/50 flex-shrink-0"></span>
+                <div class="flex-1 min-w-0">
+                  <p class="font-semibold text-white text-sm truncate mb-1 group-hover/item:text-purple-300 transition-colors">{{ .title }}</p>
+                  <p class="text-xs text-slate-400 mb-0">{{ .evidence_type | humanize }}</p>
+                </div>
+              </div>
+            </a>
+            {{ end }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Featured Quote Section -->
+<!-- Timeline Preview - Bright/Vibrant -->
+{{/* Get timeline content pages */}}
+{{ $timelinePages := where site.RegularPages "Section" "timeline" }}
+{{ $timelinePages = sort $timelinePages "Date" "desc" }}
+<section class="relative py-20 overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-red-500">
+  <!-- Animated background -->
+  <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23000000%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-20"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/10"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-4">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Chronological Record
+      </div>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Timeline of Events</h2>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">Key moments documented through official records</p>
+    </div>
+
+    <!-- Timeline cards - horizontal scroll on mobile, grid on desktop -->
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+      {{ range first 6 $timelinePages }}
+      {{ $severity := .Params.severity | default "medium" }}
+      <a href="{{ .Permalink }}" class="group relative">
+        <div class="absolute -inset-0.5 bg-white/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
+        <div class="relative bg-white rounded-2xl p-5 shadow-xl h-full">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg
+              {{ if eq $severity "critical" }}bg-gradient-to-br from-red-500 to-red-600
+              {{ else if eq $severity "high" }}bg-gradient-to-br from-orange-500 to-orange-600
+              {{ else }}bg-gradient-to-br from-amber-500 to-amber-600{{ end }}">
+              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">{{ .Date.Format "Jan 2, 2006" }}</span>
+              {{ with $severity }}
+              <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
+                {{ if eq . "critical" }}bg-red-100 text-red-700
+                {{ else if eq . "high" }}bg-orange-100 text-orange-700
+                {{ else }}bg-amber-100 text-amber-700{{ end }}">
+                {{ . | title }}
+              </span>
+              {{ end }}
+            </div>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-2" style="margin: 0;">{{ .Title }}</h3>
+          <p class="text-slate-600 text-sm mb-0 line-clamp-2">{{ .Summary | plainify | truncate 100 }}</p>
+          <div class="flex items-center gap-2 mt-4 text-orange-500 font-medium text-sm group-hover:gap-3 transition-all">
+            View Details
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </div>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
+    <!-- View all link -->
+    <div class="text-center">
+      <a href="/timeline/" class="inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-slate-50 text-slate-900 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all text-lg">
+        <svg class="w-6 h-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        View All {{ len $timelinePages }} Events
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Quote Section - Dark Theme -->
 {{ $allQuotes := slice }}
 {{ range $depositions }}
   {{ $depo := . }}
@@ -438,12 +580,24 @@
 {{ end }}
 
 {{ if $allQuotes }}
-<section class="py-16 bg-gradient-to-br from-slate-900 via-navy to-slate-800 text-white relative overflow-hidden">
+<section class="relative py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+  <!-- Background effects -->
   <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.02%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
-  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Words Under Oath</h2>
-      <p class="text-slate-400 text-lg">Direct quotes from sworn depositions</p>
+  <div class="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-red-500/10 rounded-full blur-3xl"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-300 text-sm font-medium mb-4">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+        </span>
+        Sworn Testimony
+      </div>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4">Words Under Oath</h2>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto">Direct quotes from sworn depositions. These words carry legal weight.</p>
     </div>
 
     {{/* Store all quotes as JSON for JavaScript randomization */}}
@@ -452,22 +606,47 @@
     <div id="quotes-container" class="grid md:grid-cols-2 gap-6">
       {{/* Render 4 placeholders that will be populated by JavaScript */}}
       {{ range seq 4 }}
-      <blockquote class="quote-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
-        <div class="text-5xl text-amber-500/30 leading-none mb-2">"</div>
-        <p class="quote-text text-lg text-slate-200 italic mb-4 -mt-6"></p>
-        <footer class="flex items-center justify-between">
-          <div>
-            <cite class="quote-deponent text-amber-400 font-medium not-italic"></cite>
-            <p class="quote-page text-slate-500 text-sm"></p>
+      <blockquote class="quote-card group relative">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+        <div class="relative bg-slate-800/80 backdrop-blur rounded-2xl p-6 border border-slate-700 h-full">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="quote-text text-slate-200 text-base leading-relaxed mb-4"></p>
+              <div class="flex items-center justify-between pt-4 border-t border-slate-700">
+                <div>
+                  <cite class="quote-deponent text-amber-400 font-bold not-italic block"></cite>
+                  <span class="quote-page text-slate-500 text-sm"></span>
+                </div>
+                <a class="quote-link inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white text-sm font-semibold rounded-lg transition-all" href="#">
+                  Read
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
-          <a class="quote-link text-slate-400 hover:text-white transition-colors" href="#">
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </a>
-        </footer>
+        </div>
       </blockquote>
       {{ end }}
+    </div>
+
+    <!-- View all link -->
+    <div class="text-center mt-10">
+      <a href="/depositions/" class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-900 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all text-lg">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Browse All Depositions
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
     </div>
 
     <script>
@@ -501,169 +680,6 @@
   </div>
 </section>
 {{ end }}
-
-<!-- People Involved Section -->
-<section class="py-16 bg-slate-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between mb-10">
-      <div>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-navy mb-2">People Documented</h2>
-        <p class="text-slate-600">Individuals named in depositions, incidents, and evidence</p>
-      </div>
-      <a href="/people/" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-navy hover:bg-slate-700 text-white font-semibold rounded-lg transition-colors">
-        View All
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </a>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      {{ range first 5 $people }}
-      <a href="/people/{{ .key }}/" class="group bg-white rounded-xl p-5 shadow-sm hover:shadow-lg transition-all border border-slate-100 hover:border-navy/20">
-        <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center group-hover:from-navy group-hover:to-slate-700 transition-colors">
-          <svg class="h-8 w-8 text-slate-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </div>
-        <div class="text-center">
-          <p class="font-semibold text-navy text-sm group-hover:text-accent transition-colors">{{ .name }}</p>
-          <p class="text-xs text-slate-500 mt-1">{{ .rank }}</p>
-          {{ if eq .status "active" }}
-          <span class="inline-block mt-2 px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs rounded-full">Active</span>
-          {{ else if eq .status "retired" }}
-          <span class="inline-block mt-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs rounded-full">Retired</span>
-          {{ end }}
-        </div>
-      </a>
-      {{ end }}
-    </div>
-
-    <div class="mt-6 md:hidden text-center">
-      <a href="/people/" class="inline-flex items-center gap-2 px-5 py-2.5 bg-navy hover:bg-slate-700 text-white font-semibold rounded-lg transition-colors">
-        View All People
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- Timeline Preview -->
-{{/* Get timeline content pages */}}
-{{ $timelinePages := where site.RegularPages "Section" "timeline" }}
-{{ $timelinePages = sort $timelinePages "Date" "desc" }}
-<section class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between mb-10">
-      <div>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-navy mb-2">Timeline of Events</h2>
-        <p class="text-slate-600">Chronological documentation of key events</p>
-      </div>
-      <a href="/timeline/" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-900 font-bold rounded-lg transition-all">
-        Full Timeline
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </a>
-    </div>
-
-    <div class="relative">
-      <!-- Timeline line - centered on desktop -->
-      <div class="absolute left-4 md:left-1/2 md:-translate-x-0.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-red-500 to-purple-500"></div>
-
-      <!-- Interweaving timeline events -->
-      <div class="relative">
-        {{ range $i, $event := first 5 $timelinePages }}
-        {{ $isLeft := eq (mod $i 2) 0 }}
-        {{ $severity := $event.Params.severity | default "medium" }}
-
-        <!-- Event row with negative margin for interweaving (except first) -->
-        <div class="relative flex items-start {{ if $i }}md:-mt-12{{ end }}">
-
-          <!-- Left column -->
-          <div class="hidden md:block md:w-1/2 md:pr-8 {{ if not $isLeft }}md:invisible{{ end }}">
-            {{ if $isLeft }}
-            <a href="{{ $event.Permalink }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition-all p-5 border border-slate-100 hover:border-accent group text-right">
-              <div class="flex flex-wrap items-center gap-2 mb-2 justify-end">
-                <span class="text-xs font-medium text-slate-500">{{ $event.Date.Format "January 2, 2006" }}</span>
-                {{ with $severity }}
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
-                  {{ if eq . "critical" }}bg-red-100 text-red-700
-                  {{ else if eq . "high" }}bg-orange-100 text-orange-700
-                  {{ else }}bg-amber-100 text-amber-700{{ end }}">
-                  {{ . | title }}
-                </span>
-                {{ end }}
-              </div>
-              <h3 class="text-base font-bold text-navy group-hover:text-accent transition-colors" style="margin: 0 0 0.25rem 0;">{{ $event.Title }}</h3>
-              <p class="text-slate-600 text-sm mb-0 line-clamp-2">{{ $event.Summary | plainify | truncate 80 }}</p>
-            </a>
-            {{ end }}
-          </div>
-
-          <!-- Center dot -->
-          <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-5 w-4 h-4 rounded-full border-4 border-white shadow-lg z-10
-            {{ if eq $severity "critical" }}bg-red-500
-            {{ else if eq $severity "high" }}bg-orange-500
-            {{ else }}bg-amber-500{{ end }}"></div>
-
-          <!-- Right column -->
-          <div class="ml-12 md:ml-0 md:w-1/2 md:pl-8 {{ if $isLeft }}md:invisible{{ end }}">
-            {{ if not $isLeft }}
-            <a href="{{ $event.Permalink }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition-all p-5 border border-slate-100 hover:border-accent group">
-              <div class="flex flex-wrap items-center gap-2 mb-2">
-                <span class="text-xs font-medium text-slate-500">{{ $event.Date.Format "January 2, 2006" }}</span>
-                {{ with $severity }}
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
-                  {{ if eq . "critical" }}bg-red-100 text-red-700
-                  {{ else if eq . "high" }}bg-orange-100 text-orange-700
-                  {{ else }}bg-amber-100 text-amber-700{{ end }}">
-                  {{ . | title }}
-                </span>
-                {{ end }}
-              </div>
-              <h3 class="text-base font-bold text-navy group-hover:text-accent transition-colors" style="margin: 0 0 0.25rem 0;">{{ $event.Title }}</h3>
-              <p class="text-slate-600 text-sm mb-0 line-clamp-2">{{ $event.Summary | plainify | truncate 80 }}</p>
-            </a>
-            {{ else }}
-            <!-- Mobile fallback for left-side events -->
-            <a href="{{ $event.Permalink }}" class="block md:hidden bg-white rounded-xl shadow-md hover:shadow-lg transition-all p-5 border border-slate-100 hover:border-accent group">
-              <div class="flex flex-wrap items-center gap-2 mb-2">
-                <span class="text-xs font-medium text-slate-500">{{ $event.Date.Format "January 2, 2006" }}</span>
-                {{ with $severity }}
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
-                  {{ if eq . "critical" }}bg-red-100 text-red-700
-                  {{ else if eq . "high" }}bg-orange-100 text-orange-700
-                  {{ else }}bg-amber-100 text-amber-700{{ end }}">
-                  {{ . | title }}
-                </span>
-                {{ end }}
-              </div>
-              <h3 class="text-base font-bold text-navy group-hover:text-accent transition-colors" style="margin: 0 0 0.25rem 0;">{{ $event.Title }}</h3>
-              <p class="text-slate-600 text-sm mb-0 line-clamp-2">{{ $event.Summary | plainify | truncate 80 }}</p>
-            </a>
-            {{ end }}
-          </div>
-        </div>
-
-        <!-- Spacer for mobile stacking -->
-        <div class="h-6 md:h-0"></div>
-        {{ end }}
-      </div>
-    </div>
-
-    <div class="mt-10 text-center">
-      <a href="/timeline/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-900 font-bold rounded-lg shadow-lg hover:shadow-xl transition-all">
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        View All {{ len $timelinePages }} Events
-      </a>
-    </div>
-  </div>
-</section>
 
 <!-- Call to Action -->
 <section class="relative py-20 overflow-hidden">

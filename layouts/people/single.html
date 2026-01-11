@@ -28,31 +28,24 @@
   <header class="relative overflow-hidden">
     {{ partial "header-bg.html" . }}
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-16">
       {{/* Breadcrumb */}}
-      <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
-        <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
-        <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-        <a href="/people/" class="text-slate-400 hover:text-white transition-colors">People</a>
-        <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-        <span class="text-white font-medium">{{ $person.name }}</span>
-      </nav>
+      {{ partial "breadcrumb.html" (dict "page" . "current" $person.name "parents" (slice (dict "title" "People" "url" "/people/"))) }}
 
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         {{/* Left side - Icon, Name, Role */}}
         <div class="flex items-start gap-6">
-          {{/* Avatar with initials */}}
-          <div class="hidden sm:flex flex-shrink-0 w-20 h-20 rounded-xl bg-gradient-to-br {{ $iconBg }} ring-4 {{ $ringColor }} shadow-2xl items-center justify-center">
-            <span class="text-2xl font-bold text-white">{{ $initials }}</span>
+          {{/* Avatar with initials and glow */}}
+          <div class="hidden sm:block relative flex-shrink-0">
+            <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-40"></div>
+            <div class="relative w-20 h-20 rounded-xl bg-gradient-to-br {{ $iconBg }} ring-4 {{ $ringColor }} shadow-2xl flex items-center justify-center">
+              <span class="text-2xl font-bold text-white">{{ $initials }}</span>
+            </div>
           </div>
 
           <div>
-            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3" style="margin-top: 0;">{{ default .Title $person.name }}</h1>
-            <div class="flex flex-wrap items-center gap-3">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3" style="margin-top: 0; text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6);">{{ default .Title $person.name }}</h1>
+            <div class="flex flex-wrap items-center gap-3" style="text-shadow: 0 1px 4px rgba(0,0,0,0.7);">
               {{ with $person.role }}
               <span class="text-lg text-slate-300">{{ . }}</span>
               {{ end }}
@@ -62,56 +55,73 @@
               {{ end }}
             </div>
             {{ with $person.division }}
-            <p class="text-slate-400 mt-1 mb-0">{{ . }}</p>
+            <p class="text-slate-400 mt-1 mb-0" style="text-shadow: 0 1px 3px rgba(0,0,0,0.6);">{{ . }}</p>
             {{ end }}
           </div>
         </div>
 
-        {{/* Right side - Status boxes */}}
+        {{/* Right side - Status boxes with glow */}}
         <div class="flex flex-wrap items-center gap-4">
           {{/* Status box */}}
           {{ with $person.status }}
-          {{ $statusBg := "bg-slate-800/50" }}
+          {{ $statusBg := "bg-slate-800/80" }}
           {{ $statusBorder := "border-slate-700" }}
           {{ $statusText := "text-slate-400" }}
+          {{ $glowFrom := "from-slate-500" }}
+          {{ $glowTo := "to-slate-600" }}
           {{ if eq . "active" }}
             {{ $statusBg = "bg-green-900/30" }}
             {{ $statusBorder = "border-green-700/50" }}
             {{ $statusText = "text-green-400" }}
+            {{ $glowFrom = "from-green-500" }}
+            {{ $glowTo = "to-emerald-500" }}
           {{ else if eq . "retired" }}
             {{ $statusBg = "bg-orange-900/30" }}
             {{ $statusBorder = "border-orange-700/50" }}
             {{ $statusText = "text-orange-400" }}
+            {{ $glowFrom = "from-orange-500" }}
+            {{ $glowTo = "to-amber-500" }}
           {{ else if eq . "terminated" }}
             {{ $statusBg = "bg-red-900/30" }}
             {{ $statusBorder = "border-red-700/50" }}
             {{ $statusText = "text-red-400" }}
+            {{ $glowFrom = "from-red-500" }}
+            {{ $glowTo = "to-rose-500" }}
           {{ end }}
-          <div class="text-center px-6 py-3 {{ $statusBg }} rounded-xl border {{ $statusBorder }}">
-            <div class="text-2xl font-bold {{ $statusText }}">{{ . | title }}</div>
-            <div class="text-sm text-slate-400 uppercase tracking-wide">Status</div>
+          <div class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r {{ $glowFrom }} {{ $glowTo }} rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+            <div class="relative text-center px-6 py-4 {{ $statusBg }} backdrop-blur rounded-xl border {{ $statusBorder }} group-hover:border-opacity-70 transition-colors">
+              <div class="text-2xl font-bold {{ $statusText }}">{{ . | title }}</div>
+              <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">Status</div>
+            </div>
           </div>
           {{ end }}
 
           {{/* Credibility warning box */}}
           {{ if eq $person.credibility "compromised" }}
-          <div class="text-center px-6 py-3 bg-red-900/40 rounded-xl border border-red-600/50">
-            <div class="flex items-center justify-center gap-2 text-red-400">
-              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <span class="text-lg font-bold">Compromised</span>
+          <div class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-rose-500 rounded-xl blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
+            <div class="relative text-center px-6 py-4 bg-red-900/40 backdrop-blur rounded-xl border border-red-600/50">
+              <div class="flex items-center justify-center gap-2 text-red-400">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span class="text-lg font-bold">Compromised</span>
+              </div>
+              <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">Credibility</div>
             </div>
-            <div class="text-sm text-slate-400 uppercase tracking-wide">Credibility</div>
           </div>
           {{ end }}
 
           {{/* Tenure box */}}
           {{ with $person.start_date }}
           {{ $years := sub now.Year (time.Format "2006" . | int) }}
-          <div class="text-center px-6 py-3 bg-slate-800/50 rounded-xl border border-slate-700">
-            <div class="text-2xl font-bold text-amber-400">{{ $years }}+</div>
-            <div class="text-sm text-slate-400 uppercase tracking-wide">Years</div>
+          <div class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+            <div class="relative text-center px-6 py-4 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700 group-hover:border-amber-500/50 transition-colors">
+              <div class="text-2xl font-bold text-amber-400">{{ $years }}+</div>
+              <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">Years</div>
+            </div>
           </div>
           {{ end }}
         </div>

@@ -24,45 +24,48 @@
 <header class="relative overflow-hidden">
   {{ partial "header-bg.html" . }}
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Breadcrumb (always shown) -->
-    <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
-      <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
-      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-      <span class="text-white font-medium" aria-current="page">{{ $title }}</span>
-    </nav>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-16">
+    <!-- Breadcrumb -->
+    {{ partial "breadcrumb.html" (dict "page" $page "current" $title) }}
 
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
       <!-- Title and description -->
       <div class="flex items-start gap-6">
-        <!-- Icon -->
-        <div class="hidden sm:flex flex-shrink-0 w-20 h-20 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 ring-4 ring-amber-500/50 shadow-2xl items-center justify-center">
-          {{ partial "header-icon.html" (dict "icon" $icon "class" "h-12 w-12 text-slate-400") }}
+        <!-- Icon with glow effect -->
+        <div class="hidden sm:block relative flex-shrink-0">
+          <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-40"></div>
+          <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-xl shadow-amber-500/25 flex items-center justify-center">
+            {{ partial "header-icon.html" (dict "icon" $icon "class" "h-10 w-10 text-white") }}
+          </div>
         </div>
 
         <div>
-          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">{{ $title }}</h1>
+          <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3" style="text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6);">{{ $title }}</h1>
           {{ with $description }}
-          <p class="text-lg text-slate-300 max-w-2xl">{{ . }}</p>
+          <p class="text-lg text-slate-300 max-w-2xl leading-relaxed" style="text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 2px 12px rgba(0,0,0,0.5);">{{ . }}</p>
           {{ end }}
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="flex flex-wrap items-center gap-4 sm:gap-8">
+      <!-- Stats with glow -->
+      <div class="flex flex-wrap items-center gap-4">
         {{ if $count }}
-        <div class="text-center px-6 py-3 bg-slate-800/50 rounded-xl border border-slate-700">
-          <div class="text-4xl font-bold text-amber-400">{{ $count }}</div>
-          <div class="text-sm text-slate-400 uppercase tracking-wide">{{ $countLabel }}</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+          <div class="relative text-center px-6 py-4 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700 group-hover:border-amber-500/50 transition-colors">
+            <div class="text-4xl font-black text-white mb-1">{{ $count }}</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">{{ $countLabel }}</div>
+          </div>
         </div>
         {{ end }}
 
         {{ range $stats }}
-        <div class="text-center px-6 py-3 bg-slate-800/50 rounded-xl border border-slate-700">
-          <div class="text-4xl font-bold text-white">{{ .value }}</div>
-          <div class="text-sm text-slate-400 uppercase tracking-wide">{{ .label }}</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+          <div class="relative text-center px-6 py-4 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700 group-hover:border-purple-500/50 transition-colors">
+            <div class="text-4xl font-black text-white mb-1">{{ .value }}</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">{{ .label }}</div>
+          </div>
         </div>
         {{ end }}
       </div>

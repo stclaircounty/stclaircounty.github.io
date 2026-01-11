@@ -1,10 +1,11 @@
 # St. Clair County Public Accountability Project - People Database
-# Last Updated: 2026-01-10
+# Last Updated: 2026-01-11
 #
+# All information sourced from court records, depositions, and public documents.
 # Access: site.Data.people["mat-king"]
 
 # =============================================================================
-# LAW ENFORCEMENT - Command Staff
+# SHERIFF'S OFFICE - Leadership
 # =============================================================================
 
 mat-king:
@@ -15,18 +16,17 @@ mat-king:
   status: active
   start_date: 2020-01-01
   category: law-enforcement
-  subcategory: command-staff
   credibility: compromised
   description: |
-    Elected Sheriff of St. Clair County, Michigan. Highest-ranking law enforcement
-    official in the county responsible for department leadership, policy enforcement,
-    and oversight.
-  public_verification:
-    - SCCSO administration page
-  needs_foia:
-    - badge_number
-    - official_salary_record
-    - hire_date
+    Elected Sheriff of St. Clair County, Michigan. When his brother Marc King
+    was arrested for drunk driving, Sheriff King failed to recuse himself
+    from the matter. Instead, he remained involved as the department he leads
+    conducted its own internal investigation into the arrest of his own sibling.
+    A federal judge denied him qualified immunity, allowing the civil rights
+    lawsuit against him to proceed.
+  credibility_note: |
+    Failed to recuse despite direct family relationship with arrestee.
+    Department he commands investigated his own brother's arrest.
   relationships:
     marc-king:
       type: family
@@ -34,11 +34,11 @@ mat-king:
   involvement:
     2022-11-06-owi-arrest:
       role: command-involved
-      description: Notified of brother's arrest; did not recuse
+      description: Notified of brother's arrest; failed to recuse from matter
       concerns:
         - No recusal despite direct family relationship
-        - Direct involvement in matter where he should have been recused
-        - No independent investigation mechanism utilized
+        - Department investigated his own brother
+        - Federal judge denied qualified immunity
   depositions:
     - mat-king-deposition
   litigation:
@@ -50,12 +50,12 @@ mat-king:
   credibility_factors:
     relationship_to_arrestee: Brother
     neutrality: Severely Compromised
-    evidence_handling: Unclear
+    recusal: Failed to recuse
   tags:
     - sheriff
-    - command-staff
-    - conflict-of-interest
     - defendant
+    - conflict-of-interest
+    - qualified-immunity-denied
 
 jim-spadafore:
   name: Jim Spadafore
@@ -64,27 +64,16 @@ jim-spadafore:
   rank: Undersheriff
   status: active
   category: law-enforcement
-  subcategory: command-staff
   description: |
-    Second-in-command within the St. Clair County Sheriff's Office. Long career
-    in county law enforcement with progression through supervisory roles. Plays
-    key role in operational oversight and sensitive internal matters.
-  public_verification:
-    - SCCSO administration page
-    - local news promotion coverage
-  needs_foia:
-    - salary
-    - hire_date
-    - badge_number
-  relationships: {}
+    Second-in-command of the St. Clair County Sheriff's Office. Part of the
+    notification chain on November 6, 2022 when the Sheriff's brother was
+    arrested for drunk driving.
   involvement:
     2022-11-06-owi-arrest:
       role: notified
-      description: Contacted by Sheriff regarding incident
-  depositions: []
+      description: Contacted regarding incident
   tags:
     - undersheriff
-    - command-staff
 
 matthew-pohl:
   name: Matthew Pohl
@@ -94,87 +83,44 @@ matthew-pohl:
   division: Road Patrol Division
   status: active
   category: law-enforcement
-  subcategory: command-staff
   credibility: compromised
   description: |
-    Captain overseeing road patrol operations. Member of the sheriff's command staff.
-    Known through public records and testimony to have professional and social
-    familiarity with other command-level officials.
-  public_verification:
-    - SCCSO administration page
-  needs_foia:
-    - salary
-    - badge_number
-    - hire_date
+    Captain who was tasked with conducting the internal investigation into
+    the Sheriff's brother's drunk driving arrest—despite being close friends
+    with the arrestee. Under oath, Pohl admitted to deleting text messages
+    related to the incident. He also texted a former deputy about the arrest
+    within hours of it occurring, demonstrating how quickly word spread through
+    informal channels rather than proper procedures.
+  credibility_note: |
+    Admitted under oath to deleting text messages. Friends with the arrestee
+    he was supposed to be objectively investigating.
   relationships:
     marc-king:
       type: social
-      detail: Close friend (per deposition testimony)
+      detail: Close friend (admitted under oath)
   involvement:
     2022-11-06-owi-arrest:
-      role: command-involved
-      description: Contacted by Sheriff; involved in internal handling
+      role: investigator
+      description: Conducted internal investigation despite friendship with arrestee
       concerns:
-        - Deleted text messages related to the incident
-        - Personal relationship with subject of investigation
+        - Deleted text messages (admitted under oath)
+        - Close friend of person he was investigating
+        - Texted former deputy about arrest within hours
   depositions:
     - pohl-deposition
   credibility_factors:
-    relationship_to_arrestee: Friend
+    relationship_to_arrestee: Close Friend
     neutrality: Compromised
-    evidence_handling: Text messages deleted
+    evidence_handling: Deleted text messages (sworn testimony)
   tags:
     - captain
-    - command-staff
+    - investigator
     - evidence-spoliation
+    - conflict-of-interest
 
 # =============================================================================
-# LAW ENFORCEMENT - Deputies
+# SHERIFF'S OFFICE - Deputies
 # =============================================================================
-
-josh-goodrich:
-  name: Joshua Goodrich
-  role: Former Deputy Sheriff
-  department: St. Clair County Sheriff's Office
-  rank: Deputy
-  status: former
-  category: law-enforcement
-  subcategory: former
-  description: |
-    Former deputy sheriff with St. Clair County Sheriff's Office. Received text
-    message from Captain Matthew Pohl at 5:44 PM on November 6, 2022 informing
-    him of Marc King's OWI arrest. This communication was referenced in Pohl's
-    deposition as evidence of how quickly information about the arrest spread
-    through informal channels within the department. According to deposition
-    testimony, Goodrich told Pohl that Marc "was arrested by Clark and was super
-    drunk" and that he "had a previous encounter with Deputy Clark that he was
-    upset about and stated he was going to FOIA the report." Identified in federal
-    court opinion as anonymous source.
-  public_verification:
-    - Federal court opinion identifying him as anonymous source
-  case_involvement:
-    - Jones v. St. Clair County
-  needs_foia:
-    - employment_dates
-    - salary_history
-    - badge_number
-  relationships:
-    matthew-pohl:
-      type: social
-      detail: Regular contact (per deposition testimony)
-    george-clark:
-      type: professional
-      detail: Previous dispute; Goodrich was upset about prior encounter and threatened FOIA request (per deposition)
-  involvement:
-    2022-11-06-owi-arrest:
-      role: informed
-      description: Received text from Pohl about Marc King's arrest at 5:44 PM; relayed information about arrest
-  depositions: []
-  tags:
-    - former
-    - deputy
-    - witness
-    - anonymous-source
 
 marc-king:
   name: Marc King
@@ -186,20 +132,16 @@ marc-king:
   status: active
   start_date: 2015-01-01
   category: law-enforcement
-  subcategory: deputy
   credibility: not-applicable
   credibility_note: Subject of investigation
   description: |
-    Deputy sheriff with the St. Clair County Sheriff's Office. Brother of
-    Sheriff Mat King. Subject of November 2022 OWI arrest that is central
-    to accountability concerns documented in this project. Identified as
-    Sheriff Mat King's brother in federal court opinion.
-  public_verification:
-    - Federal court opinion (Jones v. St. Clair County)
-  needs_foia:
-    - salary
-    - badge_number
-    - hire_date
+    Deputy sheriff and brother of Sheriff Mat King. Arrested for Operating
+    While Intoxicated (OWI) on November 6, 2022. Rather than being processed
+    through normal channels, he was transported to a different county's jail.
+    His own department then investigated the arrest, led by his close friend
+    Captain Pohl, while his brother the Sheriff failed to recuse himself.
+    The preferential treatment he allegedly received is the basis of a
+    federal civil rights lawsuit.
   relationships:
     mat-king:
       type: family
@@ -207,13 +149,12 @@ marc-king:
   involvement:
     2022-11-06-owi-arrest:
       role: arrestee
-      description: Arrested for Operating While Intoxicated (OWI)
+      description: Arrested for OWI; received allegedly preferential treatment
       details:
         - Arrested for Operating While Intoxicated (OWI)
-        - Transported to Lapeer County Jail (not St. Clair County)
-        - Brother (Sheriff) notified same day
-        - Internal investigation by own department
-  depositions: []
+        - Transported to Lapeer County Jail instead of St. Clair County
+        - Brother (Sheriff) failed to recuse
+        - Close friend (Pohl) conducted internal investigation
   tags:
     - deputy
     - arrestee
@@ -226,52 +167,120 @@ damon-duva:
   rank: Deputy
   status: active
   category: law-enforcement
-  subcategory: deputy
   credibility: compromised
   description: |
-    Deputy sheriff with the St. Clair County Sheriff's Office with 25 years
-    of service. Former union president. Has known Marc King for 15-20 years
-    and Mat King for approximately 20 years. Was partners with Mat King in a
-    patrol car for a period. Testified that his relationship with Marc is closer
-    than with Mat. Received call from Phil Pokriefka about Marc King's arrest
-    and subsequently contacted Lieutenant Jones, Captain Pohl, Undersheriff
-    Spadafore, and Sheriff King. Retrieved Marc King from Lapeer County Jail.
-  public_verification:
-    - Federal court opinion (Jones v. St. Clair County)
-  case_involvement:
-    - Jones v. St. Clair County
-  needs_foia:
-    - salary
-    - badge_number
-    - hire_date
+    Deputy with 25+ years of service and former union president. Testified
+    under oath to being close friends with Marc King for 15-20 years and
+    former patrol car partners with Sheriff Mat King for 20+ years. Despite
+    these deep personal relationships, he was allowed to retrieve Marc King
+    from jail after his arrest and administer PBT tests. He admitted under
+    oath to deleting text messages related to the incident.
+  credibility_note: |
+    Admitted under oath to deleting text messages. Close personal friends
+    with both the arrestee and the Sheriff for decades.
   relationships:
     marc-king:
       type: social
-      detail: Close friend for 15-20 years (per sworn testimony)
+      detail: Close friend for 15-20 years (sworn testimony)
     mat-king:
       type: social
-      detail: Known 20+ years; former patrol car partners; acquaintances/friends (per testimony)
-    phil-pokriefka:
-      type: professional
-      detail: Received call from Pokriefka informing him of Marc King's arrest
+      detail: Former patrol car partners; 20+ year relationship (sworn testimony)
   involvement:
     2022-11-06-owi-arrest:
       role: involved
-      description: Retrieved Marc King from Lapeer County Jail; administered PBT tests
+      description: Retrieved arrestee from jail despite close friendship
       concerns:
-        - Deleted text messages related to the incident
-        - Personal relationship with subject
-        - Family friendship (wives are friends)
+        - Deleted text messages (admitted under oath)
+        - 15-20 year friendship with arrestee
+        - Former patrol partners with Sheriff
+        - Retrieved friend from jail and administered tests
   depositions:
     - duva-transcripts
   credibility_factors:
-    relationship_to_arrestee: Friend (15-20 years)
-    relationship_to_sheriff: Former patrol partners, 20+ year acquaintance
-    neutrality: Compromised
-    evidence_handling: Text messages deleted
+    relationship_to_arrestee: Close Friend (15-20 years)
+    relationship_to_sheriff: Former patrol partners (20+ years)
+    neutrality: Severely Compromised
+    evidence_handling: Deleted text messages (sworn testimony)
   tags:
     - deputy
     - evidence-spoliation
+    - conflict-of-interest
+
+george-clark:
+  name: George Clark
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  description: |
+    Deputy who conducted the traffic stop and arrest of Marc King for OWI
+    on November 6, 2022. Administered field sobriety tests and breathalyzer
+    at the scene. Did his job by the book—arresting the Sheriff's brother
+    for drunk driving.
+  involvement:
+    2022-11-06-owi-arrest:
+      role: arresting-officer
+      description: Conducted traffic stop and made lawful arrest
+  tags:
+    - deputy
+    - arresting-officer
+
+april-seavolt:
+  name: April Seavolt
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  description: |
+    Deputy present at the scene of the November 6, 2022 traffic stop.
+  involvement:
+    2022-11-06-owi-arrest:
+      role: responding-officer
+      description: Present at scene
+  tags:
+    - deputy
+
+joe-schoof:
+  name: Joe Schoof
+  role: Deputy Sheriff
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  description: |
+    Deputy who arrived at the scene of the November 2022 traffic stop.
+    Relayed information to other personnel about the arrest.
+  involvement:
+    2022-11-06-owi-arrest:
+      role: responding-officer
+      description: Arrived at scene, relayed information
+  tags:
+    - deputy
+
+phil-pokriefka:
+  name: Phil Pokriefka
+  role: Deputy Sheriff / Union Vice President
+  department: St. Clair County Sheriff's Office
+  rank: Deputy
+  status: active
+  category: law-enforcement
+  description: |
+    Deputy and union vice president. Marc King called him directly after
+    being arrested, and Pokriefka then called Damon Duva to set the informal
+    notification chain in motion—bypassing normal procedures.
+  relationships:
+    marc-king:
+      type: professional
+      detail: Marc King called him directly after arrest
+  involvement:
+    2022-11-06-owi-arrest:
+      role: notified
+      description: Received call from arrestee, activated notification chain
+  tags:
+    - deputy
+    - union-representative
     - notification-chain
 
 chad-cronkright:
@@ -281,179 +290,50 @@ chad-cronkright:
   rank: Deputy
   status: active
   category: law-enforcement
-  subcategory: deputy
   credibility: compromised
   description: |
-    Deputy sheriff with St. Clair County Sheriff's Office. According to deposition
-    testimony, Cronkright deleted text messages after being notified of the
-    internal investigation related to the Marc King OWI arrest. He later provided
-    some texts, but the deletion after notification raises evidence spoliation
-    concerns.
-  public_verification:
-    - Federal court opinion
-    - SCCSO public recognition posts
-  case_involvement:
-    - Jones v. St. Clair County
-  needs_foia:
-    - salary
-    - badge_number
-    - hire_date
-  relationships: {}
+    Deputy who testified under oath to deleting text messages AFTER being
+    notified of the internal investigation. Unlike others who may have
+    deleted messages before knowing they were relevant, Cronkright deleted
+    his after he knew an investigation was underway—a particularly troubling
+    form of evidence destruction.
+  credibility_note: |
+    Deleted text messages after being notified of investigation (sworn testimony).
   involvement:
     2022-11-06-owi-arrest:
       role: involved
-      description: Present at administrative meetings regarding the incident
+      description: Present at administrative meetings; deleted evidence
       concerns:
-        - Deleted text messages after being notified of investigation
+        - Deleted text messages AFTER notification of investigation
   credibility_factors:
-    evidence_handling: Text messages deleted after notification of investigation
-  depositions: []
+    evidence_handling: Deleted messages after notification of investigation (sworn testimony)
   tags:
     - deputy
     - evidence-spoliation
 
-phil-pokriefka:
-  name: Phil Pokriefka
-  role: Deputy Sheriff / Union Vice President
+josh-goodrich:
+  name: Joshua Goodrich
+  role: Former Deputy Sheriff
   department: St. Clair County Sheriff's Office
   rank: Deputy
-  status: active
+  status: former
   category: law-enforcement
-  subcategory: deputy
   description: |
-    Deputy sheriff serving as union vice president. Received call directly from
-    Marc King after his arrest and relayed information to Damon Duva and others.
-    Key link in the notification chain on November 6, 2022. Deputy Schoof also
-    provided information to Pokriefka about the arrest.
-  relationships:
-    marc-king:
-      type: professional
-      detail: Union representative; Marc King called him directly after arrest
-    damon-duva:
-      type: professional
-      detail: Called Duva to inform him of Marc King's arrest
-    joe-schoof:
-      type: professional
-      detail: Schoof provided information about the arrest
+    Former deputy who received a text from Captain Pohl at 5:44 PM on
+    November 6, 2022—just hours after the arrest—informing him of Marc King's
+    drunk driving arrest. This demonstrates how quickly news spread through
+    informal channels. According to testimony, Goodrich told Pohl that Marc
+    "was super drunk." Identified in federal court opinion as a source.
   involvement:
     2022-11-06-owi-arrest:
-      role: notified
-      description: Received call from Marc King about arrest, notified Duva and others
-  depositions: []
+      role: informed
+      description: Received text from Pohl within hours of arrest
   tags:
+    - former
     - deputy
-    - union-representative
-    - witness
-    - notification-chain
-
-joe-schoof:
-  name: Joe Schoof
-  role: Deputy Sheriff
-  department: St. Clair County Sheriff's Office
-  rank: Deputy
-  status: active
-  category: law-enforcement
-  subcategory: deputy
-  description: |
-    Deputy sheriff with St. Clair County Sheriff's Office. Arrived at the scene
-    of Marc King's November 2022 traffic stop. Provided information to Deputy
-    Pokriefka about the arrest. Interviewed by Captain Pohl during internal
-    investigation.
-  relationships: {}
-  involvement:
-    2022-11-06-owi-arrest:
-      role: responding-officer
-      description: Arrived at scene, relayed information about arrest
-  depositions: []
-  tags:
-    - deputy
-    - witness
-
-george-clark:
-  name: George Clark
-  role: Deputy Sheriff
-  department: St. Clair County Sheriff's Office
-  rank: Deputy
-  status: active
-  category: law-enforcement
-  subcategory: deputy
-  description: |
-    Deputy sheriff who conducted the traffic stop and arrest of Marc King for
-    OWI on November 6, 2022. Administered field sobriety tests and breathalyzer
-    at scene. Author of the primary arrest report. Interviewed by Captain Pohl
-    during internal investigation. According to deposition testimony, Deputy
-    Josh Goodrich had a "previous encounter" with Clark that he was upset about.
-  relationships:
-    joe-schoof:
-      type: professional
-      detail: Responded to same scene during Marc King arrest
-    april-seavolt:
-      type: professional
-      detail: Responded to same scene during Marc King arrest
-    josh-goodrich:
-      type: professional
-      detail: Prior dispute; Goodrich was upset about previous encounter (per deposition)
-  involvement:
-    2022-11-06-owi-arrest:
-      role: arresting-officer
-      description: Conducted traffic stop, administered tests, made arrest
-  depositions: []
-  tags:
-    - deputy
-    - arresting-officer
-    - witness
-
-april-seavolt:
-  name: April Seavolt
-  role: Deputy Sheriff
-  department: St. Clair County Sheriff's Office
-  rank: Deputy
-  status: active
-  category: law-enforcement
-  subcategory: deputy
-  description: |
-    Deputy sheriff with St. Clair County Sheriff's Office. Present at the scene
-    of Marc King's November 2022 traffic stop. Interviewed by Captain Pohl
-    during internal investigation.
-  relationships: {}
-  involvement:
-    2022-11-06-owi-arrest:
-      role: responding-officer
-      description: Present at scene of arrest
-  depositions: []
-  tags:
-    - deputy
-    - witness
-
-andy-teichow:
-  name: Andrew Teichow
-  role: Police Officer
-  department: Port Huron Police Department
-  rank: Officer
-  status: active
-  category: law-enforcement
-  subcategory: external
-  description: |
-    Police officer with Port Huron Police Department (not SCCSO as previously
-    noted). Interviewed by Captain Pohl during internal investigation related
-    to the Marc King OWI arrest incident.
-  public_verification:
-    - Port Huron city site
-    - court opinions
-  needs_foia:
-    - salary
-    - badge_number
-  relationships: {}
-  involvement: {}
-  depositions: []
-  tags:
-    - officer
-    - external
-    - port-huron-pd
-    - witness
 
 # =============================================================================
-# LAW ENFORCEMENT - Lieutenants
+# SHERIFF'S OFFICE - Lieutenants
 # =============================================================================
 
 scott-braun:
@@ -463,35 +343,15 @@ scott-braun:
   rank: Lieutenant
   status: active
   category: law-enforcement
-  subcategory: lieutenant
   description: |
-    Lieutenant with St. Clair County Sheriff's Office. Present at detective
-    bureau when Marc King was brought in following his November 2022 arrest.
-    Worked with Sergeant Zuzga to supervise the processing. Referenced
-    extensively in deposition testimony regarding chain of custody and
-    internal procedures. Was coming on duty when Marc King arrived at DB.
-  public_verification:
-    - News coverage of K-9 unit
-    - POAM union publications
-  needs_foia:
-    - official_salary
-    - badge_number
-  relationships:
-    nate-zuzga:
-      type: professional
-      detail: Worked together at DB during Marc King processing; switch shifts
-    damon-duva:
-      type: professional
-      detail: Supervised Duva during Marc King processing
+    Lieutenant present at the detective bureau when Marc King was brought in
+    following his arrest. Supervised the processing with Sergeant Zuzga.
   involvement:
     2022-11-06-owi-arrest:
       role: supervisor
-      description: Present at DB during processing, supervised with Zuzga
-  depositions: []
+      description: Present at DB during processing
   tags:
     - lieutenant
-    - supervisor
-    - witness
 
 mark-dedenbach:
   name: Mark Dedenbach
@@ -500,21 +360,8 @@ mark-dedenbach:
   rank: Detective Lieutenant
   status: active
   category: law-enforcement
-  subcategory: lieutenant
   description: |
-    Detective Lieutenant with St. Clair County Sheriff's Office. Referenced in
-    deposition testimony in connection with prior incidents involving
-    department personnel.
-  public_verification:
-    - POAM union contracts
-    - SCCSO public posts
-  needs_foia:
-    - salary
-    - badge_number
-    - hire_date
-  relationships: {}
-  involvement: {}
-  depositions: []
+    Detective Lieutenant referenced in deposition testimony.
   tags:
     - lieutenant
     - detective
@@ -526,23 +373,13 @@ george-maschke:
   rank: Lieutenant
   status: active
   category: law-enforcement
-  subcategory: lieutenant
   description: |
-    Lieutenant with St. Clair County Sheriff's Office. Referenced in
-    Sheriff Mat King's deposition as part of supervisory chain.
-  public_verification:
-    - SCCSO promotion posts
-  needs_foia:
-    - salary
-    - badge_number
-  relationships: {}
-  involvement: {}
-  depositions: []
+    Lieutenant referenced in Sheriff Mat King's deposition.
   tags:
     - lieutenant
 
 # =============================================================================
-# LAW ENFORCEMENT - Sergeants
+# SHERIFF'S OFFICE - Sergeants
 # =============================================================================
 
 nate-zuzga:
@@ -552,34 +389,16 @@ nate-zuzga:
   rank: Sergeant
   status: active
   category: law-enforcement
-  subcategory: sergeant
   description: |
-    Sergeant with St. Clair County Sheriff's Office. Present at detective
-    bureau when Marc King was brought in following his November 2022 arrest.
-    Worked with Lieutenant Braun to supervise processing. Witnessed PBT
-    tests administered by Deputy Duva. Relieved Duva during the five-hour
-    processing period.
-  public_verification:
-    - SCCSO promotion posts
-  needs_foia:
-    - official_salary
-    - badge_number
-  relationships:
-    scott-braun:
-      type: professional
-      detail: Worked together at DB during Marc King processing; share same office
-    damon-duva:
-      type: professional
-      detail: Witnessed PBT tests administered by Duva; relieved Duva during processing
+    Sergeant present at the detective bureau when Marc King was brought in.
+    Witnessed PBT tests administered by Deputy Duva—the arrestee's close
+    friend of 15-20 years.
   involvement:
     2022-11-06-owi-arrest:
       role: supervisor
-      description: Present at DB during processing, witnessed PBT tests
-  depositions: []
+      description: Present at DB, witnessed PBT tests by Duva
   tags:
     - sergeant
-    - supervisor
-    - witness
 
 john-maxey:
   name: John Maxey
@@ -588,18 +407,8 @@ john-maxey:
   rank: Sergeant
   status: active
   category: law-enforcement
-  subcategory: sergeant
   description: |
-    Sergeant with St. Clair County Sheriff's Office. Referenced in
-    Sheriff Mat King's deposition testimony.
-  public_verification:
-    - SCCSO badge ceremony post
-  needs_foia:
-    - salary
-    - badge_number
-  relationships: {}
-  involvement: {}
-  depositions: []
+    Sergeant referenced in Sheriff Mat King's deposition.
   tags:
     - sergeant
 
@@ -610,18 +419,13 @@ sergeant-landon:
   rank: Sergeant
   status: unknown
   category: law-enforcement
-  subcategory: sergeant
   description: |
-    Sergeant with St. Clair County Sheriff's Office. Referenced in
-    Sheriff Mat King's deposition as part of supervisory chain.
-  relationships: {}
-  involvement: {}
-  depositions: []
+    Sergeant referenced in Sheriff Mat King's deposition.
   tags:
     - sergeant
 
 # =============================================================================
-# LAW ENFORCEMENT - Detectives
+# SHERIFF'S OFFICE - Detectives
 # =============================================================================
 
 kelsey-wade:
@@ -631,26 +435,14 @@ kelsey-wade:
   rank: Detective
   status: active
   category: law-enforcement
-  subcategory: detective
   description: |
-    Detective with St. Clair County Sheriff's Office. Present during events
-    related to the Marc King OWI arrest incident. Referenced in Sheriff
-    Mat King's deposition testimony.
-  public_verification:
-    - Employee of the Year article
-    - Michigan Court of Appeals opinion
-  needs_foia:
-    - salary
-    - badge_number
-  relationships: {}
+    Detective referenced in Sheriff Mat King's deposition.
   involvement:
     2022-11-06-owi-arrest:
       role: present
       description: Present during related events
-  depositions: []
   tags:
     - detective
-    - witness
 
 detective-bonner:
   name: Detective Bonner
@@ -659,18 +451,13 @@ detective-bonner:
   rank: Detective
   status: unknown
   category: law-enforcement
-  subcategory: detective
   description: |
-    Detective with St. Clair County Sheriff's Office. Referenced in
-    Sheriff Mat King's deposition as being present during related events.
-  relationships: {}
-  involvement: {}
-  depositions: []
+    Detective referenced in Sheriff Mat King's deposition.
   tags:
     - detective
 
 # =============================================================================
-# LAW ENFORCEMENT - Former/Retired
+# SHERIFF'S OFFICE - Former
 # =============================================================================
 
 scott-jones:
@@ -681,34 +468,22 @@ scott-jones:
   status: former
   end_date: 2023-01-15
   category: law-enforcement
-  subcategory: former
   credibility: not-applicable
   credibility_note: Plaintiff/whistleblower
   description: |
-    Former employee of the St. Clair County Sheriff's Office. Retired in
-    January 2023 after reporting concerns about the handling of Deputy Marc
-    King's OWI arrest. Plaintiff in federal civil rights lawsuit alleging
-    First Amendment retaliation.
-  public_verification:
-    - Federal court filings
-  needs_foia:
-    - exact_rank_at_departure
-    - employment_dates
-  relationships: {}
+    Former lieutenant who did the right thing—reporting concerns about how
+    the Sheriff's brother's drunk driving arrest was being handled. For
+    speaking up, he alleges he was retaliated against and forced out.
+    Now plaintiff in a federal civil rights lawsuit alleging First Amendment
+    retaliation. The case is ongoing.
   involvement:
     2022-11-06-owi-arrest:
       role: whistleblower
-      description: Reported concerns about handling of arrest to HR
+      description: Reported concerns about improper handling of arrest
       details:
         - Raised concerns about conflicts of interest
         - Reported through official HR channels
-        - Actions constitute protected First Amendment speech
-    2022-12-jones-reports-concerns:
-      role: whistleblower
-      description: Filed internal complaint about misconduct
-    2023-01-jones-retirement:
-      role: retaliation-victim
-      description: Retired under alleged coercion
+        - Alleges retaliation for speaking up
   litigation:
     jones-v-scc:
       role: plaintiff
@@ -716,8 +491,6 @@ scott-jones:
       claims:
         - First Amendment retaliation
         - Fourteenth Amendment due process
-        - Monell municipal liability
-  depositions: []
   tags:
     - former
     - plaintiff
@@ -725,111 +498,22 @@ scott-jones:
     - first-amendment
 
 # =============================================================================
-# LEGAL - Plaintiff's Counsel
-# =============================================================================
-
-deborah-gordon:
-  name: Deborah L. Gordon
-  role: Attorney
-  firm: Deborah L. Gordon, PLC
-  bar_state: Michigan
-  category: legal
-  subcategory: plaintiffs-counsel
-  side: plaintiff
-  description: |
-    Michigan attorney whose practice includes civil rights and employment
-    litigation. Appears in public court dockets representing plaintiffs
-    in federal civil cases.
-  tags:
-    - attorney
-    - plaintiff-counsel
-
-elizabeth-marzotto-taylor:
-  name: Elizabeth Marzotto Taylor
-  role: Attorney
-  category: legal
-  subcategory: plaintiffs-counsel
-  side: plaintiff
-  description: |
-    Attorney who has appeared in federal litigation as counsel for plaintiffs.
-  tags:
-    - attorney
-    - plaintiff-counsel
-
-# =============================================================================
-# LEGAL - Defense Counsel
-# =============================================================================
-
-todd-shoudy:
-  name: Todd J. Shoudy
-  role: Attorney
-  firm: Fletcher Fealko Shoudy & Francis, P.C.
-  bar_state: Michigan
-  category: legal
-  subcategory: defense-counsel
-  side: defense
-  description: |
-    Licensed Michigan attorney who has appeared as defense counsel in
-    publicly filed litigation involving St. Clair County.
-  tags:
-    - attorney
-    - defense-counsel
-
-# =============================================================================
-# UNION REPRESENTATIVES
-# =============================================================================
-
-steve-sellers:
-  name: Steve Sellers
-  role: POAM Business Agent
-  organization: Police Officers Association of Michigan (POAM)
-  category: union
-  subcategory: business-agent
-  description: |
-    Business agent for the Police Officers Association of Michigan (POAM),
-    representing St. Clair County Sheriff's Office deputies. Present at meetings
-    and interviews during internal investigation. Communicated with Captain Pohl
-    and administration regarding Lieutenant Jones's potential retirement.
-    Referenced extensively in deposition testimony.
-  public_verification:
-    - Federal court opinion
-    - POAM publications
-  relationships: {}
-  involvement:
-    2022-11-06-owi-arrest:
-      role: union-representative
-      description: Represented deputies during investigation interviews
-  depositions: []
-  tags:
-    - union
-    - business-agent
-    - poam
-    - witness
-
-# =============================================================================
-# ADMINISTRATIVE STAFF
-# =============================================================================
-
-andrea-blair:
-  name: Andrea Blair
-  role: Secretary
-  department: St. Clair County Sheriff's Office
-  category: administrative
-  subcategory: secretary
-  description: |
-    Secretary in the St. Clair County Sheriff's Office. Present at administrative
-    meetings. Listed as typist on internal documents. Referenced in deposition
-    testimony regarding meetings with Sheriff King and other administrators.
-  relationships: {}
-  involvement: {}
-  depositions: []
-  tags:
-    - administrative
-    - secretary
-
-# =============================================================================
 # EXTERNAL LAW ENFORCEMENT
 # =============================================================================
+
+andy-teichow:
+  name: Andrew Teichow
+  role: Police Officer
+  department: Port Huron Police Department
+  rank: Officer
+  status: active
+  category: law-enforcement
+  description: |
+    Port Huron Police Department officer interviewed during the internal
+    investigation.
+  tags:
+    - officer
+    - external
 
 sheriff-mckenna:
   name: Sheriff McKenna
@@ -838,22 +522,88 @@ sheriff-mckenna:
   rank: Sheriff
   status: unknown
   category: law-enforcement
-  subcategory: external
   description: |
-    Sheriff of Lapeer County, Michigan. Marc King was transported to Lapeer
-    County Jail following his November 2022 arrest. Referenced in Sheriff
-    Mat King's deposition testimony as someone known through conferences
-    and professional conversations.
-  relationships: {}
+    Sheriff of Lapeer County, Michigan. Marc King was transported to
+    Lapeer County Jail rather than his own department's jail—a decision
+    that raises questions about preferential treatment.
   involvement:
     2022-11-06-owi-arrest:
       role: jurisdiction
-      description: Marc King transported to Lapeer County Jail
-  depositions: []
+      description: Marc King held at Lapeer County Jail instead of St. Clair
   tags:
     - sheriff
     - external
-    - lapeer-county
+
+# =============================================================================
+# OTHER PARTIES
+# =============================================================================
+
+steve-sellers:
+  name: Steve Sellers
+  role: POAM Business Agent
+  organization: Police Officers Association of Michigan (POAM)
+  category: union
+  description: |
+    Union business agent who represented deputies during internal investigation
+    interviews. Communicated with Captain Pohl about Lieutenant Jones's
+    potential retirement.
+  involvement:
+    2022-11-06-owi-arrest:
+      role: union-representative
+      description: Represented deputies during investigation
+  tags:
+    - union
+
+andrea-blair:
+  name: Andrea Blair
+  role: Secretary
+  department: St. Clair County Sheriff's Office
+  category: administrative
+  description: |
+    Secretary in the Sheriff's Office. Listed as typist on internal documents.
+  tags:
+    - administrative
+
+# =============================================================================
+# LEGAL - Attorneys
+# =============================================================================
+
+deborah-gordon:
+  name: Deborah L. Gordon
+  role: Attorney
+  firm: Deborah L. Gordon, PLC
+  bar_state: Michigan
+  category: legal
+  side: plaintiff
+  description: |
+    Civil rights attorney representing the plaintiff in Jones v. St. Clair County.
+  tags:
+    - attorney
+    - plaintiff-counsel
+
+elizabeth-marzotto-taylor:
+  name: Elizabeth Marzotto Taylor
+  role: Attorney
+  category: legal
+  side: plaintiff
+  description: |
+    Attorney appearing as counsel for the plaintiff.
+  tags:
+    - attorney
+    - plaintiff-counsel
+
+todd-shoudy:
+  name: Todd J. Shoudy
+  role: Attorney
+  firm: Fletcher Fealko Shoudy & Francis, P.C.
+  bar_state: Michigan
+  category: legal
+  side: defense
+  description: |
+    Attorney representing the defendants in Jones v. St. Clair County.
+  tags:
+    - attorney
+    - defense-counsel
 
 # =============================================================================
 # JUDICIARY
@@ -865,13 +615,10 @@ nancy-edmunds:
   court: U.S. District Court, Eastern District of Michigan
   category: judiciary
   description: |
-    Federal judge presiding over matters before the U.S. District Court
-    for the Eastern District of Michigan. Judicial biography and case
-    assignments are publicly available through federal court sources.
+    Federal judge presiding over Jones v. St. Clair County. Denied qualified
+    immunity to Sheriff Mat King, allowing the lawsuit to proceed.
   note: |
-    Judges preside impartially over matters before the court. Included
-    for contextual completeness only. No evaluation of judicial decisions
-    is made in this project.
+    Judges preside impartially over matters before the court.
   tags:
     - judge
     - federal
@@ -881,11 +628,11 @@ nancy-edmunds:
 # =============================================================================
 
 _meta:
-  total_people: 29
+  total_people: 28
   by_category:
     law-enforcement: 22
     legal: 3
     judiciary: 1
     union: 1
     administrative: 1
-  last_updated: 2026-01-10
+  last_updated: 2026-01-11

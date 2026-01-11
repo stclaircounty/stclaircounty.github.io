@@ -26,48 +26,45 @@
 <header class="relative overflow-hidden">
   {{ partial "header-bg.html" . }}
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Breadcrumb (always shown for accessibility) -->
-    <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
-      <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
-      {{ if $page.Section }}
-      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-      <a href="/{{ $page.Section }}/" class="text-slate-400 hover:text-white transition-colors">{{ $section }}</a>
-      {{ end }}
-      <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-      <span class="text-white font-medium" aria-current="page">{{ $title }}</span>
-    </nav>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-16">
+    <!-- Breadcrumb -->
+    {{ if $page.Section }}
+      {{ partial "breadcrumb.html" (dict "page" $page "current" $title "parents" (slice (dict "title" $section "url" (printf "/%s/" $page.Section)))) }}
+    {{ else }}
+      {{ partial "breadcrumb.html" (dict "page" $page "current" $title) }}
+    {{ end }}
 
     <div class="flex flex-col md:flex-row md:items-start gap-8">
-      <!-- Icon/Image -->
-      <div class="flex-shrink-0">
+      <!-- Icon/Image with glow -->
+      <div class="flex-shrink-0 relative">
         {{ with $page.Params.photo }}
+        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-40"></div>
         <img src="/images/{{ $.page.Section }}/{{ . }}" alt="{{ $page.Title }}"
-             class="w-36 h-36 rounded-xl object-cover ring-4 ring-amber-500/50 shadow-2xl">
+             class="relative w-32 h-32 md:w-36 md:h-36 rounded-2xl object-cover shadow-xl shadow-amber-500/20">
         {{ else }}
-        <div class="w-36 h-36 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 ring-4 ring-amber-500/50 shadow-2xl flex items-center justify-center">
-          {{ partial "header-icon.html" (dict "icon" $icon "class" "h-20 w-20 text-slate-500") }}
+        <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-40"></div>
+        <div class="relative w-32 h-32 md:w-36 md:h-36 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-xl shadow-amber-500/25 flex items-center justify-center">
+          {{ partial "header-icon.html" (dict "icon" $icon "class" "h-16 w-16 md:h-20 md:w-20 text-white") }}
         </div>
         {{ end }}
       </div>
 
       <div class="flex-1">
         <!-- Title -->
-        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">{{ $title }}</h1>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-3" style="text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6);">{{ $title }}</h1>
 
         <!-- Subtitle -->
         {{ with $subtitle }}
-        <p class="text-lg text-slate-300 mb-4">{{ . }}</p>
+        <p class="text-lg text-slate-300 mb-4" style="text-shadow: 0 1px 4px rgba(0,0,0,0.7);">{{ . }}</p>
         {{ end }}
 
         <!-- Date (if available and not zero) -->
         {{ with $date }}
         {{ if not .IsZero }}
-        <p class="text-slate-400 mb-4">
+        <p class="text-slate-400 mb-4 flex items-center gap-2" style="text-shadow: 0 1px 3px rgba(0,0,0,0.6);">
+          <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
           <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "January 2, 2006" }}</time>
         </p>
         {{ end }}
@@ -75,11 +72,11 @@
 
         <!-- Badges -->
         {{ if $badges }}
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
           {{ range $badges }}
           {{ $type := .type | default "neutral" }}
-          <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border
-            {{ if eq $type "primary" }}bg-amber-500 text-slate-900 border-amber-500 shadow-lg
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border backdrop-blur-sm
+            {{ if eq $type "primary" }}bg-amber-500 text-slate-900 border-amber-500 shadow-lg shadow-amber-500/25
             {{ else if eq $type "success" }}bg-emerald-500/20 text-emerald-300 border-emerald-500/30
             {{ else if eq $type "warning" }}bg-amber-500/20 text-amber-300 border-amber-500/30
             {{ else if eq $type "danger" }}bg-red-500/20 text-red-300 border-red-500/30
@@ -97,13 +94,16 @@
         </div>
         {{ end }}
 
-        <!-- Stats row -->
+        <!-- Stats row with glow -->
         {{ if $stats }}
-        <div class="flex flex-wrap gap-6 mt-6">
+        <div class="flex flex-wrap gap-4 mt-6">
           {{ range $stats }}
-          <div class="text-center">
-            <div class="text-3xl font-bold text-white">{{ .value }}</div>
-            <div class="text-sm text-slate-400">{{ .label }}</div>
+          <div class="group relative">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
+            <div class="relative text-center px-5 py-3 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700 group-hover:border-amber-500/50 transition-colors">
+              <div class="text-2xl md:text-3xl font-black text-white">{{ .value }}</div>
+              <div class="text-xs text-slate-400 uppercase tracking-wide">{{ .label }}</div>
+            </div>
           </div>
           {{ end }}
         </div>

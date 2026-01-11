@@ -22,40 +22,47 @@
   <!-- Header -->
   <header class="relative overflow-hidden">
     {{ partial "header-bg.html" . }}
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <nav class="flex items-center gap-2 text-sm mb-6" aria-label="Breadcrumb">
-        <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
-        <svg class="w-4 h-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-        <span class="text-white font-medium">{{ .Title }}</span>
-      </nav>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-16">
+      {{ partial "breadcrumb.html" (dict "page" . "current" .Title) }}
 
-      <div class="flex items-center gap-4 mb-4">
-        <div class="p-3 bg-red-500/20 rounded-xl">
-          <svg class="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
+      <div class="flex items-start gap-6 mb-4">
+        <!-- Icon with glow -->
+        <div class="hidden sm:block relative flex-shrink-0">
+          <div class="absolute -inset-1 bg-gradient-to-r from-red-500 to-rose-500 rounded-2xl blur opacity-40"></div>
+          <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-red-500 to-rose-600 shadow-xl shadow-red-500/25 flex items-center justify-center">
+            <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
         </div>
         <div>
-          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight mb-2" style="margin-top: 0;">{{ .Title }}</h1>
-          <p class="text-slate-300">{{ .Description }}</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-3" style="margin-top: 0; text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6);">{{ .Title }}</h1>
+          <p class="text-lg text-slate-300 leading-relaxed" style="text-shadow: 0 1px 4px rgba(0,0,0,0.7);">{{ .Description }}</p>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-        <div class="bg-red-900/30 border border-red-700/50 rounded-xl p-4 text-center">
-          <div class="text-3xl font-bold text-red-400">{{ len $compromised }}</div>
-          <div class="text-sm text-slate-400">Compromised</div>
+      <!-- Stats with glow -->
+      <div class="flex flex-wrap gap-4 mt-8">
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-rose-500 rounded-xl blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
+          <div class="relative text-center px-6 py-4 bg-red-900/30 backdrop-blur rounded-xl border border-red-700/50 group-hover:border-red-500/70 transition-colors">
+            <div class="text-4xl font-black text-red-400 mb-1">{{ len $compromised }}</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">Compromised</div>
+          </div>
         </div>
-        <div class="bg-amber-900/30 border border-amber-700/50 rounded-xl p-4 text-center">
-          <div class="text-3xl font-bold text-amber-400">{{ len $concerns }}</div>
-          <div class="text-sm text-slate-400">With Concerns</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl blur opacity-30 group-hover:opacity-50 transition duration-300"></div>
+          <div class="relative text-center px-6 py-4 bg-amber-900/30 backdrop-blur rounded-xl border border-amber-700/50 group-hover:border-amber-500/70 transition-colors">
+            <div class="text-4xl font-black text-amber-400 mb-1">{{ len $concerns }}</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">With Concerns</div>
+          </div>
         </div>
-        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-4 text-center">
-          <div class="text-3xl font-bold text-slate-400">{{ len $notApplicable }}</div>
-          <div class="text-sm text-slate-400">Not Applicable</div>
+        <div class="group relative">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-slate-500 to-slate-600 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
+          <div class="relative text-center px-6 py-4 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700 group-hover:border-slate-500/70 transition-colors">
+            <div class="text-4xl font-black text-slate-400 mb-1">{{ len $notApplicable }}</div>
+            <div class="text-sm text-slate-400 uppercase tracking-wide font-medium">Not Applicable</div>
+          </div>
         </div>
       </div>
     </div>
