@@ -9,6 +9,7 @@
 
 import { NOTIFICATION_EMAIL, FROM_EMAIL, FROM_NAME, formatFileSize } from './config';
 import { escapeHtml, escapeHtmlWithBreaks } from './html';
+import { log, error } from './logger';
 
 interface EmailOptions {
   to: string;
@@ -83,45 +84,60 @@ function messageBox(label: string, content: string): string {
 }
 
 export async function sendEmail(options: EmailOptions): Promise<boolean> {
+  log('email', 'Sending email', {
+    to: options.to,
+    subject: options.subject,
+    from: FROM_EMAIL,
+    hasHtml: !!options.html
+  });
+
+  const payload = {
+    personalizations: [
+      {
+        to: [{ email: options.to }],
+      },
+    ],
+    from: {
+      email: FROM_EMAIL,
+      name: FROM_NAME,
+    },
+    subject: options.subject,
+    content: [
+      {
+        type: 'text/plain',
+        value: options.text,
+      },
+      ...(options.html ? [{
+        type: 'text/html',
+        value: options.html,
+      }] : []),
+    ],
+  };
+
+  log('email', 'MailChannels payload', { payload: JSON.stringify(payload).slice(0, 500) });
+
   try {
     const response = await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        personalizations: [
-          {
-            to: [{ email: options.to }],
-          },
-        ],
-        from: {
-          email: FROM_EMAIL,
-          name: FROM_NAME,
-        },
-        subject: options.subject,
-        content: [
-          {
-            type: 'text/plain',
-            value: options.text,
-          },
-          ...(options.html ? [{
-            type: 'text/html',
-            value: options.html,
-          }] : []),
-        ],
-      }),
+      body: JSON.stringify(payload),
     });
 
+    log('email', 'MailChannels response', { status: response.status, statusText: response.statusText });
+
     if (!response.ok) {
-      const error = await response.text();
-      console.error('Email send failed:', error);
+      const errorText = await response.text();
+      error('email', 'Email send failed', { status: response.status, error: errorText });
       return false;
     }
 
+    const responseText = await response.text();
+    log('email', 'Email sent successfully', { response: responseText });
     return true;
-  } catch (error) {
-    console.error('Email send error:', error);
+  } catch (err) {
+    error('email', 'Email send error', err);
     return false;
   }
 }
@@ -132,6 +148,14 @@ export async function notifyContactSubmission(
   name?: string,
   email?: string
 ): Promise<void> {
+  log('email', 'notifyContactSubmission called', {
+    submissionType,
+    messageLength: message.length,
+    hasName: !!name,
+    hasEmail: !!email,
+    notificationEmail: NOTIFICATION_EMAIL
+  });
+
   const subject = `[Contact] New ${submissionType} submission`;
 
   const text = `
@@ -175,6 +199,16 @@ export async function notifyFileUpload(
   contactName?: string,
   contactEmail?: string
 ): Promise<void> {
+  log('email', 'notifyFileUpload called', {
+    uploadId,
+    filename,
+    fileSize,
+    hasDescription: !!description,
+    hasContactName: !!contactName,
+    hasContactEmail: !!contactEmail,
+    notificationEmail: NOTIFICATION_EMAIL
+  });
+
   const subject = `[Upload] New file uploaded: ${filename}`;
   const sizeFormatted = formatFileSize(fileSize);
 
@@ -225,6 +259,15 @@ export async function notifyEmailReceived(
   body: string,
   attachmentCount: number
 ): Promise<void> {
+  log('email', 'notifyEmailReceived called', {
+    from,
+    to,
+    emailSubject,
+    bodyLength: body.length,
+    attachmentCount,
+    notificationEmail: NOTIFICATION_EMAIL
+  });
+
   const notifySubject = `[Email] ${attachmentCount > 0 ? '📎 ' : ''}From: ${from}`;
 
   const text = `

@@ -19,10 +19,12 @@ import { handleContact } from './handlers/contact';
 import { handleUpload } from './handlers/upload';
 import { handleHealth } from './handlers/health';
 import { handleEmail } from './handlers/email';
+import { initLogger } from './lib/logger';
 
 export default {
   // HTTP request handler
   async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
+    initLogger(env.ENABLE_LOGGING);
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -59,6 +61,7 @@ export default {
 
   // Email handler for tip@/contact@ addresses
   async email(message: ForwardableEmailMessage, env: Env, _ctx: ExecutionContext): Promise<void> {
+    initLogger(env.ENABLE_LOGGING);
     await handleEmail(message, env);
   }
 };

@@ -6,6 +6,7 @@
 
 import type { Env } from '../types';
 import { timestamp } from './config';
+import { log, error } from './logger';
 
 export interface UploadMetadata {
   filename: string;
@@ -36,7 +37,7 @@ export async function storeUpload(
   const r2Key = `uploads/${uploadId}`;
   const now = timestamp();
 
-  console.log('[storage] Storing upload', {
+  log('storage', 'Storing upload', {
     uploadId,
     r2Key,
     filename: metadata.filename,
@@ -52,7 +53,7 @@ export async function storeUpload(
   };
 
   // Store file in R2
-  console.log('[storage] Uploading to R2...');
+  log('storage', 'Uploading to R2...');
   try {
     await env.UPLOADS_BUCKET.put(r2Key, fileData, {
       customMetadata: {
@@ -61,14 +62,14 @@ export async function storeUpload(
         uploadedAt: now,
       },
     });
-    console.log('[storage] R2 upload successful');
-  } catch (error) {
-    console.error('[storage] R2 upload failed:', error);
-    throw error;
+    log('storage', 'R2 upload successful');
+  } catch (err) {
+    error('storage', 'R2 upload failed', err);
+    throw err;
   }
 
   // Store metadata in D1
-  console.log('[storage] Storing metadata in D1...');
+  log('storage', 'Storing metadata in D1...');
   try {
     await env.DB.prepare(`
       INSERT INTO upload_metadata
@@ -81,10 +82,10 @@ export async function storeUpload(
       fileData.length,
       JSON.stringify(fullMetadata)
     ).run();
-    console.log('[storage] D1 metadata stored successfully');
-  } catch (error) {
-    console.error('[storage] D1 metadata storage failed:', error);
-    throw error;
+    log('storage', 'D1 metadata stored successfully');
+  } catch (err) {
+    error('storage', 'D1 metadata storage failed', err);
+    throw err;
   }
 
   return { uploadId, r2Key };
@@ -100,7 +101,7 @@ export async function storeContactSubmission(
   name?: string | null,
   email?: string | null
 ): Promise<void> {
-  console.log('[storage] Storing contact submission', {
+  log('storage', 'Storing contact submission', {
     submissionType,
     messageLength: message.length,
     hasName: !!name,
@@ -118,10 +119,9 @@ export async function storeContactSubmission(
       email || null,
       message
     ).run();
-    console.log('[storage] Contact submission stored successfully', { meta: result.meta });
-  } catch (error) {
-    console.error('[storage] Contact submission storage failed:', error);
-    console.error('[storage] Error details:', error instanceof Error ? error.message : 'unknown');
-    throw error;
+    log('storage', 'Contact submission stored successfully', { meta: result.meta });
+  } catch (err) {
+    error('storage', 'Contact submission storage failed', err);
+    throw err;
   }
 }

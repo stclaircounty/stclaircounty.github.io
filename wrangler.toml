@@ -75,6 +75,7 @@ address = "general@stclaircounty.net"
 SITE_NAME = "St. Clair Under Oath"
 MAX_FILE_SIZE = "104857600"
 HUGO_BASEURL = "https://stclaircounty.net"
+ENABLE_LOGGING = "false"
 
 # Production environment (main branch)
 [env.production]

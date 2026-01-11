@@ -7,6 +7,8 @@
  * 3. Add the secret key to wrangler.toml or Cloudflare dashboard secrets
  */
 
+import { log, error } from './logger';
+
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 interface TurnstileVerifyResponse {
@@ -29,7 +31,7 @@ export async function verifyTurnstile(
   secretKey: string,
   remoteIp?: string
 ): Promise<boolean> {
-  console.log('[turnstile] Verifying token', {
+  log('turnstile', 'Verifying token', {
     tokenLength: token?.length,
     hasSecretKey: !!secretKey,
     secretKeyLength: secretKey?.length,
@@ -37,7 +39,7 @@ export async function verifyTurnstile(
   });
 
   if (!token || !secretKey) {
-    console.error('[turnstile] Missing token or secret key', { hasToken: !!token, hasSecretKey: !!secretKey });
+    error('turnstile', 'Missing token or secret key', { hasToken: !!token, hasSecretKey: !!secretKey });
     return false;
   }
 
@@ -49,26 +51,25 @@ export async function verifyTurnstile(
       formData.append('remoteip', remoteIp);
     }
 
-    console.log('[turnstile] Sending verification request to Cloudflare');
+    log('turnstile', 'Sending verification request to Cloudflare');
     const response = await fetch(TURNSTILE_VERIFY_URL, {
       method: 'POST',
       body: formData,
     });
 
-    console.log('[turnstile] Response status:', response.status);
+    log('turnstile', 'Response received', { status: response.status });
     const result: TurnstileVerifyResponse = await response.json();
-    console.log('[turnstile] Response body:', JSON.stringify(result));
+    log('turnstile', 'Response body', { result: JSON.stringify(result) });
 
     if (!result.success) {
-      console.error('[turnstile] Verification failed:', result['error-codes']);
+      error('turnstile', 'Verification failed', result['error-codes']);
       return false;
     }
 
-    console.log('[turnstile] Verification successful');
+    log('turnstile', 'Verification successful');
     return true;
-  } catch (error) {
-    console.error('[turnstile] Verification error:', error);
-    console.error('[turnstile] Error stack:', error instanceof Error ? error.stack : 'no stack');
+  } catch (err) {
+    error('turnstile', 'Verification error', err);
     return false;
   }
 }
