@@ -40,6 +40,36 @@ database_id = "8fbd0217-9f3f-4f50-85e3-4c1d28ce47df"
 binding = "UPLOADS_BUCKET"
 bucket_name = "scc-uploads"
 
+# Email routing - receives emails and processes them
+# Configure routes in Cloudflare Dashboard > Email Routing
+[[email.routing.rules]]
+action = "worker"
+address = "tip@stclaircounty.net"
+
+[[email.routing.rules]]
+action = "worker"
+address = "contact@stclaircounty.net"
+
+[[email.routing.rules]]
+action = "worker"
+address = "media@stclaircounty.net"
+
+[[email.routing.rules]]
+action = "worker"
+address = "corrections@stclaircounty.net"
+
+[[email.routing.rules]]
+action = "worker"
+address = "evidence@stclaircounty.net"
+
+[[email.routing.rules]]
+action = "worker"
+address = "document@stclaircounty.net"
+
+[[email.routing.rules]]
+action = "worker"
+address = "general@stclaircounty.net"
+
 # Environment variables
 [vars]
 SITE_NAME = "St. Clair Under Oath"

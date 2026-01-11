@@ -103,8 +103,16 @@ function determineSubmissionType(email: string, subject: string): string {
   const lowerEmail = email.toLowerCase();
   const lowerSubject = subject.toLowerCase();
 
+  // Check email address first
   if (lowerEmail.includes('tip')) return 'tip';
   if (lowerEmail.includes('media') || lowerEmail.includes('press')) return 'media';
+  if (lowerEmail.includes('correction')) return 'correction';
+  if (lowerEmail.includes('evidence') || lowerEmail.includes('document')) return 'document';
+  if (lowerEmail.includes('general') || lowerEmail.includes('contact')) return 'general';
+
+  // Fall back to subject line
+  if (lowerSubject.includes('tip')) return 'tip';
+  if (lowerSubject.includes('media') || lowerSubject.includes('press')) return 'media';
   if (lowerSubject.includes('correction')) return 'correction';
   if (lowerSubject.includes('document') || lowerSubject.includes('evidence')) return 'document';
 
