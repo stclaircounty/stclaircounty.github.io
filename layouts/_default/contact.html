@@ -46,37 +46,73 @@
 <article class="relative">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
-    <!-- Primary Contact Card -->
-    <section class="mb-12">
-      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-navy to-slate-800 px-6 py-4">
-          <h2 class="text-lg font-bold text-white flex items-center gap-3 mb-0">
-            <svg class="w-6 h-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-            </svg>
-            Primary Contact
-          </h2>
-        </div>
-        <div class="px-8 py-8">
-          <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
-            <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
-              <svg class="w-7 h-7 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
+    <!-- Stats Banner -->
+    <section class="mb-8">
+      <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl border border-emerald-200 p-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="flex -space-x-2">
+              <div class="w-10 h-10 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center shadow-sm">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <div class="w-10 h-10 rounded-full bg-teal-500 border-2 border-white flex items-center justify-center shadow-sm">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <div class="w-10 h-10 rounded-full bg-cyan-500 border-2 border-white flex items-center justify-center shadow-sm">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
             </div>
             <div>
-              <p class="text-sm text-slate-light uppercase tracking-wide font-medium mb-1">Email</p>
-              <a href="mailto:contact@stclaircounty.net" class="text-2xl sm:text-3xl font-bold text-navy hover:text-accent transition-colors">
-                contact@stclaircounty.net
-              </a>
+              <p class="text-emerald-800 font-semibold mb-0" id="contact-stats-text">
+                Join others speaking up
+              </p>
+              <p class="text-emerald-600 text-sm mb-0">Your submission is confidential</p>
             </div>
           </div>
-          <p class="text-slate leading-relaxed">
-            This is the primary contact point for all inquiries, submissions, and correspondence related to this project. We monitor this inbox regularly and respond to all legitimate inquiries.
-          </p>
+          <div class="flex items-center gap-6 text-center">
+            <div>
+              <div class="text-2xl font-bold text-emerald-700" id="stats-contacts">-</div>
+              <div class="text-xs text-emerald-600 uppercase tracking-wide">Messages</div>
+            </div>
+            <div class="w-px h-10 bg-emerald-200"></div>
+            <div>
+              <div class="text-2xl font-bold text-teal-700" id="stats-uploads">-</div>
+              <div class="text-xs text-teal-600 uppercase tracking-wide">Files</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <script>
+      // Fetch and display submission stats
+      (function() {
+        fetch('/api/health')
+          .then(r => r.json())
+          .then(data => {
+            if (data.stats) {
+              const contacts = data.stats.contacts || 0;
+              const uploads = data.stats.uploads || 0;
+              document.getElementById('stats-contacts').textContent = contacts;
+              document.getElementById('stats-uploads').textContent = uploads;
+              if (contacts + uploads > 0) {
+                document.getElementById('contact-stats-text').textContent =
+                  `${contacts + uploads} submissions received`;
+              }
+            }
+          })
+          .catch(() => {
+            document.getElementById('stats-contacts').textContent = '0';
+            document.getElementById('stats-uploads').textContent = '0';
+          });
+      })();
+    </script>
 
     <!-- Contact Form -->
     <section class="mb-12">
@@ -181,6 +217,119 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Email Directory -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-lg bg-navy/10 flex items-center justify-center">
+          <svg class="w-5 h-5 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-navy">Direct Email Addresses</h2>
+      </div>
+
+      <p class="text-slate mb-6">
+        Prefer email? Reach us directly at any of these specialized addresses. Each inbox is monitored and routed to ensure your message gets the right attention.
+      </p>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <!-- Tip -->
+        <a href="mailto:tip@stclaircounty.net" class="group bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-accent/30 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-red-200 transition-colors">
+              <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+            </div>
+            <span class="px-2 py-0.5 text-xs font-bold uppercase tracking-wide bg-red-100 text-red-700 rounded">Priority</span>
+          </div>
+          <div class="font-mono text-sm font-semibold text-navy group-hover:text-accent transition-colors mb-1">
+            tip@stclaircounty.net
+          </div>
+          <p class="text-xs text-slate-light">Tips, leads, and urgent information about misconduct</p>
+        </a>
+
+        <!-- Evidence -->
+        <a href="mailto:evidence@stclaircounty.net" class="group bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-accent/30 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center group-hover:bg-amber-200 transition-colors">
+              <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+              </svg>
+            </div>
+          </div>
+          <div class="font-mono text-sm font-semibold text-navy group-hover:text-accent transition-colors mb-1">
+            evidence@stclaircounty.net
+          </div>
+          <p class="text-xs text-slate-light">Photos, videos, recordings, and physical evidence</p>
+        </a>
+
+        <!-- Document -->
+        <a href="mailto:document@stclaircounty.net" class="group bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-accent/30 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+            </div>
+          </div>
+          <div class="font-mono text-sm font-semibold text-navy group-hover:text-accent transition-colors mb-1">
+            document@stclaircounty.net
+          </div>
+          <p class="text-xs text-slate-light">Official documents, FOIA responses, court filings</p>
+        </a>
+
+        <!-- Corrections -->
+        <a href="mailto:corrections@stclaircounty.net" class="group bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-accent/30 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+              <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+            </div>
+          </div>
+          <div class="font-mono text-sm font-semibold text-navy group-hover:text-accent transition-colors mb-1">
+            corrections@stclaircounty.net
+          </div>
+          <p class="text-xs text-slate-light">Report errors, inaccuracies, or outdated information</p>
+        </a>
+
+        <!-- Media -->
+        <a href="mailto:media@stclaircounty.net" class="group bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-accent/30 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+              <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+              </svg>
+            </div>
+          </div>
+          <div class="font-mono text-sm font-semibold text-navy group-hover:text-accent transition-colors mb-1">
+            media@stclaircounty.net
+          </div>
+          <p class="text-xs text-slate-light">Press inquiries, interview requests, media relations</p>
+        </a>
+
+        <!-- General / Contact -->
+        <a href="mailto:contact@stclaircounty.net" class="group bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg hover:border-accent/30 transition-all">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+              <svg class="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            </div>
+          </div>
+          <div class="font-mono text-sm font-semibold text-navy group-hover:text-accent transition-colors mb-1">
+            contact@stclaircounty.net
+          </div>
+          <p class="text-xs text-slate-light">General questions and everything else</p>
+        </a>
+      </div>
+
+      <p class="text-xs text-slate-light mt-4 text-center">
+        All addresses accept attachments up to 25MB. For larger files, use our <a href="/secure-upload/" class="text-accent hover:underline">secure upload</a>.
+      </p>
     </section>
 
     <!-- What You Can Send -->
@@ -348,17 +497,66 @@
 </article>
 
 <!-- Bottom CTA -->
-<section class="bg-gradient-to-r from-navy to-slate-800 text-white">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-    <p class="text-xl font-semibold text-white mb-2">
-      Ready to get in touch?
-    </p>
-    <a href="mailto:contact@stclaircounty.net" class="inline-flex items-center gap-2 text-gold hover:text-amber-300 transition-colors text-lg">
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-      </svg>
-      contact@stclaircounty.net
-    </a>
+<section class="relative bg-gradient-to-br from-navy via-slate-800 to-slate-900 text-white overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="cta-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#cta-grid)" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+        Be Part of the Record
+      </h2>
+      <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+        Accountability starts with information. Whether you have documents, witnessed something, or just have questions—we're listening.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-6 mb-10">
+      <a href="mailto:tip@stclaircounty.net" class="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold/50 rounded-xl p-6 text-center transition-all">
+        <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+        </div>
+        <div class="font-mono text-gold text-lg mb-1">tip@</div>
+        <div class="text-sm text-gray-400">Report misconduct</div>
+      </a>
+
+      <a href="mailto:document@stclaircounty.net" class="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold/50 rounded-xl p-6 text-center transition-all">
+        <div class="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+          </svg>
+        </div>
+        <div class="font-mono text-gold text-lg mb-1">document@</div>
+        <div class="text-sm text-gray-400">Share records</div>
+      </a>
+
+      <a href="mailto:contact@stclaircounty.net" class="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold/50 rounded-xl p-6 text-center transition-all">
+        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+        </div>
+        <div class="font-mono text-gold text-lg mb-1">contact@</div>
+        <div class="text-sm text-gray-400">Ask questions</div>
+      </a>
+    </div>
+
+    <div class="text-center">
+      <p class="text-gray-500 text-sm">
+        All emails <span class="font-mono text-gray-400">@stclaircounty.net</span>
+      </p>
+    </div>
   </div>
 </section>
 

@@ -236,6 +236,98 @@
   </div>
 </section>
 
+<!-- Submit Information CTA -->
+<section class="relative py-12 overflow-hidden bg-gradient-to-br from-navy via-slate-800 to-slate-900">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="submit-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#submit-grid)" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Social proof banner -->
+    <div class="flex items-center justify-center gap-3 mb-8">
+      <div class="flex -space-x-2">
+        <div class="w-8 h-8 rounded-full bg-emerald-500 border-2 border-slate-800 flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-blue-500 border-2 border-slate-800 flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-purple-500 border-2 border-slate-800 flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-gold border-2 border-slate-800 flex items-center justify-center">
+          <span class="text-xs font-bold text-slate-900">+</span>
+        </div>
+      </div>
+      <p class="text-slate-300 text-sm" id="submission-count">
+        <span class="text-gold font-semibold" id="count-number">Community members</span> speaking up for accountability
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">
+          Your Voice Matters
+        </h2>
+        <p class="text-slate-300 text-lg mb-0">
+          Every tip strengthens the record. Every document adds to the truth. Join others who've chosen transparency over silence—anonymously if you prefer.
+        </p>
+      </div>
+      <div class="flex flex-wrap justify-start lg:justify-end gap-4">
+        <a href="/contact/" class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-amber-400 text-slate-900 font-bold rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+          Submit a Tip
+        </a>
+        <a href="/secure-upload/" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+          Secure Upload
+        </a>
+        <a href="mailto:tip@stclaircounty.net" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          tip@stclaircounty.net
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fetch submission count from API
+    (function() {
+      fetch('/api/health')
+        .then(r => r.json())
+        .then(data => {
+          if (data.stats) {
+            const total = (data.stats.contacts || 0) + (data.stats.uploads || 0);
+            if (total > 0) {
+              document.getElementById('count-number').textContent = total + ' submissions received';
+            }
+          }
+        })
+        .catch(() => {}); // Silently fail, keep default text
+    })();
+  </script>
+</section>
+
 <!-- Latest From Each Section - 3 Column Grid -->
 <section class="py-16 bg-white overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
