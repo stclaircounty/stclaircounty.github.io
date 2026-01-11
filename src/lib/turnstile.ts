@@ -29,8 +29,15 @@ export async function verifyTurnstile(
   secretKey: string,
   remoteIp?: string
 ): Promise<boolean> {
+  console.log('[turnstile] Verifying token', {
+    tokenLength: token?.length,
+    hasSecretKey: !!secretKey,
+    secretKeyLength: secretKey?.length,
+    remoteIp
+  });
+
   if (!token || !secretKey) {
-    console.error('Turnstile: Missing token or secret key');
+    console.error('[turnstile] Missing token or secret key', { hasToken: !!token, hasSecretKey: !!secretKey });
     return false;
   }
 
@@ -42,21 +49,26 @@ export async function verifyTurnstile(
       formData.append('remoteip', remoteIp);
     }
 
+    console.log('[turnstile] Sending verification request to Cloudflare');
     const response = await fetch(TURNSTILE_VERIFY_URL, {
       method: 'POST',
       body: formData,
     });
 
+    console.log('[turnstile] Response status:', response.status);
     const result: TurnstileVerifyResponse = await response.json();
+    console.log('[turnstile] Response body:', JSON.stringify(result));
 
     if (!result.success) {
-      console.error('Turnstile verification failed:', result['error-codes']);
+      console.error('[turnstile] Verification failed:', result['error-codes']);
       return false;
     }
 
+    console.log('[turnstile] Verification successful');
     return true;
   } catch (error) {
-    console.error('Turnstile verification error:', error);
+    console.error('[turnstile] Verification error:', error);
+    console.error('[turnstile] Error stack:', error instanceof Error ? error.stack : 'no stack');
     return false;
   }
 }
