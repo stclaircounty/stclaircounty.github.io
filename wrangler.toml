@@ -28,11 +28,7 @@ bucket_name = "scc-uploads"
 [vars]
 SITE_NAME = "St. Clair Under Oath"
 MAX_FILE_SIZE = "104857600"
-# Turnstile site key (public) - add to hugo.toml params for frontend
-# Create at: https://dash.cloudflare.com/turnstile
-TURNSTILE_SITE_KEY = "0x4AAAAAACL4w8dqaLCzxxOv"
-# Secret key - set via `wrangler secret put TURNSTILE_SECRET_KEY`
-# TURNSTILE_SECRET_KEY = "set-via-wrangler-secret"
+HUGO_BASEURL = "https://stclaircounty.net"
 
 # Production environment (main branch)
 [env.production]
