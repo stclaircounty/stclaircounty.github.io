@@ -1,0 +1,7 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/deploy-config-schema",
+  "deploy": {
+    "install": ["npm ci"],
+    "build": ["npm run build"]
+  }
+}

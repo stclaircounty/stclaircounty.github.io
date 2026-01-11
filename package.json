@@ -21,7 +21,7 @@
 
     "deploy": "npm run build:site && wrangler deploy",
     "deploy:staging": "npm run build:site && wrangler deploy --env staging",
-    "deploy:preview": "npm run build:site:preview && wrangler versions upload",
+    "deploy:preview": "npm run build:site:preview && wrangler deploy --env preview",
 
     "typecheck": "tsc --noEmit"
   },
