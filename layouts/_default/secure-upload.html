@@ -1,0 +1,187 @@
+{{ define "main" }}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-navy via-slate-800 to-slate-900 overflow-hidden">
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="upload-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#upload-grid)" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur mb-6">
+        <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold text-white mb-4">{{ .Title }}</h1>
+      <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+        {{ .Description }}
+      </p>
+    </div>
+  </div>
+
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg class="w-full h-12 text-offwhite" preserveAspectRatio="none" viewBox="0 0 1200 120" fill="currentColor">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z"></path>
+    </svg>
+  </div>
+</section>
+
+<article class="relative">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    <!-- Security Notice -->
+    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-8">
+      <div class="flex gap-4">
+        <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-emerald-800 mb-1">Secure Upload</h3>
+          <ul class="text-sm text-emerald-700 space-y-1">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Files transferred over encrypted HTTPS connection
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              No IP address or identifying information logged
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Files stored securely in Cloudflare R2
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Only site administrators can access uploads
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Form -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-navy to-slate-800 px-6 py-4">
+        <h2 class="text-lg font-bold text-white mb-0">Upload Document</h2>
+      </div>
+
+      <form id="upload-form" class="px-8 py-8 space-y-6">
+        <!-- File Input -->
+        <div>
+          <label class="block text-sm font-medium text-navy mb-2">
+            Select File <span class="text-accent">*</span>
+          </label>
+          <div id="drop-zone"
+            class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-accent transition-colors cursor-pointer">
+            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <p class="text-slate-light mb-2">Drag and drop your file here, or click to browse</p>
+            <p class="text-xs text-gray-400">PDF, images, documents, video (max 100MB)</p>
+            <input type="file" id="file-input" class="hidden"
+              accept=".pdf,.doc,.docx,.txt,.rtf,.jpg,.jpeg,.png,.gif,.mp4,.mov,.avi,.mkv,.zip,.7z">
+          </div>
+          <p id="file-name" class="mt-2 text-sm text-navy font-medium hidden"></p>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="description" class="block text-sm font-medium text-navy mb-2">
+            Description <span class="text-slate-light">(optional)</span>
+          </label>
+          <textarea id="description" rows="3"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent"
+            placeholder="What is this document? Any context that would help us understand it..."></textarea>
+        </div>
+
+        <!-- Optional Contact -->
+        <div class="bg-gray-50 rounded-xl p-4">
+          <p class="text-sm font-medium text-navy mb-3">
+            Contact Information <span class="text-slate-light">(optional)</span>
+          </p>
+          <p class="text-xs text-slate-light mb-4">
+            If you'd like us to follow up, provide contact details.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input type="text" id="contact-name"
+              class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-accent"
+              placeholder="Name (optional)">
+            <input type="email" id="contact-email"
+              class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-accent"
+              placeholder="Email (optional)">
+          </div>
+        </div>
+
+        <!-- Turnstile CAPTCHA -->
+        <div class="cf-turnstile" data-sitekey="{{ site.Params.turnstileSiteKey }}" data-callback="onTurnstileSuccess" data-theme="light"></div>
+
+        <!-- Progress Bar -->
+        <div id="progress-container" class="hidden">
+          <div class="flex justify-between text-sm mb-2">
+            <span id="progress-status">Preparing...</span>
+            <span id="progress-percent">0%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div id="progress-bar" class="bg-accent h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn" disabled
+          class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          Upload File
+        </button>
+
+        <!-- Result -->
+        <div id="result" class="hidden"></div>
+      </form>
+    </div>
+
+    <!-- Technical Details -->
+    <div class="mt-8 bg-gray-50 rounded-xl border border-gray-200 p-6">
+      <h3 class="font-semibold text-navy mb-3">How It Works</h3>
+      <ul class="text-sm text-slate-light space-y-2">
+        <li><strong class="text-navy">Transfer:</strong> HTTPS/TLS encrypted connection</li>
+        <li><strong class="text-navy">Storage:</strong> Cloudflare R2 (encrypted at rest)</li>
+        <li><strong class="text-navy">Privacy:</strong> No IP addresses or tracking data stored</li>
+        <li><strong class="text-navy">Access:</strong> Only site administrators can view uploads</li>
+      </ul>
+    </div>
+
+    <!-- Back Link -->
+    <div class="mt-8 text-center">
+      <a href="/contact/" class="inline-flex items-center gap-2 text-slate-light hover:text-navy transition-colors">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Contact
+      </a>
+    </div>
+
+  </div>
+</article>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="/js/whistleblower-upload.js" defer></script>
+{{ end }}

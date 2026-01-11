@@ -16,6 +16,9 @@ title = 'St. Clair Under Oath'
   # Contact
   contactEmail = ""
 
+  # Cloudflare Turnstile CAPTCHA (get from Cloudflare Dashboard → Turnstile)
+  turnstileSiteKey = "0x4AAAAAACL4w8dqaLCzxxOv"
+
   # Colors (for reference in templates)
   [params.colors]
     primary = "#0f172a"

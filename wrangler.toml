@@ -1,0 +1,47 @@
+# Cloudflare Workers configuration
+# Uses Workers CI/CD Builds with GitHub integration
+# Docs: https://developers.cloudflare.com/workers/ci-cd/builds/configuration/
+
+name = "stclaircounty-net"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# Static assets (Hugo build output)
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# D1 Database for everything (contacts, uploads, rate limiting)
+# Create with: wrangler d1 create scc-db
+[[d1_databases]]
+binding = "DB"
+database_name = "scc-db"
+database_id = "8fbd0217-9f3f-4f50-85e3-4c1d28ce47df"
+
+# R2 Bucket for encrypted whistleblower uploads
+# Create with: wrangler r2 bucket create scc-uploads
+[[r2_buckets]]
+binding = "UPLOADS_BUCKET"
+bucket_name = "scc-uploads"
+
+# Environment variables
+[vars]
+SITE_NAME = "St. Clair Under Oath"
+MAX_FILE_SIZE = "104857600"
+# Turnstile site key (public) - add to hugo.toml params for frontend
+# Create at: https://dash.cloudflare.com/turnstile
+TURNSTILE_SITE_KEY = "0x4AAAAAACL4w8dqaLCzxxOv"
+# Secret key - set via `wrangler secret put TURNSTILE_SECRET_KEY`
+# TURNSTILE_SECRET_KEY = "set-via-wrangler-secret"
+
+# Production environment (main branch)
+[env.production]
+name = "stclaircounty-net"
+
+# Staging environment (staging branch)
+[env.staging]
+name = "stclaircounty-net-staging"
+
+# Preview environment (all other branches)
+[env.preview]
+name = "stclaircounty-net-preview"
