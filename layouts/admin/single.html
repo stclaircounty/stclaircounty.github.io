@@ -96,10 +96,37 @@
     return res.json();
   }
 
-  function login() {
-    token = document.getElementById('secret-input').value;
+  async function login() {
+    const input = document.getElementById('secret-input');
+    token = input.value;
+    if (!token) {
+      alert('Please enter a secret');
+      return;
+    }
     localStorage.setItem('admin_token', token);
-    init();
+
+    try {
+      const res = await fetch('/api/admin/contacts?limit=1', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.status === 401) {
+        alert('Invalid secret');
+        localStorage.removeItem('admin_token');
+        token = '';
+        return;
+      }
+      if (!res.ok) {
+        const text = await res.text();
+        alert('Error: ' + text);
+        return;
+      }
+      document.getElementById('auth-section').classList.add('hidden');
+      document.getElementById('main-section').classList.remove('hidden');
+      loadContacts();
+      loadUploads();
+    } catch (e) {
+      alert('Connection error: ' + e.message);
+    }
   }
 
   function logout() {

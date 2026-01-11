@@ -31,10 +31,12 @@ export default {
 
     // API routes
     if (path.startsWith('/api/')) {
-      // Rate limiting for API routes
-      const rateLimitResponse = await checkRateLimit(request, env);
-      if (rateLimitResponse) {
-        return addSecurityHeaders(rateLimitResponse);
+      // Rate limiting for public API routes (not admin)
+      if (!path.startsWith('/api/admin/')) {
+        const rateLimitResponse = await checkRateLimit(request, env);
+        if (rateLimitResponse) {
+          return addSecurityHeaders(rateLimitResponse);
+        }
       }
 
       let response: Response;
