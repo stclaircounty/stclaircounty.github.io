@@ -12,8 +12,8 @@
     "pagefind:dev": "npx pagefind --site public --output-path static/pagefind",
     "preview": "hugo server --buildDrafts",
 
-    "build:site": "npm run tailwind:build && hugo --gc --minify && npm run pagefind",
-    "build:site:preview": "npm run tailwind:build && hugo --gc --minify --buildDrafts --buildFuture && npm run pagefind",
+    "build:site": "npm run tailwind:build && hugo --gc --minify --baseURL https://stclaircounty.net/ && npm run pagefind",
+    "build:site:preview": "npm run tailwind:build && hugo --gc --minify --buildDrafts --buildFuture --baseURL https://stclaircounty.net/ && npm run pagefind",
     "build:worker": "wrangler deploy --dry-run --outdir=dist",
 
     "build": "npm run build:site",
