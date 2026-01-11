@@ -72,6 +72,25 @@ title = 'St. Clair Under Oath'
     pageRef = "/about"
     weight = 90
 
+# Minification settings - preserve JSON-LD scripts
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+  minifyOutput = true
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepEndTags = true
+      keepQuotes = true
+      keepWhitespace = false
+    [minify.tdewolff.js]
+      keepVarNames = false
+      precision = 0
+      version = 2022
+
 # Markdown rendering
 [markup]
   [markup.goldmark]

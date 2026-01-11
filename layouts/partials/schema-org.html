@@ -1,7 +1,7 @@
 {{/*
   Schema.org Structured Data
   Generates JSON-LD for different content types
-  Uses dict + jsonify pattern to avoid escaping issues
+  Uses dict + jsonify with safeJS to prevent minifier escaping
 */}}
 
 {{/* Person Schema - for /people/ single pages */}}
@@ -18,7 +18,7 @@
     {{ with $person.role }}{{ $schema = merge $schema (dict "jobTitle" .) }}{{ end }}
     {{ with $person.department }}{{ $schema = merge $schema (dict "worksFor" (dict "@type" "Organization" "name" .)) }}{{ end }}
     {{ with $person.description }}{{ $schema = merge $schema (dict "description" (. | plainify | truncate 200)) }}{{ end }}
-    <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+    {{ printf `<script type="application/ld+json">%s</script>` ($schema | jsonify) | safeHTML }}
   {{ end }}
 {{ end }}
 
@@ -36,7 +36,7 @@
     {{ with $case.case_number }}{{ $schema = merge $schema (dict "identifier" .) }}{{ end }}
     {{ with $case.court }}{{ $schema = merge $schema (dict "court" (dict "@type" "Organization" "name" .)) }}{{ end }}
     {{ with $case.filed_date }}{{ $schema = merge $schema (dict "datePublished" (. | time.Format "2006-01-02")) }}{{ end }}
-    <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+    {{ printf `<script type="application/ld+json">%s</script>` ($schema | jsonify) | safeHTML }}
   {{ end }}
 {{ end }}
 
@@ -51,7 +51,7 @@
   }}
   {{ with .Params.location }}{{ $schema = merge $schema (dict "location" (dict "@type" "Place" "name" .)) }}{{ end }}
   {{ with .Description }}{{ $schema = merge $schema (dict "description" (. | plainify | truncate 200)) }}{{ end }}
-  <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+  {{ printf `<script type="application/ld+json">%s</script>` ($schema | jsonify) | safeHTML }}
 {{ end }}
 
 {{/* CreativeWork Schema - for /depositions/ single pages */}}
@@ -68,7 +68,7 @@
     }}
     {{ with $depo.date }}{{ $schema = merge $schema (dict "dateCreated" (. | time.Format "2006-01-02")) }}{{ end }}
     {{ with $depo.deponent }}{{ $schema = merge $schema (dict "about" (dict "@type" "Person" "name" .name)) }}{{ end }}
-    <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+    {{ printf `<script type="application/ld+json">%s</script>` ($schema | jsonify) | safeHTML }}
   {{ end }}
 {{ end }}
 
@@ -88,7 +88,7 @@
     "@type" "BreadcrumbList"
     "itemListElement" $items
   }}
-  <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+  {{ printf `<script type="application/ld+json">%s</script>` ($schema | jsonify) | safeHTML }}
 {{ end }}
 
 {{/* Organization Schema - for homepage */}}
@@ -100,5 +100,5 @@
     "url" .Site.BaseURL
     "description" .Site.Params.description
   }}
-  <script type="application/ld+json">{{ $schema | jsonify | safeHTML }}</script>
+  {{ printf `<script type="application/ld+json">%s</script>` ($schema | jsonify) | safeHTML }}
 {{ end }}
