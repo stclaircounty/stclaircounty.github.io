@@ -92,6 +92,17 @@
         </div>
       </div>
 
+      <!-- Sort Toggle -->
+      <button id="sort-toggle" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-navy bg-white border-2 border-slate-200 hover:border-accent rounded-lg transition-all duration-200 shadow-sm" data-sort="desc" title="Toggle sort order">
+        <svg id="sort-icon-desc" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4 4m0 0l4-4m-4 4V4" />
+        </svg>
+        <svg id="sort-icon-asc" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+        </svg>
+        <span id="sort-label">Newest First</span>
+      </button>
+
       <!-- Reset Button -->
       <button id="reset-filters" class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:text-white bg-slate-100 hover:bg-navy border-2 border-slate-200 hover:border-navy rounded-lg transition-all duration-200 shadow-sm">
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,6 +152,7 @@
          data-incident="{{ .Params.incident }}"
          data-people="{{ $officers }}"
          data-year="{{ $year }}"
+         data-date="{{ .Date.Format "2006-01-02T15:04:05" }}"
          data-severity="{{ $severity }}">
         <!-- Timeline dot -->
         <div class="absolute left-2 md:left-6 w-5 h-5 rounded-full border-4 border-white shadow-lg z-10 transition-transform group-hover:scale-125
@@ -262,12 +274,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const incidentFilter = document.getElementById('incident-filter');
   const personFilter = document.getElementById('person-filter');
   const resetBtn = document.getElementById('reset-filters');
+  const sortToggle = document.getElementById('sort-toggle');
+  const sortLabel = document.getElementById('sort-label');
+  const sortIconDesc = document.getElementById('sort-icon-desc');
+  const sortIconAsc = document.getElementById('sort-icon-asc');
   const filterStatus = document.getElementById('filter-status');
   const visibleCount = document.getElementById('visible-count');
-  const events = document.querySelectorAll('.timeline-event');
-  const yearDividers = document.querySelectorAll('[class*="Year divider"]'); // Will need to mark these
+  const timelineContainer = document.querySelector('.space-y-6');
+
+  let currentSort = 'desc'; // Default: newest first
 
   function filterEvents() {
+    const events = document.querySelectorAll('.timeline-event');
     const selectedIncident = incidentFilter.value;
     const selectedPerson = personFilter.value;
     let visible = 0;
@@ -305,6 +323,73 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  function sortTimeline() {
+    // Get all timeline items (events and year dividers)
+    const items = Array.from(timelineContainer.children);
+
+    // Separate events and collect by year
+    const eventsByYear = {};
+    const yearDividers = {};
+
+    items.forEach(item => {
+      if (item.classList.contains('year-divider')) {
+        yearDividers[item.dataset.year] = item;
+      } else if (item.classList.contains('timeline-event')) {
+        const year = item.dataset.year;
+        if (!eventsByYear[year]) eventsByYear[year] = [];
+        eventsByYear[year].push(item);
+      }
+    });
+
+    // Sort years
+    const years = Object.keys(yearDividers).sort((a, b) => {
+      return currentSort === 'desc' ? b - a : a - b;
+    });
+
+    // Sort events within each year by date
+    Object.keys(eventsByYear).forEach(year => {
+      eventsByYear[year].sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return currentSort === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+    });
+
+    // Clear container and rebuild
+    timelineContainer.innerHTML = '';
+
+    years.forEach(year => {
+      if (yearDividers[year]) {
+        timelineContainer.appendChild(yearDividers[year]);
+      }
+      if (eventsByYear[year]) {
+        eventsByYear[year].forEach(event => {
+          timelineContainer.appendChild(event);
+        });
+      }
+    });
+
+    // Re-apply filters
+    filterEvents();
+  }
+
+  function toggleSort() {
+    currentSort = currentSort === 'desc' ? 'asc' : 'desc';
+    sortToggle.dataset.sort = currentSort;
+
+    if (currentSort === 'desc') {
+      sortLabel.textContent = 'Newest First';
+      sortIconDesc.classList.remove('hidden');
+      sortIconAsc.classList.add('hidden');
+    } else {
+      sortLabel.textContent = 'Oldest First';
+      sortIconDesc.classList.add('hidden');
+      sortIconAsc.classList.remove('hidden');
+    }
+
+    sortTimeline();
+  }
+
   function resetFilters() {
     incidentFilter.value = '';
     personFilter.value = '';
@@ -314,6 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
   incidentFilter.addEventListener('change', filterEvents);
   personFilter.addEventListener('change', filterEvents);
   resetBtn.addEventListener('click', resetFilters);
+  sortToggle.addEventListener('click', toggleSort);
 });
 </script>
 {{ end }}
