@@ -59,7 +59,20 @@ export default {
     }
 
     // Static assets - let Cloudflare handle from [assets] binding
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+
+    // Serve custom 404 page if not found
+    if (response.status === 404) {
+      const notFoundPage = await env.ASSETS.fetch(new Request(new URL('/404.html', request.url)));
+      return new Response(notFoundPage.body, {
+        status: 404,
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+        }
+      });
+    }
+
+    return response;
   },
 
   // Email handler for tip@/contact@ addresses

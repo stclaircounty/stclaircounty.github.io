@@ -1,169 +1,81 @@
 {{ define "main" }}
-<style>
-  .admin-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-  .auth-form {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    max-width: 400px;
-    margin: 100px auto;
-  }
-  .auth-form h2 { margin-bottom: 20px; color: var(--navy); }
-  .auth-form input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    font-size: 16px;
-    margin-bottom: 15px;
-  }
-  .auth-form button {
-    width: 100%;
-    padding: 12px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .auth-form button:hover { opacity: 0.9; }
-  .admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .admin-header h1 { font-size: 1.5rem; color: var(--navy); }
-  .tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .tab {
-    padding: 10px 20px;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    color: var(--navy);
-  }
-  .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-  .card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-bottom: 15px;
-    overflow: hidden;
-  }
-  .card-header {
-    background: #f8fafc;
-    padding: 12px 16px;
-    border-bottom: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .card-body { padding: 16px; }
-  .badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-  .badge-tip { background: #fef2f2; color: #dc2626; }
-  .badge-document { background: #eff6ff; color: #2563eb; }
-  .badge-general { background: #f0fdf4; color: #16a34a; }
-  .badge-media { background: #faf5ff; color: #9333ea; }
-  .badge-correction { background: #fefce8; color: #ca8a04; }
-  .meta { font-size: 13px; color: #64748b; margin-bottom: 8px; }
-  .message {
-    background: #f8fafc;
-    padding: 12px;
-    border-radius: 6px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-size: 14px;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  .file-info { display: flex; gap: 20px; flex-wrap: wrap; }
-  .file-info div { flex: 1; min-width: 150px; }
-  .file-info label { font-size: 12px; color: #64748b; text-transform: uppercase; }
-  .file-info p { font-weight: 500; margin-top: 4px; }
-  .btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .btn-primary { background: #2563eb; color: white; }
-  .btn-success { background: #16a34a; color: white; }
-  .btn-outline { background: transparent; border: 1px solid #e2e8f0; color: var(--navy); }
-  .btn-sm { padding: 6px 12px; font-size: 13px; }
-  .actions { display: flex; gap: 8px; margin-top: 12px; }
-  .empty { text-align: center; padding: 40px; color: #64748b; }
-  .loading { text-align: center; padding: 40px; }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  .stat {
-    background: white;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  .stat-value { font-size: 24px; font-weight: 700; color: var(--navy); }
-  .stat-label { font-size: 13px; color: #64748b; }
-  .hidden { display: none !important; }
-  .processed { opacity: 0.6; }
-</style>
+<section class="py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-<!-- Auth Form -->
-<div id="auth-section" class="auth-form">
-  <h2>Admin Login</h2>
-  <input type="password" id="secret-input" placeholder="Enter admin secret" onkeypress="if(event.key==='Enter')login()">
-  <button onclick="login()">Login</button>
-</div>
-
-<!-- Main Content -->
-<div id="main-section" class="hidden">
-  <div class="admin-container">
-    <div class="admin-header">
-      <h1>Submissions</h1>
-      <button class="btn btn-outline" onclick="logout()">Logout</button>
-    </div>
-
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-value" id="contacts-count">-</div>
-        <div class="stat-label">Contact Submissions</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value" id="uploads-count">-</div>
-        <div class="stat-label">File Uploads</div>
+    <!-- Auth Form -->
+    <div id="auth-section" class="max-w-md mx-auto mt-20">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-lg p-8">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-navy/10 mb-4">
+            <svg class="w-6 h-6 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-navy">Admin Access</h2>
+        </div>
+        <input type="password" id="secret-input"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent mb-4"
+          placeholder="Enter admin secret"
+          onkeypress="if(event.key==='Enter')login()">
+        <button onclick="login()"
+          class="w-full px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
+          Login
+        </button>
       </div>
     </div>
 
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('contacts')">Contacts</button>
-      <button class="tab" onclick="showTab('uploads')">Uploads</button>
+    <!-- Main Content -->
+    <div id="main-section" class="hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <h1 class="text-3xl font-bold text-navy">Submissions</h1>
+        <button onclick="logout()"
+          class="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-slate-light hover:bg-gray-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Logout
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <div class="text-3xl font-bold text-navy" id="contacts-count">-</div>
+          <div class="text-sm text-slate-light">Contacts</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <div class="text-3xl font-bold text-navy" id="uploads-count">-</div>
+          <div class="text-sm text-slate-light">Uploads</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <div class="text-3xl font-bold text-navy" id="unprocessed-count">-</div>
+          <div class="text-sm text-slate-light">Unprocessed</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <div class="text-3xl font-bold text-navy" id="today-count">-</div>
+          <div class="text-sm text-slate-light">Today</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex gap-2 mb-6">
+        <button class="tab-btn px-5 py-2.5 rounded-lg font-medium transition-colors bg-accent text-white" data-tab="contacts" onclick="showTab('contacts')">
+          Contacts
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-lg font-medium transition-colors bg-white text-navy border border-gray-200 hover:bg-gray-50" data-tab="uploads" onclick="showTab('uploads')">
+          Uploads
+        </button>
+      </div>
+
+      <!-- Contacts Tab -->
+      <div id="contacts-tab"></div>
+
+      <!-- Uploads Tab -->
+      <div id="uploads-tab" class="hidden"></div>
     </div>
 
-    <div id="contacts-tab"></div>
-    <div id="uploads-tab" class="hidden"></div>
   </div>
-</div>
+</section>
 
 <script>
   let token = localStorage.getItem('admin_token') || '';
@@ -198,8 +110,14 @@
   }
 
   function showTab(tab) {
-    document.querySelectorAll('.tab').forEach((t, i) => {
-      t.classList.toggle('active', (tab === 'contacts' && i === 0) || (tab === 'uploads' && i === 1));
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      const isActive = btn.dataset.tab === tab;
+      btn.classList.toggle('bg-accent', isActive);
+      btn.classList.toggle('text-white', isActive);
+      btn.classList.toggle('bg-white', !isActive);
+      btn.classList.toggle('text-navy', !isActive);
+      btn.classList.toggle('border', !isActive);
+      btn.classList.toggle('border-gray-200', !isActive);
     });
     document.getElementById('contacts-tab').classList.toggle('hidden', tab !== 'contacts');
     document.getElementById('uploads-tab').classList.toggle('hidden', tab !== 'uploads');
@@ -217,111 +135,126 @@
 
   function getBadgeClass(type) {
     const classes = {
-      tip: 'badge-tip',
-      document: 'badge-document',
-      general: 'badge-general',
-      media: 'badge-media',
-      correction: 'badge-correction'
+      tip: 'bg-red-100 text-red-700',
+      document: 'bg-blue-100 text-blue-700',
+      general: 'bg-green-100 text-green-700',
+      media: 'bg-purple-100 text-purple-700',
+      correction: 'bg-yellow-100 text-yellow-700'
     };
-    return classes[type] || 'badge-general';
+    return classes[type] || 'bg-gray-100 text-gray-700';
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   }
 
   async function loadContacts() {
     const container = document.getElementById('contacts-tab');
-    container.innerHTML = '<div class="loading">Loading...</div>';
+    container.innerHTML = '<div class="text-center py-12 text-slate-light">Loading...</div>';
 
     try {
       const data = await api('/api/admin/contacts');
       document.getElementById('contacts-count').textContent = data.total;
 
+      const unprocessed = data.data.filter(c => !c.processed).length;
+      document.getElementById('unprocessed-count').textContent = unprocessed;
+
+      const today = new Date().toDateString();
+      const todayCount = data.data.filter(c => new Date(c.created_at).toDateString() === today).length;
+      document.getElementById('today-count').textContent = todayCount;
+
       if (data.data.length === 0) {
-        container.innerHTML = '<div class="empty">No submissions yet</div>';
+        container.innerHTML = '<div class="text-center py-12 text-slate-light">No submissions yet</div>';
         return;
       }
 
       container.innerHTML = data.data.map(c => `
-        <div class="card ${c.processed ? 'processed' : ''}">
-          <div class="card-header">
-            <span class="badge ${getBadgeClass(c.submission_type)}">${c.submission_type}</span>
-            <span class="meta">${formatDate(c.created_at)}</span>
+        <div class="bg-white rounded-xl border border-gray-200 mb-4 overflow-hidden ${c.processed ? 'opacity-60' : ''}">
+          <div class="flex items-center justify-between px-5 py-3 bg-gray-50 border-b border-gray-200">
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase ${getBadgeClass(c.submission_type)}">${c.submission_type}</span>
+            <span class="text-sm text-slate-light">${formatDate(c.created_at)}</span>
           </div>
-          <div class="card-body">
-            <div class="meta">
-              ${c.name ? `<strong>${escapeHtml(c.name)}</strong>` : '<em>Anonymous</em>'}
+          <div class="p-5">
+            <div class="text-sm text-slate-light mb-3">
+              ${c.name ? `<strong class="text-navy">${escapeHtml(c.name)}</strong>` : '<em>Anonymous</em>'}
               ${c.email ? ` &lt;${escapeHtml(c.email)}&gt;` : ''}
             </div>
-            <div class="message">${escapeHtml(c.message)}</div>
+            <div class="bg-gray-50 rounded-lg p-4 text-sm whitespace-pre-wrap break-words max-h-48 overflow-y-auto">${escapeHtml(c.message)}</div>
             ${!c.processed ? `
-              <div class="actions">
-                <button class="btn btn-success btn-sm" onclick="markProcessed(${c.id})">Mark Processed</button>
+              <div class="mt-4">
+                <button onclick="markProcessed(${c.id})" class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors">
+                  Mark Processed
+                </button>
               </div>
-            ` : '<div class="meta" style="margin-top:10px">Processed</div>'}
+            ` : '<div class="mt-3 text-sm text-green-600 font-medium">Processed</div>'}
           </div>
         </div>
       `).join('');
     } catch (e) {
-      container.innerHTML = '<div class="empty">Error loading data</div>';
+      container.innerHTML = '<div class="text-center py-12 text-red-600">Error loading data</div>';
     }
   }
 
   async function loadUploads() {
     const container = document.getElementById('uploads-tab');
-    container.innerHTML = '<div class="loading">Loading...</div>';
+    container.innerHTML = '<div class="text-center py-12 text-slate-light">Loading...</div>';
 
     try {
       const data = await api('/api/admin/uploads');
       document.getElementById('uploads-count').textContent = data.total;
 
       if (data.data.length === 0) {
-        container.innerHTML = '<div class="empty">No uploads yet</div>';
+        container.innerHTML = '<div class="text-center py-12 text-slate-light">No uploads yet</div>';
         return;
       }
 
       container.innerHTML = data.data.map(u => `
-        <div class="card">
-          <div class="card-header">
-            <span><strong>${escapeHtml(u.metadata.filename || 'Unknown')}</strong></span>
-            <span class="meta">${formatDate(u.created_at)}</span>
+        <div class="bg-white rounded-xl border border-gray-200 mb-4 overflow-hidden">
+          <div class="flex items-center justify-between px-5 py-3 bg-gray-50 border-b border-gray-200">
+            <span class="font-semibold text-navy">${escapeHtml(u.metadata.filename || 'Unknown')}</span>
+            <span class="text-sm text-slate-light">${formatDate(u.created_at)}</span>
           </div>
-          <div class="card-body">
-            <div class="file-info">
+          <div class="p-5">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
               <div>
-                <label>Size</label>
-                <p>${formatSize(u.file_size)}</p>
+                <div class="text-xs text-slate-light uppercase mb-1">Size</div>
+                <div class="font-medium text-navy">${formatSize(u.file_size)}</div>
               </div>
               <div>
-                <label>Type</label>
-                <p>${escapeHtml(u.file_type)}</p>
+                <div class="text-xs text-slate-light uppercase mb-1">Type</div>
+                <div class="font-medium text-navy">${escapeHtml(u.file_type)}</div>
               </div>
               <div>
-                <label>Source</label>
-                <p>${escapeHtml(u.metadata.source || 'web')}</p>
+                <div class="text-xs text-slate-light uppercase mb-1">Source</div>
+                <div class="font-medium text-navy">${escapeHtml(u.metadata.source || 'web')}</div>
               </div>
               <div>
-                <label>ID</label>
-                <p style="font-family:monospace;font-size:12px">${u.id.slice(0,8)}</p>
+                <div class="text-xs text-slate-light uppercase mb-1">ID</div>
+                <div class="font-mono text-sm text-navy">${u.id.slice(0,8)}</div>
               </div>
             </div>
             ${u.metadata.description ? `
-              <div style="margin-top:12px">
-                <label style="font-size:12px;color:#64748b;text-transform:uppercase">Description</label>
-                <div class="message" style="margin-top:4px">${escapeHtml(u.metadata.description)}</div>
+              <div class="mb-4">
+                <div class="text-xs text-slate-light uppercase mb-1">Description</div>
+                <div class="bg-gray-50 rounded-lg p-3 text-sm">${escapeHtml(u.metadata.description)}</div>
               </div>
             ` : ''}
             ${u.metadata.contactName || u.metadata.contactEmail ? `
-              <div class="meta" style="margin-top:12px">
+              <div class="text-sm text-slate-light mb-4">
                 Contact: ${u.metadata.contactName ? escapeHtml(u.metadata.contactName) : 'Anonymous'}
                 ${u.metadata.contactEmail ? `&lt;${escapeHtml(u.metadata.contactEmail)}&gt;` : ''}
               </div>
             ` : ''}
-            <div class="actions">
-              <button class="btn btn-primary btn-sm" onclick="downloadFile('${u.id}', '${escapeHtml(u.metadata.filename || 'download')}')">Download</button>
-            </div>
+            <button onclick="downloadFile('${u.id}', '${escapeHtml(u.metadata.filename || 'download')}')"
+              class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              Download File
+            </button>
           </div>
         </div>
       `).join('');
     } catch (e) {
-      container.innerHTML = '<div class="empty">Error loading data</div>';
+      container.innerHTML = '<div class="text-center py-12 text-red-600">Error loading data</div>';
     }
   }
 
@@ -345,13 +278,6 @@
     a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    })[c]);
   }
 
   async function init() {
